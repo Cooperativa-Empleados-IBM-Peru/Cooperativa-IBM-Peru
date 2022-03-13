@@ -1,0 +1,41 @@
+<ibm-modal
+    [open]="open"
+    (overlaySelected)="closeModal()">
+    <ibm-modal-header (closeSelect)="closeModal()">
+    <h1 class="bx--modal-header__heading bx--padding-bottom-0_5">
+        {{modalText}}
+    </h1>
+    </ibm-modal-header>
+    <section class="bx--modal-content" hasForm="true">
+		
+		<div class="row-form">
+			<div class = "col-form">
+				<ibm-label class="item-name">
+					Nombre
+					<input  [value]="categoriaup.nombre"
+						(change)="onChangeNombreCate($event)"
+						autocomplete="off" ibmText placeholder="Nombre de Categoria" type="text" />
+				</ibm-label>
+			</div> 
+		</div>
+		<div class="row-form">
+			<div class = "col-form">
+				<ibm-label class="item-name">
+					URL
+					<input  [value]="categoriaup.url"
+						(change)="onChangeUrlCate($event)"
+						autocomplete="off" ibmText placeholder="URL de  Categoria" type="text" />
+				</ibm-label>
+			</div> 
+		</div>  
+    </section>
+    <ibm-modal-footer>
+        <button type="button" ibmButton="secondary" (click)="closeModal()">
+            Cancelar
+        </button>
+        <button type="submit" ibmButton="primary" modal-primary-focus (click)="guardarUpdateCategoria()" >
+            Aceptar
+        </button>
+    </ibm-modal-footer>
+</ibm-modal>
+

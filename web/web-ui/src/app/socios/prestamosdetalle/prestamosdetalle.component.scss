@@ -1,0 +1,17 @@
+@import "~carbon-components/scss/globals/scss/vendor/@carbon/type/scss/font-family";
+@import "~carbon-components/scss/globals/scss/typography";
+//@import "~carbon-components/scss/globals/scss/styles";
+//@import "~@carbon/charts/styles";
+//@import "~@carbon/charts/styles/styles";
+@import '~@carbon/charts/styles.css';
+//@import "@carbon/charts/styles.css";
+
+@import "../../../assets/coope";
+
+.coope__r1{
+    margin-top: 5px;
+}
+.chart-skeleton{
+	fill: #f3f3f3;
+}
+

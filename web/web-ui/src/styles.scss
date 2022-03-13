@@ -1,0 +1,114 @@
+/* You can add global styles to this file, and also import other style files */
+//@import "~carbon-components/scss/globals/scss/styles";
+//$font-prefix: '';
+//@import 'node_modules/@ibm/plex/scss/ibm-plex.scss';
+@import '~ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
+@import '~ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
+
+$feature-flags: (
+	grid-columns-16: true,
+);
+
+// To change the theme uncomment the below import and which ever carbon theme you want to use
+// @import '~carbon-components/scss/globals/scss/vendor/@carbon/elements/scss/themes/theme-maps';
+// $carbon--theme: $carbon--theme--g100;
+// $carbon--theme: $carbon--theme--g90;
+// $carbon--theme: $carbon--theme--g10;
+
+// Feature flags
+$css--font-face: true;
+$css--plex: true;
+// Global styles
+/* @import "~carbon-components/scss/globals/scss/spacing";
+@import "~carbon-components/scss/globals/scss/css--font-face";
+@import "~carbon-components/scss/globals/grid/grid"; */
+// Carbon components
+/* @import "~carbon-components/scss/components/breadcrumb/breadcrumb";
+@import "~carbon-components/scss/components/button/button";
+@import "~carbon-components/scss/components/data-table/data-table";
+@import "~carbon-components/scss/components/link/link";
+@import "~carbon-components/scss/components/pagination/pagination";
+@import "~carbon-components/scss/components/tabs/tabs";
+@import "~carbon-components/scss/components/ui-shell/ui-shell";
+@import "~carbon-components/scss/components/loading/loading"; */
+@import '~carbon-components/scss/globals/scss/styles.scss';
+
+@import './assets/scss/carbon-overrides.scss';
+
+.starter-home {
+	.title {
+		@include type-style("productive-heading-05");
+	}
+
+	.subtitle {
+		margin-top: carbon--mini-units(2);
+		@include type-style("productive-heading-02");
+	}
+
+	.body-text {
+		margin-top: carbon--mini-units(2);
+		margin-bottom: carbon--mini-units(4);
+	}
+
+	.list {
+		max-width: carbon--mini-units(63);
+		padding-left: carbon--mini-units(6);
+		column-count: 2;
+
+		@media only screen and (max-width: 1055px) {
+			margin-top: carbon--mini-units(2);
+		}
+	}
+
+	.starter-tab-description {
+		margin-bottom: carbon--mini-units(2);
+	}
+}
+
+.bx--tabs-trigger {
+    display: none;
+}
+
+.tabla-ds
+.bx--data-table td + td {
+    text-align: right !important;
+}
+
+.tabla-ds-2
+.bx--data-table td + td + td {
+    text-align: right !important;
+}
+
+.tabla-ds-3
+.bx--data-table td + td + td + td{
+    text-align: right !important;
+}
+
+.tabla-ds-4
+.bx--data-table td + td + td + td + td{
+    text-align: right !important;
+}
+
+.tabla-ds-5
+.bx--data-table td + td + td + td + td + td{
+    text-align: right !important;
+}
+
+.tabla-ds-6
+.bx--data-table td + td + td + td + td + td + td{
+    text-align: right !important;
+}
+
+.tabla-ds-7
+.bx--data-table td + td + td + td + td + td + td + td{
+    text-align: right !important;
+}
+
+.content-detalle ul {
+	list-style: inherit !important;
+    list-style-position: inside !important;
+}
+
+@import '~quill/dist/quill.core.css';
+@import '~quill/dist/quill.bubble.css';
+@import '~quill/dist/quill.snow.css';

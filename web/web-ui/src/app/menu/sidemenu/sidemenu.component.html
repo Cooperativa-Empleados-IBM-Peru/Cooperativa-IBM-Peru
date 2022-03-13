@@ -1,0 +1,31 @@
+<ibm-sidenav *ngIf="ibmidservice.LoggedIn" [hidden]="hidesidemenu" [expanded]="sideactive">
+    <ibm-sidenav-menu title="Mis cuentas">
+        <ibm-sidenav-item [route]="['socios/ahorros']">Ahorros</ibm-sidenav-item>
+        <ibm-sidenav-item [route]="['socios/certificados']">Certificados</ibm-sidenav-item>
+        <ibm-sidenav-item [route]="['socios/prestamos']">Préstamos</ibm-sidenav-item>
+        <ibm-sidenav-item [route]="['socios/garantizados']">Garantías</ibm-sidenav-item>
+        <ibm-sidenav-item [route]="['socios/automovil']">Automóvil</ibm-sidenav-item>
+    </ibm-sidenav-menu>
+    <!--
+    <ibm-sidenav-menu title="Herramientas">
+        <ibm-sidenav-item [route]="['herramientas/calcpagos']">Calculadora de Pagos</ibm-sidenav-item>
+        <ibm-sidenav-item [route]="['herramientas/calccertificados']">Calculadora de Certificados</ibm-sidenav-item>
+        <ibm-sidenav-item [route]="['herramientas/reglamentocredito']">Reglamento de Crédito</ibm-sidenav-item>
+        <ibm-sidenav-item [route]="['herramientas/tasasinteres']">Tasas de interes</ibm-sidenav-item>
+    </ibm-sidenav-menu>        
+    <ibm-sidenav-menu title="Otros Servicios">
+        <ibm-sidenav-item [route]="['servicios/previsionsocial']">Previsión Social</ibm-sidenav-item>
+        <ibm-sidenav-item [route]="['servicios/asesorialegal']">Asesoría Legal</ibm-sidenav-item>
+        <ibm-sidenav-item [route]="['servicios/consumo']">Consumo</ibm-sidenav-item>
+    </ibm-sidenav-menu> 
+    <ibm-sidenav-menu title="Proveedores y Avisos">
+        <ibm-sidenav-item [route]="['avisos/proveedores']">Proveedores</ibm-sidenav-item>
+        <ibm-sidenav-item [route]="['avisos/internos']">Internos</ibm-sidenav-item>
+        <ibm-sidenav-item [route]="['avisos/noticias']">Noticias</ibm-sidenav-item>
+    </ibm-sidenav-menu> 
+    -->
+    <ibm-sidenav-menu *ngIf="ibmidservice.IsAdmin" title="Administración">
+        <ibm-sidenav-item [route]="['administracion/listasocios']">Lista de Socios</ibm-sidenav-item>
+    </ibm-sidenav-menu> 
+
+</ibm-sidenav>

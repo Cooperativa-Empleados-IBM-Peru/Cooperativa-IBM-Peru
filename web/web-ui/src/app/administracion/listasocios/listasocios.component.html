@@ -1,0 +1,174 @@
+<div ibmGrid class="bx--grid--full-width coope">
+<div ibmRow class="coope__banner">
+    <div ibmCol [columnNumbers]="{'lg': 12, 'md' : 5}">
+        <h1 class="coope__heading">
+            {{ibmidservice.NombreEmpleado}}
+        </h1>
+        <h2 class="coope__subheading">
+<!--              {{ibmidservice.DireccionEmpleado}}   -->
+        </h2>
+    </div>
+    <div ibmCol [columnNumbers]="{'lg': 4, 'md' : 3}">
+        <h1 class="coope__subheading2">
+            {{ibmidservice.EmailEmpleado}}
+        </h1>
+        <h2 class="coope__subheading2">
+            {{ibmidservice.CodEmpleado}}
+        </h2>
+    </div>
+
+</div>
+<div class="notification-container" ></div>
+<ibm-placeholder></ibm-placeholder>
+
+<ng-template #overflowMenuItemTemplate let-data="data">
+	<ibm-overflow-menu flip="true">
+		<ibm-overflow-menu-option (click)="openModal(1)">
+			Modificar
+		</ibm-overflow-menu-option>
+		<ibm-overflow-menu-option type="danger" (click)="deleteSocio()">
+			Eliminar
+		</ibm-overflow-menu-option>
+	</ibm-overflow-menu>
+</ng-template>
+
+<div ibmRow class="coope__r2">
+    <div ibmCol class="bx--no-gutter">
+
+        <div ibmGrid class="bx--grid--no-gutter bx--grid--full-width">
+
+            <ibm-tabs ariaLabel="Tab navigation">
+                <ibm-tab heading="Socios IBM">
+                    <ibm-table-container>
+                        <ibm-table-header>
+                            <h4 ibmTableHeaderTitle>Socios Empleados de IBM</h4>
+                            <p ibmTableHeaderDescription>socios ibm</p>
+						</ibm-table-header>
+                        <ibm-table-toolbar [model]="modelIbmer">
+                            <ibm-table-toolbar-content>
+                                <ibm-table-toolbar-search
+                                    placeholder=" Search in the Table "
+									(search)="searchSociosIbm($event)"
+									(clear)="clearSearchSociosIbm()"
+                                ></ibm-table-toolbar-search>
+                                <button ibmButton="primary" size="sm" (click)="openModal(2)">
+                                    Añadir<ibm-icon-add size="20" class="bx--btn__icon"></ibm-icon-add>
+                                </button>
+                            </ibm-table-toolbar-content>
+                        </ibm-table-toolbar>
+                        <ibm-table
+                            [skeleton]="skeletonibmer"
+                            [model]="skeletonibmer ? skeletonIbmer : modelIbmer"
+                            [showSelectionColumn]="false"
+                            [sortable]="false"
+                            [striped]="false"
+                            [stickyHeader]="false"
+                            (rowClick)="onRowClickIbmer($event)">
+                        </ibm-table>
+                        <ibm-pagination [model]="modelIbmer" (selectPage)="selectPageIbmer($event)"></ibm-pagination>
+                    </ibm-table-container>
+
+                </ibm-tab>
+
+                <ibm-tab heading="Socios KYNDRYL">
+                    <ibm-table-container>
+                        <ibm-table-header>
+                            <h4 ibmTableHeaderTitle>Socios Empleados de KYNDRYL</h4>
+                            <p ibmTableHeaderDescription>socios ibm</p>
+						</ibm-table-header>
+                        <ibm-table-toolbar [model]="modelKyndryl">
+                            <ibm-table-toolbar-content>
+                                <ibm-table-toolbar-search
+                                    placeholder=" Search in the Table "
+									(search)="searchSociosIbm($event)"
+									(clear)="clearSearchSociosIbm()"
+                                ></ibm-table-toolbar-search>
+                                <button ibmButton="primary" size="sm" (click)="openModal(2)">
+                                    Añadir<ibm-icon-add size="20" class="bx--btn__icon"></ibm-icon-add>
+                                </button>
+                            </ibm-table-toolbar-content>
+                        </ibm-table-toolbar>
+                        <ibm-table
+                            [skeleton]="skeletonkyndryl"
+                            [model]="skeletonkyndryl ? skeletonKyndryl : modelKyndryl"
+                            [showSelectionColumn]="false"
+                            [sortable]="false"
+                            [striped]="false"
+                            [stickyHeader]="false"
+                            (rowClick)="onRowClickIbmer($event)">
+                        </ibm-table>
+                        <ibm-pagination [model]="modelKyndryl" (selectPage)="selectPageKyndryl($event)"></ibm-pagination>
+                    </ibm-table-container>
+
+                </ibm-tab>
+
+                <ibm-tab heading="Jubilados">
+                    <ibm-table-container>
+                        <ibm-table-header>
+                            <h4 ibmTableHeaderTitle>Socios ex empleados de IBM - KYNDRYL</h4>
+                            <p ibmTableHeaderDescription>socios ex empleados</p>
+						</ibm-table-header>
+                        <ibm-table-toolbar [model]="modelExibmer">
+                            <ibm-table-toolbar-content>
+                                <ibm-table-toolbar-search
+                                    placeholder=" Search in the Table "
+									(search)="searchJubilados($event)"
+									(clear)="clearSearchJubilados()"
+                                ></ibm-table-toolbar-search>
+                                <button ibmButton="primary" size="sm" (click)="openModal(2)">
+                                    Añadir<ibm-icon-add size="20" class="bx--btn__icon"></ibm-icon-add>
+                                </button>
+                            </ibm-table-toolbar-content>
+                        </ibm-table-toolbar>
+                        <ibm-table
+                            [skeleton]="skeletonexibmer"
+                            [model]="skeletonexibmer ? skeletonExibmer : modelExibmer"
+                            [showSelectionColumn]="false"
+                            [sortable]="false"
+                            [striped]="false"
+							[stickyHeader]="false"
+							(rowClick)="onRowClickExIbmer($event)">
+                        </ibm-table>
+                        <ibm-pagination [model]="modelExibmer" (selectPage)="selectPageExIbmer($event)"></ibm-pagination>
+                    </ibm-table-container>
+
+				</ibm-tab>
+
+				<ibm-tab heading="Socios Inactivos">
+					<ibm-table-container>
+                        <ibm-table-header>
+                            <h4 ibmTableHeaderTitle>Socios inactivos de la Cooperativa</h4>
+                            <p ibmTableHeaderDescription>Ex socios</p>
+						</ibm-table-header>
+                        <ibm-table-toolbar [model]="modelExSocio">
+                            <ibm-table-toolbar-content>
+                                <ibm-table-toolbar-search
+                                    placeholder=" Search in the Table "
+                                 
+                                ></ibm-table-toolbar-search>
+                                <button ibmButton="primary" size="sm" (click)="openModal(2)">
+                                    Añadir<ibm-icon-add size="20" class="bx--btn__icon"></ibm-icon-add>
+                                </button>
+                            </ibm-table-toolbar-content>
+                        </ibm-table-toolbar> 
+                        <ibm-table
+                            [skeleton]="skeletonexsocio"
+                            [model]="skeletonexsocio ? skeletonExSocio : modelExSocio"
+                            [showSelectionColumn]="false"
+                            [sortable]="false"
+                            [striped]="false"
+							[stickyHeader]="false"
+							(rowClick)="onRowClickExSocio($event)">
+                        </ibm-table>
+                        <ibm-pagination [model]="modelExSocio" (selectPage)="selectPageExSocio($event)"></ibm-pagination>
+                    </ibm-table-container>
+				</ibm-tab>
+
+            </ibm-tabs>
+
+        </div>
+
+    </div>
+</div>
+
+</div>

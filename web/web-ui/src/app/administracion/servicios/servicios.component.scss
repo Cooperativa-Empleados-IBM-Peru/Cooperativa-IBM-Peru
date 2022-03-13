@@ -1,0 +1,38 @@
+@import "~carbon-components/scss/globals/scss/vendor/@carbon/type/scss/font-family";
+@import "~carbon-components/scss/globals/scss/typography";
+//@import "~carbon-components/scss/components/tabs/tabs";
+
+@import "../../../assets/coope";
+
+.container{
+	padding: 6px;
+}
+.content-url{
+	width: 50%;
+	background-color: whitesmoke;
+	border-radius: 10px;
+	padding: 10px;
+	display: inline-block;
+}
+
+.btn-url{
+	margin-left: 5px;
+	border-color: whitesmoke;
+	float: right;
+}
+
+.content-calc{
+	margin: 10px;
+	padding: 15px;
+	background-color: whitesmoke;
+	border-radius: 10px;
+}
+.calc-grid{
+	width: 100%;
+}
+.calc{
+	margin: 5px;
+}
+.btn-update-prestamo {
+	float :right;
+}

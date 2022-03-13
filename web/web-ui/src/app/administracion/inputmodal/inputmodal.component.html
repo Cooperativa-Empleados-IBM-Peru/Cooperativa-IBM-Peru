@@ -1,0 +1,29 @@
+<ibm-modal
+	[size]="size"
+	[open]="open"
+	(overlaySelected)="closeModal()">
+	<ibm-modal-header (closeSelect)="closeModal()">{{modalText}}</ibm-modal-header>
+	<section class="bx--modal-content">
+		<ibm-label>
+			Nombre
+			<input
+				ibmText
+				[value]="servicio.nombre"
+				(change)="onChangeName($event)"
+			>
+		</ibm-label>
+		<ibm-label>
+			Link
+			<input
+				ibmText
+				[value]="servicio.url"
+				(change)="onChange($event)"
+				>
+		</ibm-label>
+	</section>
+	<ibm-modal-footer>
+		<button class="bx--btn bx--btn--secondary" (click)="closeModal()">Cancelar</button>
+		<button class="bx--btn bx--btn--primary" modal-primary-focus (click)="updateUrl()">Guardar</button>
+	</ibm-modal-footer>
+</ibm-modal>
+

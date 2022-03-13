@@ -1,0 +1,13 @@
+applications:
+ - name: CooperativaIBM-dev
+   memory: 384M
+   instances: 1
+   disk_quota: 2048M
+   force_https: true
+   routes:
+   - route: coopeibm-dev.mybluemix.net
+   buildpacks:
+    - https://github.com/cloudfoundry/nodejs-buildpack.git
+   env:
+    FORCE_HTTPS: true
+    OPTIMIZE_MEMORY : true

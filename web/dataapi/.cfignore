@@ -1,0 +1,7 @@
+node_modules/
+.vscode/
+.git
+
+env.json
+env.ts
+*.config.json

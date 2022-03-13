@@ -1,0 +1,81 @@
+<ibm-header [route]="['']" name="Cooperativa de Empleados IBM Perú">
+    <ibm-hamburger *ngIf="ibmidservice.LoggedIn" [active]="sidemenuactive" (selected)="sidemenuactive = !sidemenuactive"></ibm-hamburger>
+    <ibm-header-navigation *ngIf="ibmidservice.LoggedIn">
+        <ibm-header-menu title="Mis Cuentas">
+            <ibm-header-item [route]="['socios/ahorros']">Ahorros</ibm-header-item>
+            <ibm-header-item [route]="['socios/certificados']">Certificados</ibm-header-item>
+            <ibm-header-item [route]="['socios/prestamos']">Préstamos</ibm-header-item>
+            <ibm-header-item [route]="['socios/garantizados']">Garantías</ibm-header-item>
+            <ibm-header-item [route]="['socios/automovil']">Automóvil</ibm-header-item>
+        </ibm-header-menu>
+        <!--
+        <ibm-header-menu title="Herramientas">
+            <ibm-header-item [route]="['herramientas/calcpagos']">Calculadora de Pagos</ibm-header-item>
+            <ibm-header-item [route]="['herramientas/calccertificados']">Calculadora de Certificados</ibm-header-item>
+        </ibm-header-menu>
+        <ibm-header-menu title="Otros Servicios">
+			<ibm-header-item *ngFor="let servicio of servicios" title={{servicio.nombre}}><a href={{servicio.url}} target="_blank">{{servicio.nombre}}</a></ibm-header-item>
+        </ibm-header-menu>
+        <ibm-header-menu title="Proveedores y Avisos">
+            <ibm-header-item [route]="['avisos/proveedores']">Proveedores</ibm-header-item>
+            <ibm-header-item [route]="['avisos/internos']">Internos</ibm-header-item>
+            <ibm-header-item [route]="['avisos/noticias']">Noticias</ibm-header-item> 
+        </ibm-header-menu> -->
+
+        <ibm-header-menu *ngIf="ibmidservice.IsAdmin" title="Administración">
+			<ibm-header-item [route]="['administracion/listasocios']">Lista de Socios</ibm-header-item>
+			<ibm-header-item [route]="['administracion/servicios']">Mantenimiento</ibm-header-item>
+			<ibm-header-item [route]="['administracion/proveedor']">Lista Proveedores</ibm-header-item>
+        </ibm-header-menu>
+
+    </ibm-header-navigation>
+    
+    <ibm-header-global>
+		<!--
+        <ibm-header-action title="login" *ngIf="!ibmidservice.LoggedIn"
+            (selected)="loguearUser('user1@sample.com');">
+            <svg icon ibmIconUserAvatar size="20"></svg>
+        </ibm-header-action>
+        <ibm-header-action title="login" *ngIf="!ibmidservice.LoggedIn"
+            (selected)="loguearUser('user2@sample.com');">
+            <svg icon ibmIconUserAvatar size="20"></svg>
+        </ibm-header-action>
+        <ibm-header-action title="login" *ngIf="!ibmidservice.LoggedIn"
+            (selected)="loguearUser('user3@sample.com');">
+            <svg icon ibmIconUserAvatar size="20"></svg>
+        </ibm-header-action>
+        <ibm-header-action title="login" *ngIf="!ibmidservice.LoggedIn"
+            (selected)="loguearUser('user4@sample.com');">
+            <svg icon ibmIconUserAvatar size="20"></svg>
+        </ibm-header-action>
+        <ibm-header-action title="login" *ngIf="!ibmidservice.LoggedIn"
+            (selected)="loguearUser('user5@sample.com');">
+            <svg icon ibmIconUserAvatar size="20"></svg>
+        </ibm-header-action>
+        <ibm-header-action title="login" *ngIf="!ibmidservice.LoggedIn"
+            (selected)="loguearUser('user6@sample.com');">
+            <svg icon ibmIconUserAvatar size="20"></svg>
+        </ibm-header-action>
+        <ibm-header-action title="login" *ngIf="!ibmidservice.LoggedIn"
+            (selected)="loguearUser('admin@sample.com');">
+            <svg icon ibmIconUserAvatar size="20"></svg>
+        </ibm-header-action>
+
+        <ibm-header-action title="logout" *ngIf="ibmidservice.LoggedIn"
+            (selected)="logout();">
+            <svg icon ibmIconUserAvatarFilled size="20"></svg>
+		</ibm-header-action>
+		-->
+		<!-- <ibm-header-action title="user">
+            <svg icon ibmIconUserAvatar size="32"></svg>
+		</ibm-header-action> -->
+		<ibm-header-action title="Ayuda" (click)="onclickHelp()">
+			<svg icon ibmIconHelp size="32"></svg>
+		</ibm-header-action>
+		<ibm-header-action title="logout" (click)="onClickSalir()">
+			<svg icon ibmIconLogout size="32"></svg>
+		</ibm-header-action>
+    </ibm-header-global>
+</ibm-header>
+
+<app-sidemenu [sideactive]="sidemenuactive"></app-sidemenu>

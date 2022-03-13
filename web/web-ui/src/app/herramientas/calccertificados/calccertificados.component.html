@@ -1,0 +1,117 @@
+<div class="coope__heading">
+	<h2>
+		Calculadora de Certificados
+	</h2>
+	<br>
+	<p>Estos cálculos se deben tomar de manera referencial.</p>
+</div>
+<div class="bx--content">
+
+	<div ibmGrid class="bx--grid--full-width">
+
+		<div ibmRow class="calc">
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Tipo de Certificado
+				</ibm-label>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-combo-box
+						[(items)]="certificado"
+						(selected)="updateSelected($event)">
+						<ibm-dropdown-list></ibm-dropdown-list>
+				</ibm-combo-box>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Intereses
+				</ibm-label>
+			</div>
+			<div ibmCol class="cifras" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<input
+					ibmText
+					[value]="intereses"
+					[disabled]="disabled"
+					(change)="onChange($event)"
+				>
+			</div>
+		</div>
+		<div ibmRow class="calc">
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Moneda
+				</ibm-label>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-combo-box
+					[(items)]="moneda"
+					(selected)="updateSelected2($event)">
+					<ibm-dropdown-list></ibm-dropdown-list>
+				</ibm-combo-box>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Total
+				</ibm-label>
+			</div>
+			<div ibmCol class="cifras" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<input
+					ibmText
+					[value]="total"
+					[disabled]="disabled"
+					(change)="onChange($event)"
+				>
+			</div>
+		</div>
+		<div ibmRow class="calc">
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Límite de días
+				</ibm-label>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<input
+					ibmText
+					[value]="limiteDias"
+					[disabled]="disabled"
+					(change)="onChange($event)"
+				>
+			</div>
+		</div>
+		<div ibmRow class="calc">
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Tipo de interés anual
+				</ibm-label>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<input
+					ibmText
+					[value]="tipoInteres"
+					[disabled]="disabled"
+					(change)="onChange($event)"
+				>
+			</div>
+		</div>
+		<div ibmRow class="calc">
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Capital del Certificado
+				</ibm-label>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<input
+					ibmText
+					[value]="capital"
+					(change)="onChange($event)"
+					[placeholder]="placeholder"
+				>
+			</div>
+		</div>
+		<div ibmRow class="calc">
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<button class="bx--btn bx--btn--primary" (click)="newCalculo()">Nuevo Calculo</button>
+			</div>
+		</div>
+	</div>
+</div>

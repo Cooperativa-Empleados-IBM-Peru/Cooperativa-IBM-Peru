@@ -1,0 +1,70 @@
+<ng-template #activeItemTemplate let-data="data">
+	<i><a ibmLink [routerLink]="" (click)="openAhorroDetalle(data.tipo, data.moneda, data.monto)">{{data.name}}</a></i>
+</ng-template>
+
+<ng-template #inactiveItemTemplate let-data="data">
+	<i><a ibmLink [disabled]="true" [routerLink]="">{{data.name}}</a></i>
+</ng-template>
+
+<div ibmGrid class="bx--grid--full-width coope">
+	<div ibmRow class="coope__banner">
+		<div ibmCol [columnNumbers]="{'lg': 12, 'md' : 5}">
+			<h1 class="coope__heading">
+                {{ibmidservice.NombreEmpleado}}
+            </h1>
+            <h2 class="coope__subheading">
+  <!--              {{ibmidservice.DireccionEmpleado}}   -->
+			</h2>
+		</div>
+		<div ibmCol [columnNumbers]="{'lg': 4, 'md' : 3}">
+			<h1 class="coope__subheading2">
+                {{ibmidservice.EmailEmpleado}}
+            </h1>
+            <h2 class="coope__subheading2">
+                {{ibmidservice.CodEmpleado}}
+			</h2>
+		</div>
+
+	</div>
+	<div *ngIf="ibmidservice.Uuid; else Alert" ibmRow class="coope__r2">
+		<div ibmCol class="bx--no-gutter">
+
+            <div ibmGrid class="bx--grid--no-gutter bx--grid--full-width">
+
+				<ibm-table-container class="tabla-ds">
+					<ibm-table-header>
+						<h4 ibmTableHeaderTitle>Mis Ahorros</h4>
+						<p ibmTableHeaderDescription>Cuentas del socio</p>
+					</ibm-table-header>
+					<ibm-table
+						[skeleton]="skeletonahorro"
+						[model]="skeletonahorro ? skeletonAhorroModel : modelAhorro"
+						[showSelectionColumn]="false"
+						[sortable]="false"
+						[striped]="false">
+					</ibm-table>
+				</ibm-table-container>
+<br>
+				<ibm-table-container class="tabla-ds">
+					<ibm-table
+						[skeleton]="skeletonmisc"
+						[model]="skeletonmisc ? skeletonMiscModel : modelMisc"
+						[showSelectionColumn]="false"
+						[sortable]="false"
+						[striped]="false">
+					</ibm-table>
+				</ibm-table-container>
+			</div>
+		</div>
+	</div>
+	<ng-template #Alert>
+		<div ibmRow class= "coope_r3">
+			<div ibmCol class="bx--no-gutter">
+				<ibm-notification
+					[notificationObj]="notificationObject"
+				></ibm-notification>
+			</div>
+		</div>
+	</ng-template>
+
+</div>

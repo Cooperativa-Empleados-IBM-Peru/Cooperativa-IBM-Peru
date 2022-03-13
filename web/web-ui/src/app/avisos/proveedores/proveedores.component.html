@@ -1,0 +1,77 @@
+<!-- SEGUNDA FORMA -->
+<!-- <div class="row">
+	<div class="col">
+	  <div class="card card4">
+		<div class="card-body">
+		  <div style="overflow: hidden; overflow-x: hidden; padding-bottom: 20px;">
+			<owl-carousel
+			  [options]="SlideOptions"
+			  [carouselClasses]="['owl-theme', 'row', 'sliding']"
+			>
+			  <div class="item" *ngFor="let item of categorias">
+				<div style="display: flex; flex-direction: column;">
+				  <span class="descripcioncate"> </span>
+				  <img  [src]="item.url" class="imagenredonda" (click)=filterProveedor(item.nombre) >
+				  <span class="descripcioncate">{{item.nombre}}</span>
+				</div>
+			  </div>
+			</owl-carousel>
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+
+  <div  fxLayout="row wrap" fxLayoutAlign="center stretch" >
+   <div *ngFor="let products of proveedores" [ngStyle.gt-sm]="{'margin.px': 5}" fxFlex.gt-sm="0 1 calc(20% - 30px) ">
+		  <mat-card class="example-card">
+			<mat-card-header>
+			<mat-card-title>Proveedor </mat-card-title>
+			</mat-card-header>
+			<img mat-card-image [src]="products.image" alt="products of a products">
+		   <mat-card-content>
+			 <p>
+			  {{products.descripcion}}
+			 </p>
+		   </mat-card-content>
+		   <mat-card-actions>
+			 <button mat-button (click)="openDetalle(products._id)">Ver Mas</button>
+		   </mat-card-actions>
+	   </mat-card>
+	</div>
+  </div> -->
+
+  <!-- TERCERA FORMA -->
+<div class="carousel">
+	<owl-carousel-o [options]="customOptions" style="text-align: center !important;">
+		<ng-container *ngFor="let item of categorias">
+		  <ng-template carouselSlide >
+			<span class="descripcioncate"> </span>
+			<img  [src]="item.url" class="imagenredonda" (click)=filterProveedor(item.nombre) >
+			<span >{{item.nombre}}</span>
+		  </ng-template>
+		</ng-container>
+	  </owl-carousel-o>
+</div>
+
+<div  fxLayout="row wrap" fxLayoutAlign="center stretch" >
+	<div *ngFor="let products of proveedores" [ngStyle.gt-sm]="{'margin.px': 5}" fxFlex.gt-sm="0 1 calc(20% - 30px) ">
+		<mat-card class="example-card">
+			<mat-card-header>
+				<mat-card-title>Proveedor </mat-card-title>
+			</mat-card-header>
+			<img mat-card-image [src]="products.image" alt="products of a products">
+			<mat-card-content>
+			<p>
+			{{products.descripcion}}
+			</p>
+			</mat-card-content>
+				<mat-card-actions>
+				<button mat-button (click)="openDetalle(products._id)">Ver Mas</button>
+				</mat-card-actions>
+			</mat-card>
+	</div>
+</div>
+
+

@@ -1,0 +1,4 @@
+node_modules/.cache
+node_modules/ibm_db/installer/clidriver
+.vscode/
+.git

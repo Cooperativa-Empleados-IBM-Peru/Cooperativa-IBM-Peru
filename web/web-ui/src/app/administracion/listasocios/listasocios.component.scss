@@ -1,0 +1,27 @@
+@import "~carbon-components/scss/globals/scss/vendor/@carbon/type/scss/font-family";
+@import "~carbon-components/scss/globals/scss/typography";
+//@import "~carbon-components/scss/components/tabs/tabs";
+
+@import "../../../assets/coope";
+
+::ng-deep  .notification-container{
+
+    .bx--toast-notification{
+      position: absolute;
+      right: 0;
+      margin-bottom: .5rem;
+      background :whitesmoke ;
+      color: black;
+    }
+    .bx--toast-notification__subtitle{
+        color:black;
+    }
+
+    .bx--toast-notification__close-button .bx--toast-notification__close-icon {
+        fill: black;
+
+    }
+
+}
+
+// <ibm-tile class"custom-color"></ibm-tile> where .custom-color looks like .custom-color .bx--tile { background: blue; }

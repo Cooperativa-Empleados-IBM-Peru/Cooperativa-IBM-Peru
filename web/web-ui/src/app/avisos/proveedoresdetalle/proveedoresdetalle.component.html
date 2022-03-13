@@ -1,0 +1,53 @@
+<div class="bx--content">
+	<div ibmGrid class="bx--grid--full-width aviso" *ngIf="proveedor">
+		<div ibmRow>
+			<div ibmCol>
+				<h2><strong>{{proveedor.nombre}}</strong></h2>
+			</div>
+		</div>
+		<div ibmRow>
+			<div ibmCol>
+				<img class="aviso-img" src={{proveedor.image}}/>
+			</div>
+		</div>
+		<div ibmRow>
+			<div ibmCol>
+				<div class="subtitle-detalle">
+					<svg icon ibmIconTableOfContents size="24"></svg>
+					<span>Especificaciones</span>
+				</div>
+				<div class="content-detalle" [innerHTML]=proveedor.especificaciones>
+
+				</div>
+			</div>
+		</div>
+		<div ibmRow>
+			<div ibmCol>
+				<div class="subtitle-detalle">
+					<svg icon ibmIconCatalog size="24"></svg>
+					<span>Catálogo</span>
+				</div>
+				<div class="content-detalle">
+				Se adjunta los productos que está ofreciendo el proveedor, asímismo la plantilla donde podrán indicar sus pedidos. <br>
+					<div class="url">
+						<img class="icon-link" src="https://www.flaticon.com/svg/static/icons/svg/179/179483.svg">
+						<a href={{proveedor.catalogo}} target="_blank">Productos_Noviembre 2020.pdf</a>
+					</div>
+					<div class="url" *ngIf="proveedor.pedido">
+						<img class="icon-link" src="https://www.flaticon.com/svg/static/icons/svg/179/179495.svg">
+						<a href={{proveedor.pedido}} target="_blank">Pedidos lácteos Conga.xls</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div ibmRow>
+			<div ibmCol>
+				<div class="subtitle-detalle">
+					<svg icon ibmIconUser size="24"></svg>
+					<span>Contacto</span>
+				</div>
+				<div class="content-detalle" [innerHTML]=proveedor.contacto></div>
+			</div>
+		</div>
+	</div>
+</div>

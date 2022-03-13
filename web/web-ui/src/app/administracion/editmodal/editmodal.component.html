@@ -1,0 +1,127 @@
+<ibm-modal
+    [open]="open"
+    (overlaySelected)="closeModal()">
+    <ibm-modal-header (closeSelect)="closeModal()">
+    <h1 class="bx--modal-header__heading bx--padding-bottom-0_5">
+        {{modalText}}
+    </h1>
+    </ibm-modal-header>
+    <section class="bx--modal-content" hasForm="true">
+		<div class="row-form">
+			<div class = "col-form">
+				<ibm-label class="item-name">
+					Código Empleado
+					<input  [value]="socio.codempleado"
+						(change)="onChangeCodEmp($event)"
+						autocomplete="off" ibmText placeholder="Codigo socio" type="text" />
+				</ibm-label>
+			</div>
+			<div class = "col-form">
+				<ibm-label class="item-name">
+					Código País
+					<input  [value]="socio.codpais"
+						(change)="onChangeCodPais($event)"
+						autocomplete="off" ibmText placeholder="Codigo país" type="text" />
+				</ibm-label>
+			</div>
+		</div>
+		<div class="row-form">
+			<div class = "col-form">
+				<ibm-label class="item-name">
+					Email
+					<input [value]="socio.emailempleado"
+							(change)="onChangeEmail($event)"
+							autocomplete="off" ibmText placeholder="Correo Electronico" type="text" />
+				</ibm-label>
+			</div>
+			<div class = "col-form">
+				<ibm-label class="item-name">
+					Nombre
+					<input [value]="socio.nombreempleado"
+							(change)="onChangeName($event)"
+							autocomplete="off" ibmText placeholder="Nombre Completo" type="text" />
+				</ibm-label>
+			</div>
+		</div>
+		<div class="row-form">
+			<div class = "col-form">
+				<ibm-label class="item-name">
+					¿Está activo?
+					<ibm-radio-group
+						aria-label="radiogroup"
+						(change)="onChangeActivo($event)" *ngIf="socio.activo; else Option">
+						<ibm-radio
+							value="si"
+							[checked]="true">
+							Sí
+						</ibm-radio>
+						<ibm-radio
+							value="no"
+							[checked]="false">
+							No
+						</ibm-radio>
+					</ibm-radio-group>
+					<ng-template #Option>
+						<ibm-radio-group
+						aria-label="radiogroup"
+						(change)="onChangeActivo($event)">
+							<ibm-radio
+								value="si"
+								[checked]="false">
+								Sí
+							</ibm-radio>
+							<ibm-radio
+								value="no"
+								[checked]="true">
+								No
+							</ibm-radio>
+						</ibm-radio-group>
+					</ng-template>
+				</ibm-label>
+			</div>
+			<div class = "col-form">
+				<ibm-label class="item-name">
+					¿Empleado de IBM?
+							<ibm-radio-group
+							aria-label="radio"
+							(change)="onChangeBlue($event)" *ngIf="socio.inbluepages; else Blue">
+							<ibm-radio
+								value="si"
+								[checked]="true">
+								Sí
+							</ibm-radio>
+							<ibm-radio
+								value="no"
+								[checked]="false">
+								No
+							</ibm-radio>
+						</ibm-radio-group>
+						<ng-template #Blue>
+							<ibm-radio-group
+							aria-label="radio"
+							(change)="onChangeBlue($event)">
+								<ibm-radio
+									value="si"
+									[checked]="false">
+									Sí
+								</ibm-radio>
+								<ibm-radio
+									value="no"
+									[checked]="true">
+									No
+								</ibm-radio>
+							</ibm-radio-group>
+						</ng-template>
+				</ibm-label>
+			</div>
+		</div>
+    </section>
+    <ibm-modal-footer>
+        <button type="button" ibmButton="secondary" (click)="closeModal()">
+            Cancelar
+        </button>
+        <button type="submit" ibmButton="primary" modal-primary-focus (click)="saveSocio(data)" >
+            Aceptar
+        </button>
+    </ibm-modal-footer>
+</ibm-modal>

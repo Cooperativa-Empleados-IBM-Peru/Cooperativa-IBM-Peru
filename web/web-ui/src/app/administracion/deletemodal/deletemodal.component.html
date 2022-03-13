@@ -1,0 +1,17 @@
+<ibm-modal
+	[size]="size"
+	[open]="open"
+	(overlaySelected)="closeModal()">
+	<ibm-modal-header (closeSelect)="closeModal()">
+		<h1 class="bx--modal-header__heading bx--padding-bottom-0_5">
+			{{modalText}}
+		</h1>
+	</ibm-modal-header>
+	<section class="bx--modal-content">
+		¿ Estás seguro que deseas eliminar el socio {{socio.nombreempleado}} ?
+	</section>
+	<ibm-modal-footer>
+		<button class="bx--btn bx--btn--secondary" (click)="closeModal()">Cancelar</button>
+		<button class="bx--btn bx--btn--danger" modal-danger-focus (click)="deleteSocio()">Suprimir</button>
+	</ibm-modal-footer>
+</ibm-modal>

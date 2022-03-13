@@ -1,0 +1,266 @@
+<div class="coope__heading">
+	<h2>
+		Calculadora de Pagos
+	</h2>
+	<br>
+	<p>Estos cálculos se deben tomar de manera referencial. Las cuotas de pago reales deben validarse con el analista de créditos. </p>
+</div>
+
+<div class="bx--content">
+	<div ibmGrid class="bx--grid--full-width">
+		<div ibmRow class="calc">
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<h4>
+					Condiciones
+				</h4>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<h4>
+					Cifras Importantes
+				</h4>
+			</div>
+		</div>
+		<div ibmRow class="calc">
+			<div ibmCol class="label-calc" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Tipo de Préstamo
+				</ibm-label>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-combo-box
+						[(items)]="prestamo"
+						(selected)="updateSelected($event)">
+						<ibm-dropdown-list></ibm-dropdown-list>
+				</ibm-combo-box>
+			</div>
+			<div ibmCol class="label-calc" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Pagos anuales
+				</ibm-label>
+			</div>
+			<div ibmCol class="cifras" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<input
+				ibmText
+				[value]="pagoAnual"
+				[disabled]="disabled"
+				>
+			</div>
+		</div>
+
+		<div ibmRow class="calc">
+			<div ibmCol class="label-calc" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Moneda
+				</ibm-label>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-combo-box
+					[(items)]="moneda"
+					(selected)="updateSelected2($event)">
+					<ibm-dropdown-list></ibm-dropdown-list>
+				</ibm-combo-box>
+			</div>
+			<div ibmCol class="label-calc" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Pagos mensuales
+				</ibm-label>
+			</div>
+			<div ibmCol class="cifras" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<input
+					ibmText
+					[value]="pagoMensual"
+					[disabled]="disabled"
+				>
+			</div>
+		</div>
+
+		<div ibmRow class="calc">
+			<div ibmCol class="label-calc" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Límite
+				</ibm-label>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<input
+						ibmText
+						[value]="limite"
+						[disabled]="disabled"
+				>
+			</div>
+
+		</div>
+
+		<div ibmRow class="calc">
+			<div ibmCol class="label-calc" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Tipo de Interés Anual
+				</ibm-label>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<input
+					ibmText
+					[value]="interesAnual"
+					[disabled]="disabled"
+				>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<h4>
+					Totales
+				</h4>
+			</div>
+
+		</div>
+
+		<div ibmRow class="calc">
+			<div ibmCol class="label-calc" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label
+					[invalid]="invalid"
+				 	[invalidText]="invalidText">
+					Capital del préstamo
+				</ibm-label>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<input
+					ibmText
+					[value]="capital"
+					(change)="onChangeCapital($event)"
+					[placeholder]="placeholder"
+					[invalid]="invalid"
+				>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Interéses
+				</ibm-label>
+			</div>
+			<div ibmCol class="cifras" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<input
+					ibmText
+					[value]="intereses"
+					[disabled]="disabled"
+				>
+			</div>
+
+		</div>
+
+		<div ibmRow class="calc">
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Min años / Max años
+				</ibm-label>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<input
+					ibmText
+					[value]="minMax"
+					[disabled]="disabled"
+				>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Pagos
+				</ibm-label>
+			</div>
+			<div ibmCol class="cifras" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<input
+					ibmText
+					[value]="pagos"
+					[disabled]="disabled"
+				>
+			</div>
+		</div>
+
+		<div ibmRow class="calc">
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Periodo de amortización (años)
+				</ibm-label>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-combo-box
+					[(items)]="amortizacion"
+					(selected)="updateSelected3($event)">
+					<ibm-dropdown-list></ibm-dropdown-list>
+				</ibm-combo-box>
+			</div>
+		</div>
+
+		<div ibmRow class="calc">
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Año base del préstamo
+				</ibm-label>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-combo-box
+					[(items)]="anioBase"
+					(selected)="updateSelected4($event)">
+					<ibm-dropdown-list></ibm-dropdown-list>
+				</ibm-combo-box>
+			</div>
+		</div>
+		<div ibmRow class="calc">
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Mes base del préstamo
+				</ibm-label>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-combo-box
+					[(items)]="mesBase"
+					(selected)="updateSelected5($event)">
+					<ibm-dropdown-list></ibm-dropdown-list>
+				</ibm-combo-box>
+			</div>
+		</div>
+		<div ibmRow class="btn-calc">
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<button class="bx--btn bx--btn--primary" (click)="newCalculo()">Nuevo Calculo</button>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<button class="bx--btn bx--btn--primary" (click)="mostrarTablita()">Calcular</button>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<button class="bx--btn bx--btn--primary btn-download" (click)="exportAsPdf()">Descargar<ibm-icon-download size="20" class="bx--btn__icon"></ibm-icon-download></button>
+			</div>
+		</div>
+
+
+
+	</div>
+	<div id="htmlData">
+		<ibm-table-container class="tabla-ds-3">
+			<ibm-table-header>
+				<h4 ibmTableHeaderTitle>Pagos a realizar</h4>
+			</ibm-table-header>
+				<ibm-table
+					[skeleton]="skeletoncalc"
+					[model]="modelCalc"
+					[showSelectionColumn]="false"
+					[sortable]="false"
+					[striped]="false"
+					>
+				</ibm-table>
+		</ibm-table-container>
+		<br>
+		<br>
+		<ibm-table-container class="tabla-ds">
+			<ibm-table-header>
+				<h4 ibmTableHeaderTitle>Programa Anual</h4>
+			</ibm-table-header>
+				<ibm-table
+					[skeleton]="skeletonprogram"
+					[model]="modelProgram"
+					[showSelectionColumn]="false"
+					[sortable]="false"
+					[striped]="false"
+					>
+				</ibm-table>
+		</ibm-table-container>
+	</div>
+
+</div>

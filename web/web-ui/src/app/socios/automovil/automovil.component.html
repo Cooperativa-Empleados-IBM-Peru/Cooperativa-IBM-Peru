@@ -1,0 +1,113 @@
+<ng-template #tautomovil let-data="data">
+		<div ibmCol [columnNumbers]="{'lg': 5, 'md' : 2}">
+			Serie : {{data.serie}}<br>
+			Motor : {{data.motor}}
+		</div>
+		<div ibmCol [columnNumbers]="{'lg': 5, 'md' : 2}">
+			Propietario : {{data.propietario}}<br>
+			Tarjeta : {{data.tarjeta}}
+		</div>
+		<div ibmCol [columnNumbers]="{'lg': 5, 'md' : 2}">
+			Fecha ingreso : {{data.fecingreso}}<br>
+			Valor accesorios : {{data.accesorios}}
+		</div>
+</ng-template>
+
+<ng-template #tsiniestro let-data="data">
+	<div ibmCol [columnNumbers]="{'lg': 5, 'md' : 2}">
+		Estado : {{data.estado}}<br>
+		Lugar : {{data.lugar}}
+	</div>
+	<div ibmCol [columnNumbers]="{'lg': 5, 'md' : 2}">
+		Franquicia : {{data.franquicia}}<br>
+		Comisaría : {{data.comisaria}}
+	</div>
+	<div ibmCol [columnNumbers]="{'lg': 5, 'md' : 2}">
+		Num. Conformidad : {{data.conformidad}}<br>
+	</div>
+</ng-template>
+
+<div ibmGrid class="bx--grid--full-width coope">
+	<div ibmRow class="coope__banner">
+		<div ibmCol [columnNumbers]="{'lg': 12, 'md' : 5}">
+			<h1 class="coope__heading">
+                {{ibmidservice.NombreEmpleado}}
+            </h1>
+            <h2 class="coope__subheading">
+<!--              {{ibmidservice.DireccionEmpleado}}   -->
+			</h2>
+		</div>
+		<div ibmCol [columnNumbers]="{'lg': 4, 'md' : 3}">
+			<h1 class="coope__subheading2">
+                {{ibmidservice.EmailEmpleado}}
+            </h1>
+            <h2 class="coope__subheading2">
+                {{ibmidservice.CodEmpleado}}
+			</h2>
+		</div>
+
+	</div>
+	<div ibmRow class="coope__r2">
+		<div ibmCol class="bx--no-gutter">
+
+            <div ibmGrid class="bx--grid--no-gutter bx--grid--full-width">
+
+				<ibm-tabs ariaLabel="Tab navigation">
+					<ibm-tab heading="Automóviles">
+
+						<ibm-table-container class="tabla-ds-6" *ngIf="isauto != 0; else AlertAuto">
+							<ibm-table-header>
+								<h4 ibmTableHeaderTitle>Automóviles</h4>
+								<p ibmTableHeaderDescription>Fondo de Reposición de Automóvil</p>
+							</ibm-table-header>
+							<ibm-table
+								[skeleton]="skeletonautomoviles"
+								[model]="skeletonautomoviles ? skeletonAutomoviles : modelAutomoviles"
+								[showSelectionColumn]="false"
+								[sortable]="false"
+								[striped]="false"
+								[stickyHeader]="false">
+							</ibm-table>
+						</ibm-table-container>
+						<ng-template #AlertAuto>
+							<div class="bx--no-gutter">
+								<ibm-notification
+									[notificationObj]="notificationObject"
+								></ibm-notification>
+							</div>
+						</ng-template>
+					</ibm-tab>
+
+					<ibm-tab heading="Siniestros">
+						<ibm-table-container  class="tabla-ds-6" *ngIf="isSiniestro != 0; else Alert">
+							<ibm-table-header>
+								<h4 ibmTableHeaderTitle>Siniestros</h4>
+								<p ibmTableHeaderDescription>Fondo de Reposición de Automóvil</p>
+							</ibm-table-header>
+							<ibm-table
+								[skeleton]="skeletonsiniestros"
+								[model]="skeletonsiniestros ? skeletonSiniestros : modelSiniestros"
+								[showSelectionColumn]="false"
+								[sortable]="false"
+								[striped]="false"
+								[stickyHeader]="false">
+							</ibm-table>
+						</ibm-table-container>
+						<ng-template #Alert>
+							<div class="bx--no-gutter">
+								<ibm-notification
+									[notificationObj]="notiObject"
+								></ibm-notification>
+							</div>
+						</ng-template>
+					</ibm-tab>
+
+				</ibm-tabs>
+
+			</div>
+
+		</div>
+	</div>
+
+
+</div>

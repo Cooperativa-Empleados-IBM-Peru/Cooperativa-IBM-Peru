@@ -1,0 +1,58 @@
+@import "~carbon-components/scss/globals/scss/vendor/@carbon/type/scss/font-family";
+@import "~carbon-components/scss/globals/scss/typography";
+//@import "~carbon-components/scss/components/tabs/tabs";
+
+@import "../../../../assets/coope";
+
+
+.insert{
+	border: 2px solid #e7e7e7;
+	border-radius: 5px;
+	box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+	padding-top: 2rem;
+	padding-bottom: 2rem;
+}
+
+.quill{
+    max-width: 200px;
+    .ql-container {
+        border: 1px solid #ccc;
+        height: 200px !important;
+    }
+}
+
+.bx--row {
+    display: block !important;
+    flex-wrap: wrap;
+}
+
+.bx--col{
+    max-height: 100%;
+    padding-bottom: 5px !important;
+    padding-top: 10px !important;
+}
+
+.bx--form-item {
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.29;
+    letter-spacing: 0.16px;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    padding: 5px;
+    align-items: flex-start;
+}
+
+@media (min-width: 42rem){
+.bx--col-md-2 {
+     display: block;
+    flex: 0 0 25%;
+    max-width: 100%;
+    padding-bottom: 5px;
+}
+}
+
+.boton{
+    padding-top: 20px;
+}

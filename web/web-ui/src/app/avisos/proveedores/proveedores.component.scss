@@ -1,0 +1,52 @@
+
+@import "~carbon-components/scss/globals/scss/vendor/@carbon/type/scss/font-family";
+@import "~carbon-components/scss/globals/scss/typography";
+
+//CARRUSEL - CATEGORIA
+.carousel{
+    padding: 30px;
+  }
+
+.owl-carousel.owl-drag .owl-item {
+text-align: center  !important;
+}
+
+.imagenredonda {
+    width: 80px;
+    height: 80px; /*
+    padding-left: 20px;
+    padding-right: 20px; */
+    border-radius:200px;
+  }
+
+.descripcioncate{
+  text-align: center !important;
+
+}
+
+
+//CARD - PRODUCTOS
+.mat-card-image {
+  width: calc(100% + 32px);
+  margin: 0 -16px 16px -16px;
+  height: 250px;
+  width: 250px;
+}
+
+img.mat-card-image {
+  padding: 10px;
+}
+
+.example-card {
+  max-width: 400px;
+  font-family: 'IBM Plex Sans' !important;
+}
+
+mat-card {
+  margin-bottom: 10px;
+  font-family: 'IBM Plex Sans' !important;
+}
+
+mat-card-content {
+  height: 100px;
+}

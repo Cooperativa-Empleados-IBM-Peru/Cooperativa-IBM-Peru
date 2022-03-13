@@ -1,0 +1,275 @@
+<div ibmGrid class="bx--grid--full-width coope">
+	<div ibmRow class="coope__banner">
+		<div ibmCol [columnNumbers]="{'lg': 12, 'md' : 5}">
+			<h1 class="coope__heading">
+				{{ibmidservice.NombreEmpleado}}
+			</h1>
+			<h2 class="coope__subheading">
+	<!--              {{ibmidservice.DireccionEmpleado}}   -->
+			</h2>
+		</div>
+		<div ibmCol [columnNumbers]="{'lg': 4, 'md' : 3}">
+			<h1 class="coope__subheading2">
+				{{ibmidservice.EmailEmpleado}}
+			</h1>
+			<h2 class="coope__subheading2">
+				{{ibmidservice.CodEmpleado}}
+			</h2>
+		</div>
+
+	</div>
+	<div class="notification-container" ></div>
+	<ibm-placeholder></ibm-placeholder>
+	<ng-template #overflowMenuItemTemplate let-data="data">
+		<ibm-overflow-menu flip="true">
+			<ibm-overflow-menu-option (click)="openModal(1)">
+				Modificar
+			</ibm-overflow-menu-option>
+			<ibm-overflow-menu-option type="danger" (click)="deleteRow()">
+				Eliminar
+			</ibm-overflow-menu-option>
+		</ibm-overflow-menu>
+	</ng-template>
+
+	<ng-template #overflowMenuTemplate let-data="data">
+		<ibm-overflow-menu flip="true">
+			<ibm-overflow-menu-option (click)="insertModalImagen(1)">
+				Modificar
+			</ibm-overflow-menu-option>
+			<ibm-overflow-menu-option type="danger" (click)="deleteModalImagen()">
+				Eliminar
+			</ibm-overflow-menu-option>
+		</ibm-overflow-menu>
+	</ng-template>
+
+	<ng-template #overflowTemplate let-data="data">
+		<ibm-overflow-menu flip="true">
+			<ibm-overflow-menu-option (click)="openModalCategoria(1)">
+				Modificar
+			</ibm-overflow-menu-option>
+			<ibm-overflow-menu-option type="danger" (click)="deleteCategoria()">
+				Eliminar
+			</ibm-overflow-menu-option>
+		</ibm-overflow-menu>
+	</ng-template>
+
+<div ibmRow class="coope__r2">
+    <div ibmCol class="bx--no-gutter">
+    	<div ibmGrid class="bx--grid--no-gutter bx--grid--full-width">
+		<ibm-tabs ariaLabel="Tab navigation">
+
+			<ibm-tab heading="Calculadora">
+				<div class="content-calc">
+					<h4>Calculadora de Pagos</h4>
+					<div ibmGrid class="bx--grid--full-width">
+						<div ibmRow class="calc">
+							<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+								<ibm-label>Tipo de Préstamo</ibm-label>
+							</div>
+							<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+									<ibm-combo-box
+										[(items)]="prestamoPagos"
+										(selected)="updatePrestamo($event)">
+										<ibm-dropdown-list></ibm-dropdown-list>
+									</ibm-combo-box>
+							</div>
+							<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+								<ibm-label>Moneda</ibm-label>
+							</div>
+							<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+									<ibm-combo-box
+										[(items)]="moneda"
+										(selected)="updateMoneda($event)">
+										<ibm-dropdown-list></ibm-dropdown-list>
+									</ibm-combo-box>
+							</div>
+						</div>
+						<div ibmRow class="calc">
+							<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+								<ibm-label>Límite</ibm-label>
+							</div>
+							<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+								<input
+									ibmText
+									[value]="limite"
+									(change)="onChangeLimite($event)"
+									[placeholder]="placeholder1">
+							</div>
+							<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+								<ibm-label>Tasa de interes anual</ibm-label>
+							</div>
+							<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+								<input
+									ibmText
+									[value]="tasa"
+									(change)="onChangeTasa($event)"
+									[placeholder]="placeholder2">
+							</div>
+						</div>
+						<div ibmRow class="calc">
+							<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+								<ibm-label>Mínimo</ibm-label>
+							</div>
+							<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+								<input
+									ibmText
+									[value]="minimo"
+									(change)="onChangeMin($event)"
+									[placeholder]="placeholder3">
+							</div>
+							<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+								<ibm-label>Máximo</ibm-label>
+							</div>
+							<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+								<input
+									ibmText
+									[value]="maximo"
+									(change)="onChangeMax($event)"
+									[placeholder]="placeholder4">
+							</div>
+						</div>
+						<div ibmRow class="calc">
+							<div ibmCol>
+								<button class="btn-update-prestamo" type="button" ibmButton="primary" (click)="updateCalculador()">Guardar Cambios</button>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			<!--Calculadora de Certificados-->
+				<div class="content-calc">
+					<h4>Calculadora de Certificados</h4>
+					<div ibmGrid class="bx--grid--full-width">
+						<div ibmRow class="calc">
+							<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+								<ibm-label>Tipo de Certificado</ibm-label>
+							</div>
+							<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+								<ibm-combo-box
+									[(items)]="prestamoCerti"
+									(selected)="updateCertificado($event)">
+									<ibm-dropdown-list></ibm-dropdown-list>
+								</ibm-combo-box>
+							</div>
+							<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+								<ibm-label>Moneda</ibm-label>
+							</div>
+							<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+								<ibm-combo-box
+									[(items)]="moneda2"
+									(selected)="updateMonedaCertificado($event)">
+									<ibm-dropdown-list></ibm-dropdown-list>
+								</ibm-combo-box>
+							</div>
+						</div>
+						<div ibmRow class="calc">
+							<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+								<ibm-label>Límite</ibm-label>
+							</div>
+							<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+								<input
+									ibmText
+									[value]="limite2"
+									(change)="onChangeLimiteCertificado($event)"
+									[placeholder]="placeholder1">
+							</div>
+							<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+								<ibm-label>Tasa de interes anual</ibm-label>
+							</div>
+							<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+								<input
+									ibmText
+									[value]="tasa2"
+									(change)="onChangeTasaCertificado($event)"
+									[placeholder]="placeholder2">
+							</div>
+						</div>
+						<div ibmRow class="calc">
+							<div ibmCol>
+								<button class="btn-update-prestamo" type="button" ibmButton="primary" (click)="updateCertificad()">Guardar Cambios</button>
+							</div>
+						</div>
+				</div>
+			</div>
+			</ibm-tab>
+			<!--Otros Servicios-->
+			<ibm-tab heading="Otros Servicios">
+				<ibm-table-container>
+                        <ibm-table-header>
+                            <h4 ibmTableHeaderTitle>Servicios Cooperativa IBM</h4>
+                            <p ibmTableHeaderDescription>Mantenimiento de URL de Box</p>
+						</ibm-table-header>
+                        <ibm-table-toolbar [model]="modelServicio">
+                            <ibm-table-toolbar-content>
+                                <button ibmButton="primary" size="sm" (click)="openModal(2)">
+                                    Añadir<ibm-icon-add size="20" class="bx--btn__icon"></ibm-icon-add>
+                                </button>
+                            </ibm-table-toolbar-content>
+                        </ibm-table-toolbar>
+                        <ibm-table
+                            [skeleton]="skeletonservicio"
+                            [model]="skeletonservicio ? skeletonServicio : modelServicio"
+                            [showSelectionColumn]="false"
+                            [sortable]="false"
+                            [striped]="false"
+							[stickyHeader]="false"
+							(rowClick)="onRowClickServicio($event)">
+                        </ibm-table>
+                        <ibm-pagination [model]="modelServicio" (selectPage)="selectPageServicio($event)"></ibm-pagination>
+                </ibm-table-container>
+			</ibm-tab>
+
+			<!--Imagenes Carrousel-->
+			<ibm-tab heading="Carrousel">
+				<ibm-table-container>
+					<ibm-table-header>
+						<h4 ibmTableHeaderTitle>Imagenes</h4>
+					</ibm-table-header>
+					<ibm-table-toolbar [model]="modelImagen">
+						<ibm-table-toolbar-content>
+							<button ibmButton="primary" size="sm" (click)="insertModalImagen(2)">
+								Añadir<ibm-icon-add size="20" class="bx--btn__icon"></ibm-icon-add>
+							</button>
+						</ibm-table-toolbar-content>
+					</ibm-table-toolbar>
+						<ibm-table
+							[skeleton]="skeletonimagen"
+							[model]="skeletonimagen ? skeletonImagen : modelImagen"
+							[showSelectionColumn]="false"
+							[sortable]="false"
+							[striped]="false"
+							[stickyHeader]="false"
+							(rowClick)="onRowClickImagen($event)"
+							>
+						</ibm-table>
+						<ibm-pagination [model]="modelImagen" (selectPage)="selectPageImagen($event)"></ibm-pagination>
+				</ibm-table-container>
+			</ibm-tab>
+			<!-- TAB CATEGORIAS -->
+			<ibm-tab heading="Categorias">
+				<ibm-table-container> 
+					<ibm-table-toolbar >
+						<ibm-table-toolbar-content>
+							<button ibmButton="primary" size="sm" (click)="openModalCategoria(2)">
+								Añadir<ibm-icon-add size="20" class="bx--btn__icon"></ibm-icon-add>
+							</button>
+						</ibm-table-toolbar-content>
+					</ibm-table-toolbar>
+					<ibm-table
+						[skeleton]="skeletoncate"
+						[model]="skeletoncate ? skeletonCate : modelCategoria"
+						[showSelectionColumn]="false"
+						[sortable]="false"
+						[striped]="false"
+						[stickyHeader]="false"
+						(rowClick)="onRowClickCate($event)" >
+					</ibm-table>
+					<ibm-pagination [model]="modelCategoria" (selectPage)="selectPageCate($event)"></ibm-pagination>
+				</ibm-table-container>
+			</ibm-tab>
+			
+		</ibm-tabs>
+		</div>
+	</div>
+</div>
+</div>

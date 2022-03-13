@@ -1,0 +1,37 @@
+<ibm-modal
+	[size]="size"
+	[open]="open"
+	(overlaySelected)="closeModal()">
+	<ibm-modal-header (closeSelect)="closeModal()">{{modalText}}</ibm-modal-header>
+	<section class="bx--modal-content">
+		<ibm-label>
+			Nombre de Imagen
+			<input
+				ibmText
+				(change)="onChangeNomIma($event)"
+				[value]="urlImage.nombre"
+				[placeholder]="placeholder1" />
+		</ibm-label>
+		<ibm-label>
+
+			Url de Imagen
+			<input
+				ibmText
+				(change)="onChangeUrlIma($event)"
+				[value]="urlImage.url"
+				[placeholder]="placeholder2" />
+		</ibm-label>
+		<ibm-label>
+			Url de Botón
+			<input
+				ibmText
+				(change)="onChangeUrlBoton($event)"
+				[value]="urlImage.url2"
+				[placeholder]="placeholder3" />
+		</ibm-label>
+	</section>
+	<ibm-modal-footer>
+		<button class="bx--btn bx--btn--secondary" (click)="closeModal()">Cancelar</button>
+		<button class="bx--btn bx--btn--primary" modal-primary-focus (click)="updateUrl()">Guardar</button>
+	</ibm-modal-footer>
+</ibm-modal>

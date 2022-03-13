@@ -1,0 +1,178 @@
+
+
+ <div class="bx--content">
+    <div ibmGrid class="bx--grid--full-width insert">
+        <div ibmRow >
+			<div ibmCol>
+				<h2><strong>{{titulo}}</strong></h2>
+			</div>
+		</div>
+		<!-- ID -->
+		<div ibmRow >
+            <div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					ID del Proveedor
+				</ibm-label>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<input
+					ibmText
+					[value]="_id"
+					(change)="onChangeIdProveedor($event)"
+					[placeholder]="placeholder"
+				>
+			</div>
+		</div>
+		<!-- NOMBRE -->
+		<div ibmRow >
+            <div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Nombre del Proveedor
+				</ibm-label>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<input
+					ibmText
+					[value]="nombre"
+					(change)="onChangeNombre($event)"
+					[placeholder]="placeholder"
+				>
+			</div>
+		</div>
+		<!-- IMAGEN -->
+		<div ibmRow >
+            <div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Imagen del Proveedor
+				</ibm-label>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<input
+					ibmText
+					[value]="image"
+					(change)="onChangeImagen($event)"
+					[placeholder]="placeholder"
+				>
+			</div>
+		</div>
+		<!-- CATEGORIA -->
+		<div ibmRow >
+            <div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Categoria
+				</ibm-label>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-combo-box
+						[(items)]="categoria"
+						(selected)="onChangeCategoria($event)">
+                        <ibm-dropdown-list></ibm-dropdown-list>
+                    </ibm-combo-box>
+			</div>
+		</div>
+		<!-- DESCRIPCION -->
+		<div ibmRow >
+            <div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Descripción
+				</ibm-label>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<input
+					ibmText
+					[value]="descripcion"
+					(change)="onChangeDescripcion($event)"
+					[placeholder]="placeholder"
+				>
+			</div>
+		</div>
+		<!-- CATALOGO -->
+		<div ibmRow >
+            <div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Catálogo
+				</ibm-label>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<input
+					ibmText
+					[value]="catalogo"
+					(change)="onChangeCatalogo($event)"
+					[placeholder]="placeholder"
+				>
+			</div>
+		</div>
+		<!-- PEDIDO -->
+		<div ibmRow >
+            <div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Pedido
+				</ibm-label>
+			</div>
+			<div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<input
+					ibmText
+					[value]="pedido"
+					(change)="onChangePedido($event)"
+					[placeholder]="placeholder"
+				>
+			</div>
+		</div>
+		<!-- ACTIVO -->
+		<div ibmRow >
+			<div  >
+				<ibm-label >
+					¿Está activo?
+					<ibm-radio-group
+						aria-label="radiogroup"
+						(change)="onChangeActivo($event)" >
+						<ibm-radio
+							value="si"
+							[checked]="true">
+							Sí
+						</ibm-radio>
+						<ibm-radio
+							value="no"
+							[checked]="false">
+							No
+						</ibm-radio>
+					</ibm-radio-group>
+				</ibm-label>
+			</div>
+		</div>
+		<!-- CONTACTO -->
+		<div ibmRow >
+            <div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Contacto
+				</ibm-label>
+			</div>
+			<!-- CONTACTO QUILL -->
+			<div ibmRow >
+				<quill-editor  class="quill" (onContentChanged)="onChangeContacto($event)"
+				[modules]="editorOptions"  ></quill-editor>
+			</div>
+		</div>
+	<br>
+		<!-- ESPECIFICACION -->
+		<div ibmRow >
+            <div ibmCol class="custom-class-example" [columnNumbers]="{'md': 2, 'sm': 12}">
+				<ibm-label>
+					Especificación
+				</ibm-label>
+			</div>
+			<!-- DESCRIPCION QUILL -->
+			<div ibmRow >
+				<quill-editor  class="quill" (onContentChanged)="onChangeEspecificaciones($event)"
+				[customOptions]="options"  ></quill-editor>
+			</div>
+		</div>
+
+
+	</div>
+
+	<div ibmCol class="boton" [columnNumbers]="{'md': 2, 'sm': 12}">
+		<button class="bx--btn bx--btn--primary" (click)="newProveedor()">Guardar Proveedor</button>
+	</div>
+
+</div>

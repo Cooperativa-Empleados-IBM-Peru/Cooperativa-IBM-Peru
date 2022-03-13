@@ -1,0 +1,81 @@
+arch: amd64
+os: linux
+dist: focal
+
+vm:
+  size: large
+
+language: node_js
+node_js:
+  - 16
+
+env:
+  -APPNAMEPROD=CooperativaIBM
+  -APPNAMEDEV=CooperativaIBM-dev
+
+# safelist
+branches:
+  only:
+  - master
+  - dev
+
+#cache:
+#  directories:
+#    - node_modules
+    
+before_install:
+  - sudo apt-get update
+  - sudo apt-get upgrade
+  - sudo apt autoremove
+  - npm install npm@latest -g
+  - npm install -g @angular/cli
+
+install:
+  - npm install
+  - npm audit --audit-level=none
+  - npm prune;
+
+before_script:
+  - pwd
+  - cd scripts
+  - node init.js
+  - cd ..
+
+script:
+  - npm rebuild
+  - if [ "$TRAVIS_BRANCH" = "dev" ]; then
+       npm run build:dev;
+    fi
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then 
+       npm run build:prod;
+    fi
+
+before_deploy:
+  - npm prune --production;
+  - pwd
+
+deploy:
+ - space : prod
+   manifest : manifest.yml          # (optional)  Defaults to manifest.yml.
+   app_name : $APPNAMEPROD          # (optional)
+   provider : bluemixcloudfoundry
+   username : apikey
+   password : $CF_APIKEY
+   organization : cooperat@pe.ibm.com
+   region : ng                        # (optional)  [ng, eu-gb , au-syd] Defaults to US South region (ng).
+   api : https://api.ng.bluemix.net  # (optional)  Overrides region setting if specified for
+   local-dir : dist/coope
+   on :
+     branch : master
+ - space : dev
+   manifest : manifest-dev.yml      # (optional)  Defaults to manifest.yml.
+   app_name : $APPNAMEDEV           # (optional)
+   provider : bluemixcloudfoundry
+   username : apikey
+   password : $CF_APIKEY
+   organization : cooperat@pe.ibm.com
+   region : ng                        # (optional)  [ng, eu-gb , au-syd] Defaults to US South region (ng).
+   api : https://api.ng.bluemix.net  # (optional)  Overrides region setting if specified for
+   local-dir : dist/coope
+   on :
+     branch : dev

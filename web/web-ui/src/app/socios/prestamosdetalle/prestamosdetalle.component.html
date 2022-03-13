@@ -1,0 +1,133 @@
+<div ibmGrid class="bx--grid--full-width coope">
+	<div ibmRow class="coope__banner">
+		<div ibmCol [columnNumbers]="{'lg': 12, 'md' : 5}">
+			<h1 class="coope__heading">
+                {{ibmidservice.NombreEmpleado}}
+            </h1>
+            <h2 class="coope__subheading">
+<!--              {{ibmidservice.DireccionEmpleado}}   -->
+			</h2>
+		</div>
+		<div ibmCol [columnNumbers]="{'lg': 4, 'md' : 3}">
+			<h1 class="coope__subheading2">
+                {{ibmidservice.EmailEmpleado}}
+            </h1>
+            <h2 class="coope__subheading2">
+                {{ibmidservice.CodEmpleado}}
+			</h2>
+		</div>
+
+	</div>
+
+	<ng-template #Loading>
+		<div ibmRow class="coope__r1">
+			<div ibmCol class="bx--no-gutter">
+				<ibm-loading [isActive]="isActive" [size]="size"></ibm-loading>
+			</div>
+		</div>
+	</ng-template>
+
+	<div ibmRow class="coope__r1" *ngIf="(cancelado !== undefined && pendiente !== undefined && mcancelado !== undefined && mpendiente !== undefined); else Loading">
+		<div ibmCol class="custom" [columnNumbers]="{'md': 4, 'sm': 12}">
+			<ibm-donut-chart [data]="piecuotas" [options]="piecuotasconf"></ibm-donut-chart>
+		</div>
+		<div ibmCol class="custom" [columnNumbers]="{'md': 4, 'sm': 12}">
+			<ibm-donut-chart [data]="piemonto" [options]="piemontoconf"></ibm-donut-chart>
+		</div>
+	</div>
+
+	<div ibmRow class="coope__r2">
+		<div ibmCol class="bx--no-gutter">
+
+            <div ibmGrid class="bx--grid--no-gutter bx--grid--full-width">
+
+				<ibm-tabs ariaLabel="Tab navigation">
+					<ibm-tab heading="Cancelados">
+
+						<ibm-table-container class="tabla-ds-2">
+							<ibm-table-header>
+								<h4 ibmTableHeaderTitle>{{TituloTabla}}</h4>
+								<p ibmTableHeaderDescription>Interes : {{Interes}}</p>
+							</ibm-table-header>
+							<ibm-table
+								[skeleton]="skeletonprestamocancelados"
+								[model]="skeletonprestamocancelados ? skeletonPrestamoModelCancelados : modelPrestamosCancelados"
+								[showSelectionColumn]="false"
+								[sortable]="false"
+								[striped]="false"
+								[stickyHeader]="false">
+							</ibm-table>
+							<ibm-pagination [model]="modelPrestamosCancelados" (selectPage)="selectPageCancelados($event)"></ibm-pagination>
+						</ibm-table-container>
+
+					</ibm-tab>
+
+					<ibm-tab heading="Pendientes">
+						<ibm-table-container class="tabla-ds-2">
+							<ibm-table-header>
+								<h4 ibmTableHeaderTitle>{{TituloTabla}}</h4>
+								<p ibmTableHeaderDescription>Interes : {{Interes}}</p>
+							</ibm-table-header>
+							<ibm-table
+								[skeleton]="skeletonprestamopendientes"
+								[model]="skeletonprestamopendientes ? skeletonPrestamoModelPendientes : modelPrestamosPendientes"
+								[showSelectionColumn]="false"
+								[sortable]="false"
+								[striped]="false"
+								[stickyHeader]="false">
+							</ibm-table>
+							<ibm-pagination [model]="modelPrestamosPendientes" (selectPage)="selectPagePendientes($event)"></ibm-pagination>
+						</ibm-table-container>
+
+					</ibm-tab>
+
+					<ibm-tab heading="Garantes">
+						<ibm-table-container>
+							<ibm-table-header>
+								<h4 ibmTableHeaderTitle>Relación de garantes</h4>
+							</ibm-table-header>
+							<ibm-table
+								[skeleton]="skeletongarantes"
+								[model]="skeletongarantes ? skeletonGarantes : modelGarantes"
+								[showSelectionColumn]="false"
+								[sortable]="false"
+								[striped]="false"
+								[stickyHeader]="false">
+							</ibm-table>
+						</ibm-table-container>
+
+					</ibm-tab>
+
+				</ibm-tabs>
+
+			</div>
+
+		</div>
+	</div>
+
+	<div ibmRow class="coope__r2">
+		<div ibmCol class="bx--no-gutter">
+
+            <div ibmGrid class="bx--grid--no-gutter bx--grid--full-width">
+				<div ibmCol [columnNumbers]="{'md': 6, 'lg': 12}">
+
+					<ibm-table-container class="tabla-ds">
+						<ibm-table-header>
+							<h4 ibmTableHeaderTitle>Totales</h4>
+						</ibm-table-header>
+						<ibm-table
+							[skeleton]="skeletontotales"
+							[model]="skeletontotales ? skeletonTotales : modelTotales"
+							[showSelectionColumn]="false"
+							[sortable]="false"
+							[striped]="false"
+							[stickyHeader]="false">
+						</ibm-table>
+					</ibm-table-container>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
