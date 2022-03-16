@@ -1,0 +1,3 @@
+flyway.url=jdbc:db2://<host>:<port>/<database>
+flyway.user=<db2user>
+flyway.password=<db2password>
