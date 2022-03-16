@@ -1,2 +1,2 @@
 # CooperativaIBMPeru
-Cooerativa de empleados de IBM del Perú
+Cooperativa de empleados de IBM del Perú
