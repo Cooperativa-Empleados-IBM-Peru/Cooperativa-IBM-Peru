@@ -534,8 +534,6 @@ public httpSecureOptions(headers: any = {}): any {
 	return new HttpHeaders({
 			'Content-Type': 'application/json',
 			'Authorization': `Bearer ${token}`
-			/* 'apikey': env.coopeapi.apikey,
-			'secret': env.coopeapi.secret */
 		});
 }
 

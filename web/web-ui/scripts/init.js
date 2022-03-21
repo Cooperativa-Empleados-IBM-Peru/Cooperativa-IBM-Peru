@@ -28,11 +28,9 @@ cp(envtmpl, envfile);
 cp(apptmpl, appfile);
 cp(nodetmpl, nodefile);
 
-console.log("Reading env vrs from travis");
+console.log("Reading env vars from travis");
 
 const coopeapiurl = process.env.TRAVIS_BRANCH === 'dev' ? process.env.COOPEAPI_URL_DEV : process.env.COOPEAPI_URL_PROD;
-const coopeapiapikey = process.env.TRAVIS_BRANCH === 'dev' ? process.env.COOPEAPI_APIKEY_DEV : process.env.COOPEAPI_APIKEY_PROD;
-const coopeapisecret = process.env.TRAVIS_BRANCH === 'dev' ? process.env.COOPEAPI_SECRET_DEV : process.env.COOPEAPI_SECRET_PROD;
 
 const appidid = process.env.TRAVIS_BRANCH === 'dev' ? process.env.APPID_ID_DEV : process.env.APPID_ID_PROD;
 const appidoauthurl = process.env.TRAVIS_BRANCH === 'dev' ? process.env.APPID_OAUTHURL_DEV : process.env.APPID_OAUTHURL_PROD;
@@ -54,8 +52,6 @@ const db2port = process.env.TRAVIS_BRANCH === 'dev' ? process.env.DB2_PORT_DEV :
 console.log("Updating env vars in env.ts");
 
 sed('-i', '<COOPEAPI.URL>', '"' + coopeapiurl + '"', envfile);
-sed('-i', '<COOPEAPI.APIKEY>', '"' + coopeapiapikey + '"', envfile);
-sed('-i', '<COOPEAPI.SECRET>', '"' + coopeapisecret + '"', envfile);
 sed('-i', '<CLOUDANT.URL>', '"' + cloudanturl + '"', envfile);
 sed('-i', '<CLOUDANT.USERNAME>', '"' + cloudantuser + '"', envfile);
 sed('-i', '<CLOUDANT.PASSWORD>', '"' + cloudantpassword + '"', envfile);
@@ -76,6 +72,5 @@ sed('-i', '<DB2.HOSTNAME>', '"' + db2hostname + '"', nodefile);
 sed('-i', '<DB2.USER>', '"' + db2user + '"', nodefile);
 sed('-i', '<DB2.PWD>', '"' + db2pwd + '"', nodefile);
 sed('-i', '<DB2.PORT>', db2port, nodefile);
-
 
 console.log("Finish setting env vars in env.ts");
