@@ -1,9 +1,14 @@
-name: Scheduled actions
+name: Cooperativa web dataapi
 on:
-  schedule:
-    - cron: '0 */12 * * *'
+  pull_request_target:
+    types:
+      - closed
+    branches:    
+      - 'master'
+    paths:
+      - 'web/dataapi/**'
 jobs:
-  Scheuled-GitHub-Action:
+  Merge-Web-dataapi:
     runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."

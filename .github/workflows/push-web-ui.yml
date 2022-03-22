@@ -1,10 +1,10 @@
-name: Cooperativa web
+name: Cooperativa web ui
 on:
   push:
     paths:
       - 'web/web-ui/**'
 jobs:
-  Explore-GitHub-Actions:
+  Push-Web-ui:
     runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
