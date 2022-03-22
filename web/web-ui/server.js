@@ -23,19 +23,9 @@ const port = process.env.PORT || 6001;
 
 var env = process.env.NODE_ENV || "dev";
 
-const sched1 = cron.schedule("* * * * *", () => {
+const sched5 = cron.schedule("*/15 * * * *", () => {
 	var currdatetime = new Date();
-    console.log('running a task every minute ' + currdatetime);
-  });
-
-const sched2 = cron.schedule("*/2 * * * *", () => {
-	var currdatetime = new Date();
-    console.log('running a task every 2 minutes ' + currdatetime);
-  });
-
-const sched5 = cron.schedule("*/5 * * * *", () => {
-	var currdatetime = new Date();
-    console.log('running a task every 5 minutes!! ' + currdatetime);
+    console.log('running a task every 15 minutes!! ' + currdatetime);
 
 	ibmdb.open(connStr, function (err,conn) {
 		if (err) reject(err);
@@ -67,10 +57,6 @@ const sched5 = cron.schedule("*/5 * * * *", () => {
 
 });
 
-//  sched1.start();
-//  sched2.start();
-//  sched5.start();
-
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -83,7 +69,8 @@ app.use(
 	secret: uuidv4(),
     resave: true,
     saveUninitialized: true,
-    proxy: true
+    proxy: true,
+	cookie: { secure: process.env.FORCE_HTTPS }
   })
 );
 // Configurar Passport
