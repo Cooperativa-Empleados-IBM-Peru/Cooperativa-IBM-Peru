@@ -1,9 +1,6 @@
 # local git commiter config
 .git/config
 
-#flyway configuration
-flyway.conf
-DigiCertGlobalRootCA.crt
-
 #keystore
+*.crt
 *.jks

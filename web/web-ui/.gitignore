@@ -45,9 +45,8 @@ testem.log
 .DS_Store
 Thumbs.db
 
+
 env.json
 env.ts
-
 localdev-config.json
-
 .env
