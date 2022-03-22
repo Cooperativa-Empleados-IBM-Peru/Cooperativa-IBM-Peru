@@ -48,20 +48,28 @@ El registro de la aplicación en IBMid se hace por la siguiente página :
 Algunas variables de entorno usadas para conectarse a las bases de datos, o al IBMid (OpenId Connect)  
 se setean en travis, en el archivo *travis.yml* y en variables de entorno en la configuración de Travis.  
 Esto se hace asi por seguridad, pues no se pueden subir las llaves ni apikeys a Github.  
-
+  
+En Travis se define la siguiente variable para poder hacer deploy de la app en IBM Cloud.
+- CF_APIKEY
+  
 A los siguientes nombres de variables definidas en Travis, se les agrega al final **_DEV** o **_PROD** según la branch (*dev* o *master*)
-- IBMID_CLIENTNAME
-- IBMID_CLIENTID
-- IBMID_CLIENTSECRET
-- IBMID_AUTHENDPOINT
-- IBMID_TOKENENDPOINT
-- IBMID_USERINFOENDPOINT
-- IBMID_INTROSPECTIONENDPOINT
-- IBMID_DISCOVERYENDPOINT
-- IBMID_JWKSENDPOINT
-- IBMID_ISSUER  
+- APPID_ID
+- APPID_OAUTHURL
+- APPID_PROFILESURL
+- APPID_REDIRECTURL
+- APPID_SECRET
+- APPID_TENANTID
+  
+- CLOUDANT_PWD
+- CLOUDANT_URL
+- CLOUDANT_USER
   
 - COOPEAPI_URL
 - COOPEAPI_APIKEY
 - COOPEAPI_SECRET
-
+  
+- DB2_DATABASE
+- DB2_HOSTNAME
+- DB2_PASSWORD
+- DB2_PORT
+- DB2_USER
