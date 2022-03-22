@@ -26,5 +26,5 @@ Una vez seteadas las configuraciones de la base de datos, y creado el keystore, 
 docker run --rm -it -v "$PWD"/sql:/flyway/sql -v "$PWD"/conf:/flyway/conf -v "$PWD"/drivers:/flyway/drivers flyway/flyway:latest migrate
 ```
 
-Este comando ejecutarpa las migraciones de la bd desde una imagen docker de flyway
+Este comando ejecutará las migraciones de la bd desde una imagen docker de flyway
 
