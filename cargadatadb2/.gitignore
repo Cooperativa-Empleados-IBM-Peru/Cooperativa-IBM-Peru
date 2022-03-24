@@ -11,8 +11,8 @@
 .mtj.tmp/
 
 # Package Files #
-!bpjtk-v3.0.6.0.jar
 *.jar
+!bpjtk-v3.0.6.0.jar
 *.war
 *.nar
 *.ear

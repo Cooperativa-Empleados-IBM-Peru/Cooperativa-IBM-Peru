@@ -102,3 +102,6 @@ Esta info la sacamos del código de la bd de la Cooperativa en Notes
 - 208 : PS
 - 209 : Especial 1
 - 210 : Especial 2
+
+# Compilación del .jar
+mvn dependency:copy-dependencies
