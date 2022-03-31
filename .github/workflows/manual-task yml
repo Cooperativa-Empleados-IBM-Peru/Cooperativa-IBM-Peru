@@ -1,6 +1,11 @@
 name: Manual task
 on: 
   workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
 jobs:
   Manual-GitHub-Action:
     runs-on: ubuntu-latest
