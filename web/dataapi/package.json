@@ -9,7 +9,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
-    "node": "^16.14.0",
+    "node": "^16.14.2",
     "npm": "^8.5.0"
   },
   "scripts": {
@@ -47,14 +47,14 @@
     "!*/__tests__"
   ],
   "dependencies": {
-    "@loopback/boot": "^4.1.1",
-    "@loopback/core": "^3.1.1",
+    "@loopback/boot": "^4.1.2",
+    "@loopback/core": "^3.1.2",
     "@loopback/extension-health": "^0.4.13",
-    "@loopback/repository": "^4.1.1",
-    "@loopback/rest": "^11.1.1",
-    "@loopback/rest-crud": "^0.13.1",
-    "@loopback/rest-explorer": "^4.1.1",
-    "@loopback/service-proxy": "^4.1.1",
+    "@loopback/repository": "^4.1.2",
+    "@loopback/rest": "^11.1.2",
+    "@loopback/rest-crud": "^0.13.2",
+    "@loopback/rest-explorer": "^4.1.2",
+    "@loopback/service-proxy": "^4.1.2",
     "cfenv": "^1.2.4",
     "ibm_db": "^2.8.1",
     "loopback-connector-cloudant": "^2.5.0",
@@ -62,14 +62,17 @@
     "tslib": "^2.3.1"
   },
   "devDependencies": {
-    "@loopback/build": "^8.1.1",
-    "@loopback/eslint-config": "^12.0.3",
-    "@loopback/testlab": "^4.1.1",
-    "@types/node": "^17.0.22",
-    "eslint": "^8.11.0",
+    "@loopback/build": "^8.1.2",
+    "@loopback/eslint-config": "^12.0.4",
+    "@loopback/testlab": "^4.1.2",
+    "@types/node": "^17.0.23",
+    "eslint": "^8.12.0",
     "shelljs": "^0.8.5",
     "source-map-support": "^0.5.21",
-    "tsc-watch": "^4.6.2",
-    "typescript": "~4.6.2"
+    "tsc-watch": "^5.0.3",
+    "typescript": "~4.6.3"
+  },
+  "resolutions": {
+    "webpack": "^5.71.0"
   }
 }
