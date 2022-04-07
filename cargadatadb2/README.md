@@ -2,9 +2,11 @@
 
 Java program to upload the data of Cooperativa to DB2 in Cloud
 
+## Maven install
+mvn dependency:purge-local-repository
+
 ## Parameters
 Se aceptan los siguientes parámetros :  
-    **cargasocios** : Esta opción cargará el file de socios a la bd  
     **cargadata**   : Esta opción cargará los files de datos de la cuentas de los socios a la bd  
     **getfiles**    : Esta opción traerá los files de datos via sftp del server Domino  
     **help**        : Muestra esta información de ayuda  

@@ -53,11 +53,6 @@ public class CoopeCargaData {
         logger.info("main argument : " + arg);
 
         switch (arg) {
-            case "cargasocios" : 
-                    CoopeCargaSocios cargasocios = new CoopeCargaSocios(prop);
-                    cargasocios.cargaSocios();
-                    break;
-
             case "setuuids" : 
                     CoopeSetUuids setuuids = new CoopeSetUuids(prop);
                     setuuids.setUuids();
@@ -86,9 +81,6 @@ public class CoopeCargaData {
                     CoopeSftp fullsftp = new CoopeSftp(prop);
                     fullsftp.getFiles();
 
-                   CoopeCargaSocios fullsocios = new CoopeCargaSocios(prop);
-                   fullsocios.cargaSocios();
-
                    CoopeCargaFiles fulldata = new CoopeCargaFiles(prop);
                    fulldata.cargaData();
 
@@ -97,7 +89,6 @@ public class CoopeCargaData {
             case "help" :  
             default: 
                     String ayuda = "Se aceptan los siguientes parámetros :" + System.getProperty("line.separator")
-                        + "  cargasocios   : Esta opción cargara el file de socios a la bd" + System.getProperty("line.separator")
                         + "  cargadata     : Esta opción cargará los files de datos de la cuentas de los socios a la bd" + System.getProperty("line.separator")
                         + "  fullcargadata : Esta opción treará los files de datos via sftp, y los cargará en la bd" + System.getProperty("line.separator")
                         + "  getfiles      : Esta opción traerá los files de datos via sftp del server Domino" + System.getProperty("line.separator")
