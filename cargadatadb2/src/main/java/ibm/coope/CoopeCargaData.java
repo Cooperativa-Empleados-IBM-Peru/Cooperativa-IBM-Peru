@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class CoopeCargaData {
     
-    private String resourcefolder = "../../../resources";
+    private String resourcefolder = "./resources";
     private String log4jpropfile = resourcefolder + "/log4j2.properties";
     private Logger logger = null;
     private StopWatch watch;

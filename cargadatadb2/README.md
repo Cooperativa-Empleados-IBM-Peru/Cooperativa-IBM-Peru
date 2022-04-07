@@ -9,6 +9,7 @@ Java program to upload the data of Cooperativa to DB2 in Cloud
     mvn validate
     mvn compile
     mvn package
+    mvn assembly:single
     mvn verify
 
 ## Parameters
