@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class CoopeCargaData {
     
-    private String resourcefolder = "./resources";
+    private String resourcefolder = "../../../resources";
     private String log4jpropfile = resourcefolder + "/log4j2.properties";
     private Logger logger = null;
     private StopWatch watch;
@@ -53,12 +53,7 @@ public class CoopeCargaData {
         logger.info("main argument : " + arg);
 
         switch (arg) {
-            case "setuuids" : 
-                    CoopeSetUuids setuuids = new CoopeSetUuids(prop);
-                    setuuids.setUuids();
-                    break;
-
-            case "cargadata" :  
+             case "cargadata" :  
                     CoopeCargaFiles cargadata = new CoopeCargaFiles(prop);
                     cargadata.cargaData();
                     break;

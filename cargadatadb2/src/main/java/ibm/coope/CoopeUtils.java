@@ -20,7 +20,7 @@ import com.google.gson.Gson;
 
 public class CoopeUtils {
 
-	private static String resourcefolder = "./resources";
+	private static String resourcefolder = "../../../resources";
  
 	public static Date convertToDate(String input, String vformat) {
 	
