@@ -6,7 +6,7 @@
 
   <groupId>ibm.coope</groupId>
   <artifactId>coopeibm-cargadatadb2</artifactId>
-  <version>1.5</version>
+  <version>1.6</version>
 
   <name>Carga datos socios Cooperativa IBM a db2</name>
   <!-- FIXME change it to the project's website -->
