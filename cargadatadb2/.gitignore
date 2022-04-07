@@ -12,7 +12,6 @@
 
 # Package Files #
 *.jar
-!bpjtk-v3.0.6.0.jar
 *.war
 *.nar
 *.ear
@@ -29,6 +28,9 @@ hs_err_pid*
 
 # Ignore Gradle build output directory
 build
+
+# Ignore Maven build output directory
+target
 
 #Visual Code
 .vscode/*
