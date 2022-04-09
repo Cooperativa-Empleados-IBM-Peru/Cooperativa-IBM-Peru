@@ -1,2 +1,4 @@
 #flyway configuration
 flyway.conf
+*.jks
+

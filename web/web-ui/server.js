@@ -148,13 +148,15 @@ function getInfo ( email ){
 			if (err) reject(err);
 			
 			// Save last login info
-			var sql = `INSERT INTO ${process.env.DB2_USER}.USERSLOGIN (EMAILEMPLEADO, FECLOGIN) VALUES ('${email}', CURRENT TIMESTAMP)`;
-			conn.query(sql, function (err2, result) {
+			let sqlins = `INSERT INTO ${process.env.DB2_USER}.USERSLOGIN (EMAILEMPLEADO, FECLOGIN) VALUES ('${email}', CURRENT TIMESTAMP);`;
+			let sqlqry = `SELECT c.UUID FROM ${process.env.DB2_USER}.VWSOCIOSACTIVOS c WHERE c.EMAILEMPLEADO = '${email}' OR c.EMAILEMPEADO2 = '${email}';`;
+
+			conn.query(sqlins, function (err2, result) {
 				if (err2) throw err2;
 				console.log("1 record inserted into USERSLOGIN");
 			  }),
-	
-			  conn.query(`SELECT c.UUID FROM ${process.env.DB2_USER}.VWSOCIOSACTIVOS c WHERE c.EMAILEMPLEADO = '${email}';`, function (err, data) {
+
+			  conn.query(sqlqry, function (err, data) {
 			  if (err) {
 				reject(err);
 			  } else {
