@@ -45,8 +45,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: UAT
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
     - run: echo The PR was created/updated for web dataapi
   deploy:
     needs: [build]
