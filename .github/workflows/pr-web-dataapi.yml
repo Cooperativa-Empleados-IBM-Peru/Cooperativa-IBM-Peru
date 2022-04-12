@@ -19,7 +19,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '16.14.2'
-    - name : Update nopm
+    - name : Update npm
       run: npm install npm@latest -g
     - name: Verify node & npm versions
       run: node -v && npm -version
@@ -30,14 +30,17 @@ jobs:
     runs-on: ubuntu-latest
     environment: UAT
     steps:
-    - run: echo The PR was merged for web-dataapi
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: change folder
+      run: cd web/dataapi
+    - name: Install packages
+      run: npm install && npm prune
   build:
     needs: [install]
     runs-on: ubuntu-latest
     environment: UAT
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
     - run: echo The PR was created/updated for web dataapi
   deploy:
     needs: [build]
