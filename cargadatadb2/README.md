@@ -1,6 +1,6 @@
 # Cooperativa IBM Perú - Carga data
 
-Java program to upload the data of Cooperativa to DB2 in Cloud
+Java program to upload the data of Cooperativa to DB2 database in Cloud
 
 ## Maven install
     mvn dependency:purge-local-repository
