@@ -31,11 +31,11 @@ jobs:
     environment: UAT
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: change folder
-      run: cd web/dataapi
+      run: cd web/dataapi && pwd
     - name: Install packages
-      run: npm install && npm prune
+      run: pwd && npm install && npm prune
     - name: Run init script
       run: cd scripts && node init.js && cd ..
     - name: Show env file
