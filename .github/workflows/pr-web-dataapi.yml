@@ -36,6 +36,10 @@ jobs:
       run: cd web/dataapi
     - name: Install packages
       run: npm install && npm prune
+    - name: Run init script
+      run: cd scripts && node init.js && cd ..
+    - name: Show env file
+      run: cat src/datasources/env.ts
   build:
     needs: [install]
     runs-on: ubuntu-latest
