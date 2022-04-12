@@ -32,24 +32,22 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
-    - name: change folder
-      run: pwd && cd web/dataapi && pwd
     - name: Install packages
-      run: pwd && npm install && npm prune
+      run: cd web/dataapi && npm install && npm prune
     - name: Run init script
-      run: cd scripts && node init.js && cd ..
+      run: cd web/dataapi/scripts && node init.js
     - name: Show env file
-      run: cat src/datasources/env.ts
+      run: cat web/dataapi/src/datasources/env.ts
   build:
     needs: [install]
     runs-on: ubuntu-latest
     environment: UAT
     steps:
-    - run: echo The PR was created/updated for web dataapi
+    - run: echo Building web dataapi
   deploy:
     needs: [build]
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     environment: UAT
     steps:
-    - run: echo The PR was merged for web-dataapi
+    - run: echo Deploying web-dataapi
