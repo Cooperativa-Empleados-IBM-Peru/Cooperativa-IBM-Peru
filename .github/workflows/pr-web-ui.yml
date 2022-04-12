@@ -1,4 +1,4 @@
-name: Cooperativa web ui PR
+name: Cooperativa web ui
 on:
   pull_request_target:
     types: [opened, synchronize, closed]
@@ -9,6 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: UAT
     steps:
     - run: |
         echo The PR was created/updated for web ui
@@ -16,6 +17,7 @@ jobs:
     needs: [build]
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    environment: UAT
     steps:
     - run: |
         echo The PR was merged for web-ui
