@@ -12,9 +12,9 @@ jobs:
     environment: UAT
     steps:
     - name: Update OS
-      uses: sudo apt-get update && sudo apt-get upgrade
+      run: sudo apt-get update && sudo apt-get upgrade
     - name: Clean OS libs
-      uses: sudo apt autoremove
+      run: sudo apt autoremove
     - name: Install node
       uses: actions/setup-node@v3
       with:
