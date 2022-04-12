@@ -22,16 +22,16 @@ cp(envtmpl, envfile);
 
 console.log("Updating env vars in env.ts");
 
-const cloudantpassword = process.env.TRAVIS_BRANCH === 'dev' ? process.env.CLOUDANT_PASSWORD_DEV : process.env.CLOUDANT_PASSWORD_PROD;
-const cloudanturl = process.env.TRAVIS_BRANCH === 'dev' ? process.env.CLOUDANT_URL_DEV : process.env.CLOUDANT_URL_PROD;
-const cloudantusername = process.env.TRAVIS_BRANCH === 'dev' ? process.env.CLOUDANT_USERNAME_DEV : process.env.CLOUDANT_USERNAME_PROD;
+const cloudantpassword = secrets.CLOUDANT_PWD;
+const cloudanturl = secrets.CLOUDANT_URL;
+const cloudantusername = secrets.CLOUDANT_USER;
 
-const db2db = process.env.TRAVIS_BRANCH === 'dev' ? process.env.DB2_DB_DEV : process.env.DB2_DB_PROD;
-const db2host = process.env.TRAVIS_BRANCH === 'dev' ? process.env.DB2_HOST_DEV : process.env.DB2_HOST_PROD;
-const db2password = process.env.TRAVIS_BRANCH === 'dev' ? process.env.DB2_PASSWORD_DEV : process.env.DB2_PASSWORD_PROD;
-const db2port = process.env.TRAVIS_BRANCH === 'dev' ? process.env.DB2_PORT_DEV : process.env.DB2_PORT_PROD;
-const db2ssldsn = process.env.TRAVIS_BRANCH === 'dev' ? process.env.DB2_SSLDSN_DEV : process.env.DB2_SSLDSN_PROD;
-const db2username = process.env.TRAVIS_BRANCH === 'dev' ? process.env.DB2_USERNAME_DEV : process.env.DB2_USERNAME_PROD;
+const db2db = secrets.DB2_DATABASE;
+const db2host = secrets.DB2_HOSTNAME;
+const db2password = secrets.DB2_PASSWORD;
+const db2port = secrets.DB2_PORT;
+const db2ssldsn = secrets.DB2_SSLDSN;
+const db2username = secrets.DB2_USER;
 
 sed('-i', '<CLOUDANTDB.PASSWORD>', '"' + cloudantpassword + '"', envfile);
 sed('-i', '<CLOUDANTDB.URL>', '"' + cloudanturl + '"', envfile);
