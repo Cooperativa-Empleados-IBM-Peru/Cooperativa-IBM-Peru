@@ -33,7 +33,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
     - name: change folder
-      run: cd web/dataapi && pwd
+      run: pwd && cd web/dataapi && pwd
     - name: Install packages
       run: pwd && npm install && npm prune
     - name: Run init script
