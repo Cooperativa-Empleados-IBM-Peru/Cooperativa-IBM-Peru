@@ -149,7 +149,7 @@ function getInfo ( email ){
 			
 			// Save last login info
 			let sqlins = `INSERT INTO ${process.env.DB2_USER}.USERSLOGIN (EMAILEMPLEADO, FECLOGIN) VALUES ('${email}', CURRENT TIMESTAMP);`;
-			let sqlqry = `SELECT c.UUID FROM ${process.env.DB2_USER}.VWSOCIOSACTIVOS c WHERE c.EMAILEMPLEADO = '${email}' OR c.EMAILEMPEADO2 = '${email}';`;
+			let sqlqry = `SELECT c.UUID FROM ${process.env.DB2_USER}.VWSOCIOSACTIVOS c WHERE c.EMAILEMPLEADO = '${email}' OR c.EMAILEMPLEADO2 = '${email}';`;
 
 			conn.query(sqlins, function (err2, result) {
 				if (err2) throw err2;
