@@ -1,6 +1,6 @@
 # Script de Flyway para bd de Cooperativa IBM
 Este script permitirá crear las diferentes tablas y vistas necesarias en la bd de la Cooperativa de IBM. \
-La base de datos que se utiliza es db2
+La base de datos que se utiliza es db2 en cloud
 
 ## Preparacion
 
