@@ -3,11 +3,13 @@
 Java program to upload the data of Cooperativa to DB2 database in Cloud
 
 ## Maven install
+```
     mvn dependency:purge-local-repository
     mvn clean
     mvn dependency:copy-dependencies
     mvn package
     mvn assembly:single
+```
 
 ## Parameters
 Se aceptan los siguientes parámetros :  
