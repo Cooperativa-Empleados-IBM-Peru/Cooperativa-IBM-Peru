@@ -7,15 +7,42 @@ on:
     paths:
       - 'web/dataapi/**'
 jobs:
-  build:
+  prepare:
     runs-on: ubuntu-latest
+    environment: UAT
     steps:
+    - name: Update OS
+      uses: sudo apt-get update && sudo apt-get upgrade
+    - name: Clean OS libs
+      uses: sudo apt autoremove
+    - name: Install node
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16.14.2'
+    - name : Update nopm
+      run: npm install npm@latest -g
+    - name: Verify node & npm versions
+      run: node -v && npm -version
+    - name: Install loopback
+      run: npm install -g @loopback/cli
+  install:
+    needs: [prepare]
+    runs-on: ubuntu-latest
+    environment: UAT
+  build:
+    needs: [install]
+    runs-on: ubuntu-latest
+    environment: UAT
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
     - run: |
         echo The PR was created/updated for web dataapi
   deploy:
     needs: [build]
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    environment: UAT
     steps:
     - run: |
         echo The PR was merged for web-dataapi
