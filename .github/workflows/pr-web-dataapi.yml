@@ -48,17 +48,17 @@ jobs:
     - name : Prepare env file
       run: |
         cp ./src/datasources/env.ts.template ./src/datasources/env.ts
-        sed -i 's/<CLOUDANT.DB>/'${{secrets.CLOUDANT_DB}}'/' ./src/datasources/env.ts
-        sed -i 's/<CLOUDANT.MODEL>/'${{secrets.CLOUDANT_MODEL}}'/' ./src/datasources/env.ts
-        sed -i 's/<CLOUDANT.PASSWORD>/'${{secrets.CLOUDANT_PWD}}'/' ./src/datasources/env.ts
-        sed -i 's/<CLOUDANT.URL>/'${{secrets.CLOUDANT_URL}}'/' ./src/datasources/env.ts
-        sed -i 's/<CLOUDANT.USERNAME>/'${{secrets.CLOUDANT_USER}}'/' ./src/datasources/env.ts
-        sed -i 's/<DB2DB.DB>/'${{secrets.DB2_DATABASE}}'/' ./src/datasources/env.ts
-        sed -i 's/<DB2DB.HOST>/'${{secrets.DB2_HOSTNAME}}'/' ./src/datasources/env.ts
-        sed -i 's/<DB2DB.PASSWORD>/'${{secrets.DB2_PASSWORD}}'/' ./src/datasources/env.ts
-        sed -i 's/<DB2DB.PORT>/${{secrets.DB2_PORT}}/' ./src/datasources/env.ts
-        sed -i 's/<DB2DB.SSLDSN>/'${{secrets.DB2_SSLDSN}}'/' ./src/datasources/env.ts
-        sed -i 's/<DB2DB.USERNAME>/'${{secrets.DB2_USER}}'/' ./src/datasources/env.ts
+        sed -i 's|<CLOUDANT.DB>|'${{secrets.CLOUDANT_DB}}'|g' ./src/datasources/env.ts
+        sed -i 's|<CLOUDANT.MODEL>|'${{secrets.CLOUDANT_MODEL}}'|g' ./src/datasources/env.ts
+        sed -i 's|<CLOUDANT.PASSWORD>|'${{secrets.CLOUDANT_PWD}}'|g' ./src/datasources/env.ts
+        sed -i 's|<CLOUDANT.URL>|'${{secrets.CLOUDANT_URL}}'|g' ./src/datasources/env.ts
+        sed -i 's|<CLOUDANT.USERNAME>|'${{secrets.CLOUDANT_USER}}'|g' ./src/datasources/env.ts
+        sed -i 's|<DB2DB.DB>|'${{secrets.DB2_DATABASE}}'|g' ./src/datasources/env.ts
+        sed -i 's|<DB2DB.HOST>|'${{secrets.DB2_HOSTNAME}}'|g' ./src/datasources/env.ts
+        sed -i 's|<DB2DB.PASSWORD>|'${{secrets.DB2_PASSWORD}}'|g' ./src/datasources/env.ts
+        sed -i 's|<DB2DB.PORT>|${{secrets.DB2_PORT}}|g' ./src/datasources/env.ts
+        sed -i 's|<DB2DB.SSLDSN>|'${{secrets.DB2_SSLDSN}}'|g' ./src/datasources/env.ts
+        sed -i 's|<DB2DB.USERNAME>|'${{secrets.DB2_USER}}'|g' ./src/datasources/env.ts
         cat ./src/datasources/env.ts
       working-directory: ${{env.working-directory}} 
   build:
