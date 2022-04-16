@@ -66,7 +66,16 @@ jobs:
     runs-on: ubuntu-latest
     environment: UAT
     steps:
-    - run: echo Building web dataapi
+    - name: build dataapi
+      run : |
+        npm rebuild
+        npm run clean
+        npm run build
+      working-directory: ${{env.working-directory}} 
+    - name: clean modules
+      run : |
+        npm prune --production
+      working-directory: ${{env.working-directory}}       
   deploy:
     needs: [build]
     if: github.event.pull_request.merged == true
