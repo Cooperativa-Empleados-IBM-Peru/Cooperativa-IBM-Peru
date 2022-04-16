@@ -11,6 +11,7 @@ env:
   working-directory: ./web/dataapi
 jobs:
   prepare:
+    name: Prepare OS
     runs-on: ubuntu-latest
     environment: UAT
     steps:
@@ -30,6 +31,7 @@ jobs:
     - name: Install loopback
       run: npm install -g @loopback/cli
   install:
+    name: Install dependencies
     needs: [prepare]
     runs-on: ubuntu-latest
     environment: UAT
@@ -68,6 +70,7 @@ jobs:
   #      cat ./src/datasources/env.ts
       working-directory: ${{env.working-directory}} 
   build:
+    name: Build app
     needs: [install]
     runs-on: ubuntu-latest
     environment: UAT
@@ -83,6 +86,7 @@ jobs:
         npm prune --production
       working-directory: ${{env.working-directory}}       
   deploy:
+    name: Deploy app
     needs: [build]
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
