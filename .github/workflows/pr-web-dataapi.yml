@@ -6,23 +6,26 @@ on:
       - 'master'
     paths:
       - 'web/dataapi/**'
+env:
+  working-directory: ./web/dataapi
 jobs:
   prepare:
     runs-on: ubuntu-latest
     environment: UAT
     steps:
     - name: Update OS
-      run: sudo apt-get update && sudo apt-get upgrade
-    - name: Clean OS libs
-      run: sudo apt autoremove
+      run: |
+        sudo apt-get update && sudo apt-get upgrade
+        sudo apt autoremove
     - name: Install node
       uses: actions/setup-node@v3
       with:
         node-version: '16.14.2'
     - name : Update npm
-      run: npm install npm@latest -g
-    - name: Verify node & npm versions
-      run: node -v && npm -version
+      run: |
+        npm install npm@latest -g
+        node -v
+        npm -version
     - name: Install loopback
       run: npm install -g @loopback/cli
   install:
@@ -32,12 +35,22 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
+    - name : Update npm
+      run: |
+        npm install npm@latest -g
+        node -v
+        npm -version
     - name: Install packages
-      run: cd web/dataapi && npm install && npm prune
-    - name: Run init script
-      run: cd web/dataapi/scripts && node init.js
-    - name: Show env file
-      run: cat web/dataapi/src/datasources/env.ts
+      run: |
+        npm install
+        npm prune
+      working-directory: ${{env.working-directory}}
+    - name : Prepare env file
+      run: |
+        cp ./src/datasources/env.ts.template ./src/datasources/env.ts
+        sed -i 's/<CLOUDANTDB.DB>/${{secret.CLOUDANT_DB}}/' ./src/datasources/env.ts
+        cat ./src/datasources/env.ts
+      working-directory: ${{env.working-directory}} 
   build:
     needs: [install]
     runs-on: ubuntu-latest
