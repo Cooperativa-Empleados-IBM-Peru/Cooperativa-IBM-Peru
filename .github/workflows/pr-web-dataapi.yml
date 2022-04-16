@@ -48,7 +48,11 @@ jobs:
     - name : Prepare env file
       run: |
         cp ./src/datasources/env.ts.template ./src/datasources/env.ts
-        sed -i 's/<CLOUDANTDB.DB>/${{secrets.CLOUDANT_DB}}/' ./src/datasources/env.ts
+        sed -i 's/<CLOUDANT.DB>/${{secrets.CLOUDANT_DB}}/' ./src/datasources/env.ts
+        sed -i 's/<CLOUDANT.MODEL>/${{secrets.CLOUDANT_MODEL}}/' ./src/datasources/env.ts
+        sed -i 's/<CLOUDANT.PASSWORD>/${{secrets.CLOUDANT_PWD}}/' ./src/datasources/env.ts
+        sed -i 's/<CLOUDANT.URL>/${{secrets.CLOUDANT_URL}}/' ./src/datasources/env.ts
+        sed -i 's/<CLOUDANT.USERNAME>/${{secrets.CLOUDANT_USER}}/' ./src/datasources/env.ts
         cat ./src/datasources/env.ts
       working-directory: ${{env.working-directory}} 
   build:
