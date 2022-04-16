@@ -1,27 +1,33 @@
 # coopeibm-dataapi
 
-[![Build Status](https://travis.ibm.com/IGAPeru/coopeibm-dataapi.svg?token=5nxyP1jzqq1iZT5wjNUD&branch=master)](https://travis.ibm.com/IGAPeru/coopeibm-dataapi)
+[![Cooperativa web dataapi](https://github.com/Cooperativa-Empleados-IBM-Peru/Cooperativa-IBM-Peru/actions/workflows/pr-web-dataapi.yml/badge.svg)](https://github.com/Cooperativa-Empleados-IBM-Peru/Cooperativa-IBM-Peru/actions/workflows/pr-web-dataapi.yml)
 
 [![LoopBack](https://github.com/strongloop/loopback-next/raw/master/docs/site/imgs/branding/Powered-by-LoopBack-Badge-(blue)-@2x.png)](http://loopback.io/)
 
 Estas son las APIs utilizadas por la aplicación de la **Cooperativa de Empleados de IBM Perú** para leer la data de db2 (y cloudant próximamente)
 
 ## Seteo de variables de entorno
-Algunas variables de entorno usadas para conectarse a las bases de datos se setean en travis, en el archivo *travis.yml* y en variables de entorno en la configuración de Travis.
+Algunas variables de entorno usadas para conectarse a las bases de datos se setean como secrets en el repositorio de Github, o en los Environments de UAT y PROD en el mismo Github.
 Esto se hace asi por seguridad, pues no se pueden subir las llaves ni apikeys a Github.
   
-En Travis se debe definir la siguiente variable de entorno para hacer el deploy de la app en IBM Cloud.
-- CF_APIKEY
-  
-A los siguientes nombres de variables definidas en Travis, se les agrega al final **_DEV** o **_PROD** según la branch (*dev* o *master*)
+En Github secrets se debe definir la siguiente variable de entorno para hacer el deploy de la app en IBM Cloud.
+- IBM_CLOUD_APIKEY
+- IBM_CLOUD_USERNAME
+- IBM_CLOUD_ORG
+- IBM_CLOUD_SPACE
 
-- CLOUDANT_PASSWORD
-- CLOUDANT_URL
-- CLOUDANT_USERNAME
   
-- DB2_DB
-- DB2_HOST
+Las siguientes variables son definidas en los Environments de UAT y PROD en Github
+
+- CLOUDANT_DB
+- CLOUDANT_MODEL
+- CLOUDANT_PWD
+- CLOUDANT_URL
+- CLOUDANT_USER
+  
+- DB2_DATABASE
+- DB2_HOSTNAME
 - DB2_PASSWORD
 - DB2_PORT
 - DB2_SSLDSN
-- DB2_USERNAME
+- DB2_USER
