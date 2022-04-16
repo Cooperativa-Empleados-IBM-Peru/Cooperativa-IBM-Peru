@@ -35,6 +35,11 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
+    - name : Update npm
+      run: |
+        npm install npm@latest -g
+        node -v
+        npm -version
     - name: Install packages
       run: |
         npm install
