@@ -40,14 +40,12 @@ jobs:
         npm install
         npm prune
       working-directory: ${{env.working-directory}}
-    - name: Run init script
+    - name : Prepare env file
       run: |
-        cd scripts
-        node init.js
-      working-directory: ${{env.working-directory}}
-    - name: Show env file
-      run: cat ./src/datasources/env.ts
-      working-directory: ${{env.working-directory}}
+        cp ./src/datasources/env.ts.template ./src/datasources/env.ts
+        sed -i 's/<CLOUDANTDB.DB>/${{secret.CLOUDANT_DB}}/' ./src/datasources/env.ts
+        cat ./src/datasources/env.ts
+      working-directory: ${{env.working-directory}} 
   build:
     needs: [install]
     runs-on: ubuntu-latest
