@@ -1,5 +1,6 @@
 name: Cooperativa web dataapi
 on:
+  push:
   pull_request_target:
     types: [opened, synchronize, closed]
     branches:    
