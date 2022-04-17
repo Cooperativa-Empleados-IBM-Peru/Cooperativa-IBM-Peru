@@ -10,8 +10,8 @@ on:
 env:
   working-directory: ./web/dataapi
 jobs:
-  prepare:
-    name: Prepare OS
+  build:
+    name: Build app
     runs-on: ubuntu-latest
     environment: UAT
     steps:
@@ -30,12 +30,6 @@ jobs:
         npm -version
     - name: Install loopback
       run: npm install -g @loopback/cli
-  install:
-    name: Install dependencies
-    needs: [prepare]
-    runs-on: ubuntu-latest
-    environment: UAT
-    steps:
     - name: Checkout repository
       uses: actions/checkout@v3
     - name : Update npm
@@ -69,12 +63,6 @@ jobs:
   #      sed -i 's|<DB2DB.USERNAME>|'${{secrets.DB2_USER}}'|g' ./src/datasources/env.ts
   #      cat ./src/datasources/env.ts
       working-directory: ${{env.working-directory}} 
-  build:
-    name: Build app
-    needs: [install]
-    runs-on: ubuntu-latest
-    environment: UAT
-    steps:
     - name: build dataapi
       run : |
         npm rebuild
