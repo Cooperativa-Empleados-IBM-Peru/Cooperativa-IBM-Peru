@@ -16,7 +16,7 @@ on:
         default: UAT
 env:
   working-directory: ./web/dataapi
-  DEPLOYENVIRONMENT: ${format(replace(replace(GITHUB_EVENT_NAME == 'workflow_dispatch', True, '{0}'), False, '{1}'), github.event.inputs.deployenv, 'UAT')}
+#  DEPLOYENVIRONMENT: ${format(replace(replace(GITHUB_EVENT_NAME == 'workflow_dispatch', True, '{0}'), False, '{1}'), github.event.inputs.deployenv, 'UAT')}
 jobs:
   show-env:
     name: Environment vars
@@ -35,7 +35,7 @@ jobs:
          echo "GITHUB_REF: ${GITHUB_REF}"
          echo "Deployment environment: ${{ github.event.inputs.deployenv }}"
          echo "Working directory: ${{ env.working-directory }}"
-         echo "DEPLOYENVIRONMENT: ${{ env.DEPLOYENVIRONMENT }}"
+ #        echo "DEPLOYENVIRONMENT: ${{ env.DEPLOYENVIRONMENT }}"
   build:
     name: Build app
     runs-on: ubuntu-latest
