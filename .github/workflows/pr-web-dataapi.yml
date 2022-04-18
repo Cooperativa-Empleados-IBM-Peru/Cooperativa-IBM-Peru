@@ -7,40 +7,13 @@ on:
       - 'master'
     paths:
       - 'web/dataapi/**'
-  workflow_dispatch:
-    inputs:
-      deployenv:
-        required: true
-        description: Deployment environment
-        type: environment
-        default: UAT
 env:
   working-directory: ./web/dataapi
-  DEPLOYENVIRONMENT: UAT
 jobs:
-  show-env:
-    name: Environment vars
-    runs-on: ubuntu-latest
-    steps:
-     - name: echo-default-env-variables
-       run: |
-         echo "Home: ${HOME}"
-         echo "GITHUB_WORKFLOW: ${GITHUB_WORKFLOW}"
-         echo "GITHUB_ACTIONS: ${GITHUB_ACTIONS}"
-         echo "GITHUB_ACTOR: ${GITHUB_ACTOR}"
-         echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
-         echo "GITHUB_EVENT_NAME: ${GITHUB_EVENT_NAME}"
-         echo "GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}"
-         echo "GITHUB_SHA: ${GITHUB_SHA}"
-         echo "GITHUB_REF: ${GITHUB_REF}"
-         echo "Deployment environment: ${{ github.event.inputs.deployenv }}"
-         echo "Working directory: ${{ env.working-directory }}"
-         echo "DEPLOYENVIRONMENT: ${{ env.DEPLOYENVIRONMENT }}"
-         echo "job environment: ${{ jobs.show-env.environment }}"
   build:
     name: Build app
     runs-on: ubuntu-latest
-    environment: DEPLOYENVIRONMENT
+    environment: UAT
     steps:
     - name: Set the environment to Prod
       if: github.event.inputs.deployenv == 'PROD'
@@ -49,7 +22,7 @@ jobs:
         echo "job environment: ${{ jobs.build.environment }}"
     - name: Update OS
       run: |
-        echo "job environment: ${{ jobs.show-env.environment }}"
+        echo "job environment: ${{ jobs.build.environment }}"
         sudo apt-get update && sudo apt-get upgrade
         sudo apt autoremove
     - name: Install node
@@ -104,12 +77,23 @@ jobs:
     - name: clean modules
       run : |
         npm prune --production
-      working-directory: ${{env.working-directory}}       
+      working-directory: ${{env.working-directory}}
+    - name: Uploading artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: dataapi-dist
+        path: web/dataapi/dist/ 
   deploy:
     name: Deploy app
     needs: [build]
-    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
+    if: ${{ github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
-    environment: DEPLOYENVIRONMENT
+    environment: UAT
     steps:
-    - run: echo Deploying web-dataapi
+    - name: Downloading artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: dataapi-dist
+        path: dist
+    - run: cat dist/datasources/env.js
+    
