@@ -16,7 +16,7 @@ on:
         default: UAT
 env:
   working-directory: ./web/dataapi
-  DEPLOYENVIRONMENT: ${format(replace(replace(github.event_name == 'workflow_dispatch', True, '{0}'), False, '{1}'), github.event.inputs.deployenv, 'UAT')}
+  DEPLOYENVIRONMENT: ${{format(replace(replace(github.event_name == 'workflow_dispatch', True, '{0}'), False, '{1}'), github.event.inputs.deployenv, 'UAT')}}
 jobs:
   show-env:
     name: Environment vars
