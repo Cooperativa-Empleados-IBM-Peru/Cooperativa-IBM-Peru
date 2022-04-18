@@ -15,11 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: UAT
     steps:
-    - name: Set the environment to Prod
-      if: github.event.inputs.deployenv == 'PROD'
-      run: |
-        echo "DEPLOYENVIRONMENT=PROD" >> $GITHUB_ENV
-        echo "job environment: ${{ jobs.build.environment }}"
     - name: Update OS
       run: |
         echo "job environment: ${{ jobs.build.environment }}"
@@ -96,4 +91,3 @@ jobs:
         name: dataapi-dist
         path: dist
     - run: cat dist/datasources/env.js
-    
