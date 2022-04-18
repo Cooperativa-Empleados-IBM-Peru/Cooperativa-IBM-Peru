@@ -25,6 +25,7 @@ jobs:
     - name : Update npm
       run: |
         npm install npm@latest -g
+        npm config set legacy-peer-deps true
         node -v
         npm -version
     - name: Install Angular
