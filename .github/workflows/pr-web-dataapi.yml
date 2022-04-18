@@ -76,7 +76,10 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: dataapi-dist
-        path: web/dataapi/dist/ 
+        path: |
+          web/dataapi/dist/
+          web/dataapi/manifest-dev.yml
+          web/dataapi/package.json
   deploy:
     name: Deploy app
     needs: [build]
@@ -88,5 +91,11 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: dataapi-dist
-        path: dist
-    - run: cat dist/datasources/env.js
+    - name: Deploy to IBM Cloud Foundry
+      uses: IBM/cloudfoundry-deploy@master
+      with:
+        IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_APIKEY }}
+        IBM_CLOUD_CF_API: https://api.ng.bluemix.net
+        IBM_CLOUD_CF_ORG: ${{ secrets.IBM_CLOUD_ORG }}
+        IBM_CLOUD_CF_SPACE: ${{ secrets.IBM_CLOUD_SPACE }}
+        APP_MANIFEST_FILE: manifest-dev.yml
