@@ -7,30 +7,9 @@ on:
       - 'master'
     paths:
       - 'web/dataapi/**'
-  workflow_dispatch:
-    inputs:
-      deployenv:
-        required: true
-        description: Deployment environment
-        type: environment
 env:
   working-directory: ./web/dataapi
 jobs:
-  show-env:
-    name: Environment vars
-    runs-on: ubuntu-latest
-    steps:
-     - name: echo-default-env-variables
-       run: |
-         echo "Home: ${HOME}"
-         echo "GITHUB_WORKFLOW: ${GITHUB_WORKFLOW}"
-         echo "GITHUB_ACTIONS: ${GITHUB_ACTIONS}"
-         echo "GITHUB_ACTOR: ${GITHUB_ACTOR}"
-         echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
-         echo "GITHUB_EVENT_NAME: ${GITHUB_EVENT_NAME}"
-         echo "GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}"
-         echo "GITHUB_SHA: ${GITHUB_SHA}"
-         echo "GITHUB_REF: ${GITHUB_REF}"
   build:
     name: Build app
     runs-on: ubuntu-latest
@@ -92,12 +71,31 @@ jobs:
     - name: clean modules
       run : |
         npm prune --production
-      working-directory: ${{env.working-directory}}       
+      working-directory: ${{env.working-directory}}
+    - name: Uploading artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: dataapi-dist
+        path: |
+          web/dataapi/dist/
+          web/dataapi/manifest-dev.yml
+          web/dataapi/package.json
   deploy:
     name: Deploy app
     needs: [build]
-    if: github.event.pull_request.merged == true
+    if: ${{ github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     environment: UAT
     steps:
-    - run: echo Deploying web-dataapi
+    - name: Downloading artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: dataapi-dist
+    - name: Deploy to IBM Cloud Foundry
+      uses: IBM/cloudfoundry-deploy@master
+      with:
+        IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_APIKEY }}
+        IBM_CLOUD_CF_API: https://api.ng.bluemix.net
+        IBM_CLOUD_CF_ORG: ${{ secrets.IBM_CLOUD_ORG }}
+        IBM_CLOUD_CF_SPACE: ${{ secrets.IBM_CLOUD_SPACE }}
+        APP_MANIFEST_FILE: manifest-dev.yml
