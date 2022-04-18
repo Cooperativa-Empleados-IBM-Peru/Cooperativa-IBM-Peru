@@ -7,11 +7,18 @@ on:
       - 'master'
     paths:
       - 'web/dataapi/**'
+  workflow_dispatch:
+    inputs:
+      deployenv:
+        description: 'Deployment environment'     
+        required: true
+        default: 'UAT'
+
 env:
   working-directory: ./web/dataapi
 jobs:
   show-env:
-    name: Build app
+    name: Environment vars
     runs-on: ubuntu-latest
     steps:
      - name: echo-default-env-variables
