@@ -32,11 +32,6 @@ jobs:
       run: npm install -g @loopback/cli
     - name: Checkout repository
       uses: actions/checkout@v3
-    - name : Update npm
-      run: |
-        npm install npm@latest -g
-        node -v
-        npm -version
     - name: Install packages
       run: |
         npm install
@@ -45,7 +40,6 @@ jobs:
     - name : Prepare env file
       run: |
         cp ./src/datasources/env.ts.template ./src/datasources/env.ts
-        cat ./src/datasources/env.ts
       working-directory: ${{env.working-directory}}
     - name: Update vars in env file
       run: |  
@@ -60,7 +54,6 @@ jobs:
         sed -i 's|<DB2DB.PORT>|${{secrets.DB2_PORT}}|g' ./src/datasources/env.ts
         sed -i 's|<DB2DB.SSLDSN>|${{secrets.DB2_SSLDSN}}|g' ./src/datasources/env.ts
         sed -i 's|<DB2DB.USERNAME>|${{secrets.DB2_USER}}|g' ./src/datasources/env.ts
-        cat ./src/datasources/env.ts
       working-directory: ${{env.working-directory}} 
     - name: build dataapi
       run : |
