@@ -1,6 +1,6 @@
 {
   "name": "coopeibm-dataapi",
-  "version": "1.3.10",
+  "version": "1.3.11",
   "description": "Apis para Cooperativa IBM",
   "keywords": [
     "loopback-application",

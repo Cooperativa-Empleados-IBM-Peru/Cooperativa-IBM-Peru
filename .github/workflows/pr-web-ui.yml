@@ -84,12 +84,12 @@ jobs:
           web/web-ui/manifest-dev.yml
           web/web-ui/package.json
           web/web-ui/package-lock.json
-    - name: Uploading node_modules
-      uses: actions/upload-artifact@v3
-      with:
-        name: ui-nodemodules
-        path: |
-          web/web-ui/node_modules/
+#    - name: Uploading node_modules
+#      uses: actions/upload-artifact@v3
+#      with:
+#        name: ui-nodemodules
+#        path: |
+#          web/web-ui/node_modules/
   deploy:
     name: Deploy app
     needs: [build]
@@ -101,10 +101,10 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: ui-dist
-    - name: Downloading node modules
-      uses: actions/download-artifact@v3
-      with:
-        name: ui-nodemodules
+#    - name: Downloading node modules
+#      uses: actions/download-artifact@v3
+#      with:
+#        name: ui-nodemodules
     - name: Deploy to IBM Cloud Foundry
       uses: IBM/cloudfoundry-deploy@master
       with:
