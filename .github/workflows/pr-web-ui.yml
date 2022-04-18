@@ -78,6 +78,7 @@ jobs:
         name: ui-dist
         path: |
           web/web-ui/dist/
+          web/web-ui/node_modules/
           web/web-ui/server.js
           web/web-ui/localdev-config.json
           web/web-ui/.env

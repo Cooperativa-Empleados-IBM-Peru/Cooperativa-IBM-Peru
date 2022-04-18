@@ -71,6 +71,7 @@ jobs:
         name: dataapi-dist
         path: |
           web/dataapi/dist/
+          web/dataapi/node_modules/
           web/dataapi/manifest-dev.yml
           web/dataapi/package.json
   deploy:
