@@ -10,10 +10,9 @@ on:
   workflow_dispatch:
     inputs:
       deployenv:
-        description: 'Deployment environment'     
         required: true
-        default: 'UAT'
-
+        description: Deployment environment
+        type: environment
 env:
   working-directory: ./web/dataapi
 jobs:
