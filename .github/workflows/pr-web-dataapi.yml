@@ -63,7 +63,7 @@ jobs:
       working-directory: ${{env.working-directory}} 
     - name: clean modules
       run : |
-        npm prune --production
+        npm prune --omit=dev
       working-directory: ${{env.working-directory}}
     - name: Uploading artifacts
       uses: actions/upload-artifact@v3
@@ -71,9 +71,15 @@ jobs:
         name: dataapi-dist
         path: |
           web/dataapi/dist/
-          web/dataapi/node_modules/
           web/dataapi/manifest-dev.yml
           web/dataapi/package.json
+          web/dataapi/package-lock.json
+    - name: Uploading node_modules
+      uses: actions/upload-artifact@v3
+      with:
+        name: dataapi-nodemodules
+        path: |
+          web/dataapi/node_modules/
   deploy:
     name: Deploy app
     needs: [build]
@@ -85,6 +91,10 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: dataapi-dist
+    - name: Downloading node modules
+      uses: actions/download-artifact@v3
+      with:
+        name: dataapi-nodemodules
     - name: Deploy to IBM Cloud Foundry
       uses: IBM/cloudfoundry-deploy@master
       with:
