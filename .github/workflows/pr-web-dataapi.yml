@@ -1,15 +1,39 @@
 name: Cooperativa web dataapi
 on:
+  push:
   pull_request_target:
     types: [opened, synchronize, closed]
     branches:    
       - 'master'
     paths:
       - 'web/dataapi/**'
+  workflow_dispatch:
+    inputs:
+      deployenv:
+        description: 'Deployment environment'     
+        required: true
+        default: 'UAT'
+
 env:
   working-directory: ./web/dataapi
 jobs:
-  prepare:
+  show-env:
+    name: Environment vars
+    runs-on: ubuntu-latest
+    steps:
+     - name: echo-default-env-variables
+       run: |
+         echo "Home: ${HOME}"
+         echo "GITHUB_WORKFLOW: ${GITHUB_WORKFLOW}"
+         echo "GITHUB_ACTIONS: ${GITHUB_ACTIONS}"
+         echo "GITHUB_ACTOR: ${GITHUB_ACTOR}"
+         echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
+         echo "GITHUB_EVENT_NAME: ${GITHUB_EVENT_NAME}"
+         echo "GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}"
+         echo "GITHUB_SHA: ${GITHUB_SHA}"
+         echo "GITHUB_REF: ${GITHUB_REF}"
+  build:
+    name: Build app
     runs-on: ubuntu-latest
     environment: UAT
     steps:
@@ -28,11 +52,6 @@ jobs:
         npm -version
     - name: Install loopback
       run: npm install -g @loopback/cli
-  install:
-    needs: [prepare]
-    runs-on: ubuntu-latest
-    environment: UAT
-    steps:
     - name: Checkout repository
       uses: actions/checkout@v3
     - name : Update npm
@@ -52,25 +71,19 @@ jobs:
       working-directory: ${{env.working-directory}}
     - name: Update vars in env file
       run: |  
-        sed -i 's|<CLOUDANT.DB>|'${{secrets.CLOUDANT_DB}}'|g' ./src/datasources/env.ts
+        sed -i 's|<CLOUDANT.DB>|${{secrets.CLOUDANT_DB}}|g' ./src/datasources/env.ts
+        sed -i 's|<CLOUDANT.MODEL>|${{secrets.CLOUDANT_MODEL}}|g' ./src/datasources/env.ts
+        sed -i 's|<CLOUDANT.PASSWORD>|${{secrets.CLOUDANT_PWD}}|g' ./src/datasources/env.ts
+        sed -i 's|<CLOUDANT.URL>|${{secrets.CLOUDANT_URL}}|g' ./src/datasources/env.ts
+        sed -i 's|<CLOUDANT.USERNAME>|${{secrets.CLOUDANT_USER}}|g' ./src/datasources/env.ts
+        sed -i 's|<DB2DB.DB>|${{secrets.DB2_DATABASE}}|g' ./src/datasources/env.ts
+        sed -i 's|<DB2DB.HOST>|${{secrets.DB2_HOSTNAME}}|g' ./src/datasources/env.ts
+        sed -i 's|<DB2DB.PASSWORD>|${{secrets.DB2_PASSWORD}}|g' ./src/datasources/env.ts
+        sed -i 's|<DB2DB.PORT>|${{secrets.DB2_PORT}}|g' ./src/datasources/env.ts
+        sed -i 's|<DB2DB.SSLDSN>|${{secrets.DB2_SSLDSN}}|g' ./src/datasources/env.ts
+        sed -i 's|<DB2DB.USERNAME>|${{secrets.DB2_USER}}|g' ./src/datasources/env.ts
         cat ./src/datasources/env.ts
-  #      sed -i 's|<CLOUDANT.MODEL>|'${{secrets.CLOUDANT_MODEL}}'|g' ./src/datasources/env.ts
-  #      sed -i 's|<CLOUDANT.PASSWORD>|'${{secrets.CLOUDANT_PWD}}'|g' ./src/datasources/env.ts
-  #      sed -i 's|<CLOUDANT.URL>|'${{secrets.CLOUDANT_URL}}'|g' ./src/datasources/env.ts
-  #      sed -i 's|<CLOUDANT.USERNAME>|'${{secrets.CLOUDANT_USER}}'|g' ./src/datasources/env.ts
-  #      sed -i 's|<DB2DB.DB>|'${{secrets.DB2_DATABASE}}'|g' ./src/datasources/env.ts
-  #      sed -i 's|<DB2DB.HOST>|'${{secrets.DB2_HOSTNAME}}'|g' ./src/datasources/env.ts
-  #      sed -i 's|<DB2DB.PASSWORD>|'${{secrets.DB2_PASSWORD}}'|g' ./src/datasources/env.ts
-  #      sed -i 's|<DB2DB.PORT>|${{secrets.DB2_PORT}}|g' ./src/datasources/env.ts
-  #      sed -i 's|<DB2DB.SSLDSN>|'${{secrets.DB2_SSLDSN}}'|g' ./src/datasources/env.ts
-  #      sed -i 's|<DB2DB.USERNAME>|'${{secrets.DB2_USER}}'|g' ./src/datasources/env.ts
-  #      cat ./src/datasources/env.ts
       working-directory: ${{env.working-directory}} 
-  build:
-    needs: [install]
-    runs-on: ubuntu-latest
-    environment: UAT
-    steps:
     - name: build dataapi
       run : |
         npm rebuild
@@ -82,6 +95,7 @@ jobs:
         npm prune --production
       working-directory: ${{env.working-directory}}       
   deploy:
+    name: Deploy app
     needs: [build]
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
