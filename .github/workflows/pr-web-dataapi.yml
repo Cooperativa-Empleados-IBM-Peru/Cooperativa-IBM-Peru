@@ -17,7 +17,6 @@ jobs:
     steps:
     - name: Update OS
       run: |
-        echo "job environment: ${{ jobs.build.environment }}"
         sudo apt-get update && sudo apt-get upgrade
         sudo apt autoremove
     - name: Install node
