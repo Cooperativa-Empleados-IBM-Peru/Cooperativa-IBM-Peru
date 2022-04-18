@@ -1,6 +1,5 @@
 name: Cooperativa web dataapi
 on:
-  push:
   pull_request_target:
     types: [opened, synchronize, closed]
     branches:    
@@ -32,11 +31,6 @@ jobs:
       run: npm install -g @loopback/cli
     - name: Checkout repository
       uses: actions/checkout@v3
-    - name : Update npm
-      run: |
-        npm install npm@latest -g
-        node -v
-        npm -version
     - name: Install packages
       run: |
         npm install
