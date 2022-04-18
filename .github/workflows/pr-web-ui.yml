@@ -34,7 +34,7 @@ jobs:
       uses: actions/checkout@v3
     - name: Install packages
       run: |
-        npm install --force
+        npm install --legacy-peer-deps
         npm prune
       working-directory: ${{env.working-directory}}
     - name : Prepare env files
@@ -72,9 +72,40 @@ jobs:
       run : |
         npm prune --omit=dev
       working-directory: ${{env.working-directory}}
+    - name: Uploading artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: ui-dist
+        path: |
+          web/web-ui/dist/
+          web/web-ui/server.js
+          web/web-ui/localdev-config.json
+          web/web-ui/.env
+          web/web-ui/manifest-dev.yml
+          web/web-ui/package.json
+          web/web-ui/package-lock.json
+#    - name: Uploading node_modules
+#      uses: actions/upload-artifact@v3
+#      with:
+#        name: ui-nodemodules
+#        path: |
+#          web/web-ui/node_modules/
+  deploy:
+    name: Deploy app
+    needs: [build]
+    if: ${{ github.event.pull_request.merged == true }}
+    runs-on: ubuntu-latest
+    environment: UAT
+    steps:
+    - name: Downloading artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: ui-dist
+#    - name: Downloading node modules
+#      uses: actions/download-artifact@v3
+#      with:
+#        name: ui-nodemodules
     - name: Deploy to IBM Cloud Foundry
-      if: ${{ github.event.pull_request.merged == true }}
-      run: cd ${{env.working-directory}}
       uses: IBM/cloudfoundry-deploy@master
       with:
         IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_APIKEY }}
@@ -82,45 +113,3 @@ jobs:
         IBM_CLOUD_CF_ORG: ${{ secrets.IBM_CLOUD_ORG }}
         IBM_CLOUD_CF_SPACE: ${{ secrets.IBM_CLOUD_SPACE }}
         APP_MANIFEST_FILE: manifest-dev.yml
-
-#    - name: Uploading artifacts
-#      uses: actions/upload-artifact@v3
-#      with:
-#        name: ui-dist
-#        path: |
-#          web/web-ui/dist/
-#          web/web-ui/server.js
-#          web/web-ui/localdev-config.json
-#          web/web-ui/.env
-#          web/web-ui/manifest-dev.yml
-#          web/web-ui/package.json
-#          web/web-ui/package-lock.json
-#    - name: Uploading node_modules
-#      uses: actions/upload-artifact@v3
-#      with:
-#        name: ui-nodemodules
-#        path: |
-#          web/web-ui/node_modules/
-#  deploy:
-#    name: Deploy app
-#    needs: [build]
-#    if: ${{ github.event.pull_request.merged == true }}
-#    runs-on: ubuntu-latest
-#    environment: UAT
-#    steps:
-#    - name: Downloading artifacts
-#      uses: actions/download-artifact@v3
-#      with:
-#        name: ui-dist
-#    - name: Downloading node modules
-#      uses: actions/download-artifact@v3
-#      with:
-#        name: ui-nodemodules
-#    - name: Deploy to IBM Cloud Foundry
-#      uses: IBM/cloudfoundry-deploy@master
-#      with:
-#        IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_APIKEY }}
-#        IBM_CLOUD_CF_API: https://api.ng.bluemix.net
-#        IBM_CLOUD_CF_ORG: ${{ secrets.IBM_CLOUD_ORG }}
-#        IBM_CLOUD_CF_SPACE: ${{ secrets.IBM_CLOUD_SPACE }}
-#        APP_MANIFEST_FILE: manifest-dev.yml
