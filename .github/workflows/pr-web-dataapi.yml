@@ -65,9 +65,37 @@ jobs:
       run : |
         npm prune --omit=dev
       working-directory: ${{env.working-directory}}
+    - name: Uploading artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: dataapi-dist
+        path: |
+          web/dataapi/dist/
+          web/dataapi/manifest-dev.yml
+          web/dataapi/package.json
+          web/dataapi/package-lock.json
+#    - name: Uploading node_modules
+#      uses: actions/upload-artifact@v3
+#      with:
+#        name: dataapi-nodemodules
+#        path: |
+#          web/dataapi/node_modules/
+  deploy:
+    name: Deploy app
+    needs: [build]
+    if: ${{ github.event.pull_request.merged == true }}
+    runs-on: ubuntu-latest
+    environment: UAT
+    steps:
+    - name: Downloading artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: dataapi-dist
+#    - name: Downloading node modules
+#      uses: actions/download-artifact@v3
+#      with:
+#        name: dataapi-nodemodules
     - name: Deploy to IBM Cloud Foundry
-      if: ${{ github.event.pull_request.merged == true }}
-      run: cd ${{env.working-directory}}
       uses: IBM/cloudfoundry-deploy@master
       with:
         IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_APIKEY }}
@@ -75,42 +103,3 @@ jobs:
         IBM_CLOUD_CF_ORG: ${{ secrets.IBM_CLOUD_ORG }}
         IBM_CLOUD_CF_SPACE: ${{ secrets.IBM_CLOUD_SPACE }}
         APP_MANIFEST_FILE: manifest-dev.yml
-
-#    - name: Uploading artifacts
-#      uses: actions/upload-artifact@v3
-#      with:
-#        name: dataapi-dist
-#        path: |
-#          web/dataapi/dist/
-#          web/dataapi/manifest-dev.yml
-#          web/dataapi/package.json
-#          web/dataapi/package-lock.json
-#    - name: Uploading node_modules
-#      uses: actions/upload-artifact@v3
-#      with:
-#        name: dataapi-nodemodules
-#        path: |
-#          web/dataapi/node_modules/
-#  deploy:
-#    name: Deploy app
-#    needs: [build]
-#    if: ${{ github.event.pull_request.merged == true }}
-#    runs-on: ubuntu-latest
-#    environment: UAT
-#    steps:
-#    - name: Downloading artifacts
-#      uses: actions/download-artifact@v3
-#      with:
-#        name: dataapi-dist
-#    - name: Downloading node modules
-#      uses: actions/download-artifact@v3
-#      with:
-#        name: dataapi-nodemodules
-#    - name: Deploy to IBM Cloud Foundry
-#      uses: IBM/cloudfoundry-deploy@master
-#      with:
-#        IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_APIKEY }}
-#        IBM_CLOUD_CF_API: https://api.ng.bluemix.net
-#        IBM_CLOUD_CF_ORG: ${{ secrets.IBM_CLOUD_ORG }}
-#        IBM_CLOUD_CF_SPACE: ${{ secrets.IBM_CLOUD_SPACE }}
-#        APP_MANIFEST_FILE: manifest-dev.yml
