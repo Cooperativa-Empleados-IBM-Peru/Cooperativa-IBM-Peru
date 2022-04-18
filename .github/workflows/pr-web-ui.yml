@@ -1,6 +1,5 @@
 name: Cooperativa web ui UAT
 on:
-  push:
   pull_request_target:
     types: [opened, synchronize, closed]
     branches:    
