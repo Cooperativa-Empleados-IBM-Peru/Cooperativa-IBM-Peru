@@ -13,8 +13,10 @@ on:
         required: true
         description: Deployment environment
         type: environment
+        default: UAT
 env:
   working-directory: ./web/dataapi
+  DEPLOYENVIRONMENT: ${format(replace(replace(GITHUB_EVENT_NAME == 'workflow_dispatch', True, '{0}'), False, '{1}'), github.event.inputs.deployenv, 'UAT')}
 jobs:
   show-env:
     name: Environment vars
@@ -31,6 +33,9 @@ jobs:
          echo "GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}"
          echo "GITHUB_SHA: ${GITHUB_SHA}"
          echo "GITHUB_REF: ${GITHUB_REF}"
+         echo "Deployment environment: ${{ github.event.inputs.deployenv }}"
+         echo "Working directory: ${{ env.working-directory }}"
+         echo "DEPLOYENVIRONMENT: ${{ env.DEPLOYENVIRONMENT }}"
   build:
     name: Build app
     runs-on: ubuntu-latest
@@ -96,7 +101,7 @@ jobs:
   deploy:
     name: Deploy app
     needs: [build]
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true || GITHUB_EVENT_NAME == 'workflow_dispatch'
     runs-on: ubuntu-latest
     environment: UAT
     steps:
