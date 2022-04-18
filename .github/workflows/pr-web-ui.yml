@@ -45,23 +45,28 @@ jobs:
       working-directory: ${{env.working-directory}}
     - name: Update vars in env files
       run: |  
-        sed -i 's|<CLOUDANT.DB>|${{secrets.CLOUDANT_DB}}|g' ./src/datasources/env.ts
-        sed -i 's|<CLOUDANT.MODEL>|${{secrets.CLOUDANT_MODEL}}|g' ./src/datasources/env.ts
-        sed -i 's|<CLOUDANT.PASSWORD>|${{secrets.CLOUDANT_PWD}}|g' ./src/datasources/env.ts
-        sed -i 's|<CLOUDANT.URL>|${{secrets.CLOUDANT_URL}}|g' ./src/datasources/env.ts
-        sed -i 's|<CLOUDANT.USERNAME>|${{secrets.CLOUDANT_USER}}|g' ./src/datasources/env.ts
-        sed -i 's|<DB2DB.DB>|${{secrets.DB2_DATABASE}}|g' ./src/datasources/env.ts
-        sed -i 's|<DB2DB.HOST>|${{secrets.DB2_HOSTNAME}}|g' ./src/datasources/env.ts
-        sed -i 's|<DB2DB.PASSWORD>|${{secrets.DB2_PASSWORD}}|g' ./src/datasources/env.ts
-        sed -i 's|<DB2DB.PORT>|${{secrets.DB2_PORT}}|g' ./src/datasources/env.ts
-        sed -i 's|<DB2DB.SSLDSN>|${{secrets.DB2_SSLDSN}}|g' ./src/datasources/env.ts
-        sed -i 's|<DB2DB.USERNAME>|${{secrets.DB2_USER}}|g' ./src/datasources/env.ts
+        sed -i 's|<COOPEAPI.URL>|${{secrets.COOPEAPI_URL}}|g' ./src/environments/env.ts
+        sed -i 's|<CLOUDANT.URL>|${{secrets.CLOUDANT_URL}}|g' ./src/environments/env.ts
+        sed -i 's|<CLOUDANT.USERNAME>|${{secrets.CLOUDANT_USER}}|g' ./src/environments/env.ts
+        sed -i 's|<CLOUDANT.PASSWORD>|${{secrets.CLOUDANT_PWD}}|g' ./src/environments/env.ts
+
+        sed -i 's|<APPID.CLIENTID>|${{secrets.APPID_ID}}|g' ./localdev-config.json
+        sed -i 's|<APPID.OAUTHSERVERURL>|${{secrets.APPID_OAUTHURL}}|g' ./localdev-config.json
+        sed -i 's|<APPID.PROFILESURL>|${{secrets.APPID_PROFILESURL}}|g' ./localdev-config.json
+        sed -i 's|<APPID.SECRET>|${{secrets.APPID_SECRET}}|g' ./localdev-config.json
+        sed -i 's|<APPID.TENANTID>|${{secrets.APPID_TENANTID}}|g' ./localdev-config.json
+        sed -i 's|<APPID.REDIRECTURI>|${{secrets.APPID_REDIRECTURL}}|g' ./localdev-config.json
+
+        sed -i 's|<DB2.DATABASE>|${{secrets.DB2_DATABASE}}|g' ./.env
+        sed -i 's|<DB2.HOSTNAME>|${{secrets.DB2_HOSTNAME}}|g' ./.env
+        sed -i 's|<DB2.USER>|${{secrets.DB2_USER}}|g' ./.env
+        sed -i 's|<DB2.PWD>|${{secrets.DB2_PASSWORD}}|g' ./.env
+        sed -i 's|<DB2.PORT>|${{secrets.DB2_PORT}}|g' ./.env
       working-directory: ${{env.working-directory}} 
-    - name: build dataapi
+    - name: build ui
       run : |
         npm rebuild
-        npm run clean
-        npm run build
+        npm run build:dev
       working-directory: ${{env.working-directory}} 
     - name: clean modules
       run : |
@@ -70,11 +75,14 @@ jobs:
     - name: Uploading artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: dataapi-dist
+        name: ui-dist
         path: |
-          web/dataapi/dist/
-          web/dataapi/manifest-dev.yml
-          web/dataapi/package.json
+          web/web-ui/dist/
+          web/web-ui/server.js
+          web/web-ui/localdev-config.json
+          web/web-ui/.env
+          web/web-ui/manifest-dev.yml
+          web/web-ui/package.json
   deploy:
     name: Deploy app
     needs: [build]
@@ -85,7 +93,7 @@ jobs:
     - name: Downloading artifacts
       uses: actions/download-artifact@v3
       with:
-        name: dataapi-dist
+        name: ui-dist
     - name: Deploy to IBM Cloud Foundry
       uses: IBM/cloudfoundry-deploy@master
       with:
