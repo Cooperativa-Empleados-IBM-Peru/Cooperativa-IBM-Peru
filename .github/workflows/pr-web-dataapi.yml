@@ -33,7 +33,7 @@ jobs:
       uses: actions/checkout@v3
     - name: Install packages
       run: |
-        npm install
+        npm ci
         npm prune
       working-directory: ${{env.working-directory}}
     - name : Prepare env file
