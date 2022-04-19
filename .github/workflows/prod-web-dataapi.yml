@@ -87,4 +87,4 @@ jobs:
         IBM_CLOUD_CF_API: https://api.ng.bluemix.net
         IBM_CLOUD_CF_ORG: ${{ secrets.IBM_CLOUD_ORG }}
         IBM_CLOUD_CF_SPACE: ${{ secrets.IBM_CLOUD_SPACE }}
-        APP_MANIFEST_FILE: manifest-dev.yml
+        APP_MANIFEST_FILE: manifest.yml
