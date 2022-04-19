@@ -1,0 +1,90 @@
+name: Cooperativa web dataapi PROD
+on: 
+  workflow_dispatch:
+env:
+  working-directory: ./web/dataapi
+jobs:
+  build:
+    name: Build app
+    runs-on: ubuntu-latest
+    environment: PROD
+    steps:
+    - name: Update OS
+      run: |
+        sudo apt-get update && sudo apt-get upgrade
+        sudo apt autoremove
+    - name: Install node
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16.14.2'
+    - name : Update npm
+      run: |
+        npm install npm@latest -g
+        npm config set legacy-peer-deps true
+        node -v
+        npm -version
+    - name: Install loopback
+      run: npm install -g @loopback/cli
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Install packages
+      run: |
+        npm install --legacy-peer-deps
+        npm prune
+      working-directory: ${{env.working-directory}}
+    - name : Prepare env file
+      run: |
+        cp ./src/datasources/env.ts.template ./src/datasources/env.ts
+      working-directory: ${{env.working-directory}}
+    - name: Update vars in env file
+      run: |  
+        sed -i 's|<CLOUDANT.DB>|${{secrets.CLOUDANT_DB}}|g' ./src/datasources/env.ts
+        sed -i 's|<CLOUDANT.MODEL>|${{secrets.CLOUDANT_MODEL}}|g' ./src/datasources/env.ts
+        sed -i 's|<CLOUDANT.PASSWORD>|${{secrets.CLOUDANT_PWD}}|g' ./src/datasources/env.ts
+        sed -i 's|<CLOUDANT.URL>|${{secrets.CLOUDANT_URL}}|g' ./src/datasources/env.ts
+        sed -i 's|<CLOUDANT.USERNAME>|${{secrets.CLOUDANT_USER}}|g' ./src/datasources/env.ts
+        sed -i 's|<DB2DB.DB>|${{secrets.DB2_DATABASE}}|g' ./src/datasources/env.ts
+        sed -i 's|<DB2DB.HOST>|${{secrets.DB2_HOSTNAME}}|g' ./src/datasources/env.ts
+        sed -i 's|<DB2DB.PASSWORD>|${{secrets.DB2_PASSWORD}}|g' ./src/datasources/env.ts
+        sed -i 's|<DB2DB.PORT>|${{secrets.DB2_PORT}}|g' ./src/datasources/env.ts
+        sed -i 's|<DB2DB.SSLDSN>|${{secrets.DB2_SSLDSN}}|g' ./src/datasources/env.ts
+        sed -i 's|<DB2DB.USERNAME>|${{secrets.DB2_USER}}|g' ./src/datasources/env.ts
+      working-directory: ${{env.working-directory}} 
+    - name: build dataapi
+      run : |
+        npm rebuild
+        npm run clean
+        npm run build
+      working-directory: ${{env.working-directory}} 
+    - name: clean modules
+      run : |
+        npm prune --omit=dev
+      working-directory: ${{env.working-directory}}
+    - name: Uploading artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: dataapi-dist
+        path: |
+          web/dataapi/dist/
+          web/dataapi/manifest-dev.yml
+          web/dataapi/package.json
+          web/dataapi/package-lock.json
+  deploy:
+    name: Deploy app
+    needs: [build]
+    if: ${{ github.event.pull_request.merged == true }}
+    runs-on: ubuntu-latest
+    environment: PROD
+    steps:
+    - name: Downloading artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: dataapi-dist
+    - name: Deploy to IBM Cloud Foundry
+      uses: IBM/cloudfoundry-deploy@master
+      with:
+        IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_APIKEY }}
+        IBM_CLOUD_CF_API: https://api.ng.bluemix.net
+        IBM_CLOUD_CF_ORG: ${{ secrets.IBM_CLOUD_ORG }}
+        IBM_CLOUD_CF_SPACE: ${{ secrets.IBM_CLOUD_SPACE }}
+        APP_MANIFEST_FILE: manifest-dev.yml

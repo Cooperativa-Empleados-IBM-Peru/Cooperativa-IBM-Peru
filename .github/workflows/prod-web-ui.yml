@@ -1,0 +1,100 @@
+name: Cooperativa web ui PROD
+on: 
+  workflow_dispatch:
+env:
+  working-directory: ./web/web-ui
+jobs:
+  build:
+    name: Build app
+    runs-on: ubuntu-latest
+    environment: PROD
+    steps:
+    - name: Update OS
+      run: |
+        sudo apt-get update && sudo apt-get upgrade
+        sudo apt autoremove
+    - name: Install node
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16.14.2'
+    - name : Update npm
+      run: |
+        npm install npm@latest -g
+        npm config set legacy-peer-deps true
+        node -v
+        npm -version
+    - name: Install Angular
+      run: npm install -g @angular/cli
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Install packages
+      run: |
+        npm install --legacy-peer-deps
+        npm prune
+      working-directory: ${{env.working-directory}}
+    - name : Prepare env files
+      run: |
+        cp ./src/environments/env.ts.template ./src/environments/env.ts
+        cp ./localdev-config.json.template ./localdev-config.json
+        cp ./.env.template ./.env
+      working-directory: ${{env.working-directory}}
+    - name: Update vars in env files
+      run: |  
+        sed -i 's|<COOPEAPI.URL>|${{secrets.COOPEAPI_URL}}|g' ./src/environments/env.ts
+        sed -i 's|<CLOUDANT.URL>|${{secrets.CLOUDANT_URL}}|g' ./src/environments/env.ts
+        sed -i 's|<CLOUDANT.USERNAME>|${{secrets.CLOUDANT_USER}}|g' ./src/environments/env.ts
+        sed -i 's|<CLOUDANT.PASSWORD>|${{secrets.CLOUDANT_PWD}}|g' ./src/environments/env.ts
+
+        sed -i 's|<APPID.CLIENTID>|${{secrets.APPID_ID}}|g' ./localdev-config.json
+        sed -i 's|<APPID.OAUTHSERVERURL>|${{secrets.APPID_OAUTHURL}}|g' ./localdev-config.json
+        sed -i 's|<APPID.PROFILESURL>|${{secrets.APPID_PROFILESURL}}|g' ./localdev-config.json
+        sed -i 's|<APPID.SECRET>|${{secrets.APPID_SECRET}}|g' ./localdev-config.json
+        sed -i 's|<APPID.TENANTID>|${{secrets.APPID_TENANTID}}|g' ./localdev-config.json
+        sed -i 's|<APPID.REDIRECTURI>|${{secrets.APPID_REDIRECTURL}}|g' ./localdev-config.json
+
+        sed -i 's|<DB2.DATABASE>|${{secrets.DB2_DATABASE}}|g' ./.env
+        sed -i 's|<DB2.HOSTNAME>|${{secrets.DB2_HOSTNAME}}|g' ./.env
+        sed -i 's|<DB2.USER>|${{secrets.DB2_USER}}|g' ./.env
+        sed -i 's|<DB2.PWD>|${{secrets.DB2_PASSWORD}}|g' ./.env
+        sed -i 's|<DB2.PORT>|${{secrets.DB2_PORT}}|g' ./.env
+      working-directory: ${{env.working-directory}} 
+    - name: build ui
+      run : |
+        npm rebuild
+        npm run build:dev
+      working-directory: ${{env.working-directory}} 
+    - name: clean modules
+      run : |
+        npm prune --omit=dev
+      working-directory: ${{env.working-directory}}
+    - name: Uploading artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: ui-dist
+        path: |
+          web/web-ui/dist/
+          web/web-ui/server.js
+          web/web-ui/localdev-config.json
+          web/web-ui/.env
+          web/web-ui/manifest-dev.yml
+          web/web-ui/package.json
+          web/web-ui/package-lock.json
+  deploy:
+    name: Deploy app
+    needs: [build]
+    if: ${{ github.event.pull_request.merged == true }}
+    runs-on: ubuntu-latest
+    environment: PROD
+    steps:
+    - name: Downloading artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: ui-dist
+    - name: Deploy to IBM Cloud Foundry
+      uses: IBM/cloudfoundry-deploy@master
+      with:
+        IBM_CLOUD_API_KEY: ${{ secrets.IBM_CLOUD_APIKEY }}
+        IBM_CLOUD_CF_API: https://api.ng.bluemix.net
+        IBM_CLOUD_CF_ORG: ${{ secrets.IBM_CLOUD_ORG }}
+        IBM_CLOUD_CF_SPACE: ${{ secrets.IBM_CLOUD_SPACE }}
+        APP_MANIFEST_FILE: manifest-dev.yml
