@@ -5,14 +5,6 @@ import {db2config} from '../datasources/env';
   settings: {idInjection: false, db2: {schema: db2config.schema, table: 'VWSOCIOSACTIVOS'}}
 })
 export class Vwsociosactivos extends Entity {
-  @property({
-    type: 'boolean',
-    length: 1,
-    // precision: ,
-    scale: 0,
-    db2: {columnName: 'ACTIVO', dataType: 'BOOLEAN', dataLength: 1, dataPrecision: undefined, dataScale: 0, nullable: 'Y'},
-  })
-  activo?: boolean;
 
   @property({
     type: 'string',
@@ -38,26 +30,6 @@ export class Vwsociosactivos extends Entity {
 
   @property({
     type: 'string',
-    required: true,
-    length: 5,
-    // precision: ,
-    scale: 0,
-    db2: {columnName: 'CODPAIS', dataType: 'CHARACTER', dataLength: 5, dataPrecision: undefined, dataScale: 0, nullable: 'N'},
-  })
-  codpais: string;
-
-  @property({
-    type: 'string',
-    required: true,
-    length: 5,
-    // precision: ,
-    scale: 0,
-    db2: {columnName: 'COMPANY', dataType: 'CHARACTER', dataLength: 10, dataPrecision: undefined, dataScale: 0, nullable: 'N'},
-  })
-  company: string;
-
-  @property({
-    type: 'string',
     length: 50,
     // precision: ,
     scale: 0,
@@ -66,31 +38,13 @@ export class Vwsociosactivos extends Entity {
   emailempleado?: string;
 
   @property({
-    type: 'date',
-    length: 13,
-    // precision: ,
-    scale: 12,
-    db2: {columnName: 'FECMODIFICACION', dataType: 'TIMESTAMP', dataLength: 13, dataPrecision: undefined, dataScale: 12, nullable: 'Y'},
-  })
-  fecmodificacion?: string;
-
-  @property({
-    type: 'boolean',
-    length: 1,
+    type: 'string',
+    length: 50,
     // precision: ,
     scale: 0,
-    db2: {columnName: 'INBLUEPAGES', dataType: 'BOOLEAN', dataLength: 1, dataPrecision: undefined, dataScale: 0, nullable: 'Y'},
+    db2: {columnName: 'EMAILEMPLEADO2', dataType: 'CHARACTER', dataLength: 50, dataPrecision: undefined, dataScale: 0, nullable: 'Y'},
   })
-  inbluepages?: boolean;
-
-  @property({
-    type: 'boolean',
-    length: 1,
-    // precision: ,
-    scale: 0,
-    db2: {columnName: 'ISADMIN', dataType: 'BOOLEAN', dataLength: 1, dataPrecision: undefined, dataScale: 0, nullable: 'Y'},
-  })
-  isadmin?: boolean;
+  emailempleado2?: string;
 
   @property({
     type: 'string',
