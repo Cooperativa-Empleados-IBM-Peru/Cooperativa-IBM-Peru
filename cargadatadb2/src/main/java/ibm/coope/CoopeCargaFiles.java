@@ -206,118 +206,139 @@ public class CoopeCargaFiles {
 
         try {
 
-            sql = "SELECT * FROM MAESTROCLIENTESSALDOSTEMP";
-            rs = stmt.executeQuery(sql);
-
+            sql = "INSERT INTO MAESTROCLIENTESSALDOSTEMP (TipoId, CodEmpleado, " +
+            " NombreEmpleado, DireccionEmpleado, CodEmpresa, CtaCliente, " +
+            " TipoMoneda, IntAhorroMes, IntMiscelaneoMes, " +
+            " SaldoDispAhorro, SaldoBloqueoAhorro, SaldoAportacion, SaldoMiscelaneo, " +
+            " SaldoCertificado1, SaldoCertificado2, SaldoPresSolaFirma, " +
+            " SaldoPresCortoPlazo, SaldoPresMedianoPlazo, SaldoPresLargoPlazo, " +
+            " SaldoPresHipotecario, SaldoPresConsumo, SaldoPresAuto, " +
+            " SaldoPresPS1, SaldoPresEsp1, SaldoPresEsp2, " +
+            " FecDispAhorro, FecBloqueoAhorro, FecAportacion, FecMiscelaneo, " +
+            " FecCertificado1, FecCertificado2, FecPresSolaFirma, " +
+            " FecPresCortoPlazo, FecPresMedianoPlazo, FecPresLargoPlazo, " +
+            " FecPresHipotecario, FecPresConsumo, FecPresAuto, " +
+            " FecPresPS1, FecPresEsp1, FecPresEsp2) " +
+            " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
+            " ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
+            " ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
+            " ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
+            " ?)";
+            
+            PreparedStatement ps = con.prepareStatement(sql);
+            final int batchSize = 500;
+            int count = 0;
+ 
             while ((filerow = fileReader.readLine()) != null) {
 
                 logger.trace(filerow);
 
                 CoopePrusal maestro = new CoopePrusal(filerow);
 
-                rs.moveToInsertRow();
+                ps.setString(1, maestro.getTipoID());
+                ps.setString(2, maestro.getCodEmpleado());
+                ps.setString(3, maestro.getNomSocio());
+                ps.setString(4, maestro.getDirSocio());
+                ps.setString(5, maestro.getCodEmpresa());
+                ps.setString(6, maestro.getCtaCliente());
+                ps.setString(7, maestro.getTipoMonedaPago());
+                ps.setDouble(8, maestro.getIntAhoMes());
+                ps.setDouble(9, maestro.getIntMisMes());
+                ps.setDouble(10, maestro.getSalDisAho());
+                ps.setDouble(11, maestro.getSalBloAho());
+                ps.setDouble(12, maestro.getSalAporta());
+                ps.setDouble(13, maestro.getSalMiscel());
+                ps.setDouble(14, maestro.getSalCert1());
+                ps.setDouble(15, maestro.getSalCert2());
+                ps.setDouble(16, maestro.getSalPSFirma());
+                ps.setDouble(17, maestro.getSalPCPlazo());
 
-                rs.updateString("TipoId", maestro.getTipoID());
-                rs.updateString("CodEmpleado", maestro.getCodEmpleado());
-                rs.updateString("NombreEmpleado", maestro.getNomSocio());
-                rs.updateString("DireccionEmpleado", maestro.getDirSocio());
-                rs.updateString("CodEmpresa", maestro.getCodEmpresa());
-                rs.updateString("CtaCliente", maestro.getCtaCliente());
-                rs.updateString("TipoMoneda", maestro.getTipoMonedaPago());
-                rs.updateDouble("IntAhorroMes", maestro.getIntAhoMes());
-                rs.updateDouble("IntMiscelaneoMes", maestro.getIntMisMes());
-
-                rs.updateDouble("SaldoDispAhorro", maestro.getSalDisAho());
-                rs.updateDouble("SaldoBloqueoAhorro", maestro.getSalBloAho());
-                rs.updateDouble("SaldoAportacion", maestro.getSalAporta());
-                rs.updateDouble("SaldoMiscelaneo", maestro.getSalMiscel());
-                rs.updateDouble("SaldoCertificado1", maestro.getSalCert1());
-                rs.updateDouble("SaldoCertificado2", maestro.getSalCert2());
-                rs.updateDouble("SaldoPresSolaFirma", maestro.getSalPSFirma());
-                rs.updateDouble("SaldoPresCortoPlazo", maestro.getSalPCPlazo());
-                rs.updateDouble("SaldoPresMedianoPlazo", maestro.getSalPMPlazo());
-                rs.updateDouble("SaldoPresLargoPlazo", maestro.getSalPLPlazo());
-                rs.updateDouble("SaldoPresHipotecario", maestro.getSalPHipot());
-                rs.updateDouble("SaldoPresConsumo", maestro.getSalPConsum());
-                rs.updateDouble("SaldoPresAuto", maestro.getSalPAuto());
-                rs.updateDouble("SaldoPresPS1", maestro.getSalPPS1());
-                rs.updateDouble("SaldoPresEsp1", maestro.getSalPEsp1());
-                rs.updateDouble("SaldoPresEsp2", maestro.getSalPEsp2());
+                ps.setDouble(18, maestro.getSalPMPlazo());
+                ps.setDouble(19, maestro.getSalPLPlazo());
+                ps.setDouble(20, maestro.getSalPHipot());
+                ps.setDouble(21, maestro.getSalPConsum());
+                ps.setDouble(22, maestro.getSalPAuto());
+                ps.setDouble(23, maestro.getSalPPS1());
+                ps.setDouble(24, maestro.getSalPEsp1());
+                ps.setDouble(25, maestro.getSalPEsp2());
 
                 tmpld = maestro.getFecMovDisAho();
                 if (!ObjectUtils.isEmpty(tmpld))
-                    rs.updateDate("FecDispAhorro", java.sql.Date.valueOf(tmpld));
+                    ps.setDate(26, java.sql.Date.valueOf(tmpld));
 
                 tmpld = maestro.getFecMovBloAho();
                 if (!ObjectUtils.isEmpty(tmpld))
-                    rs.updateDate("FecBloqueoAhorro", java.sql.Date.valueOf(tmpld));
-
+                    ps.setDate(27, java.sql.Date.valueOf(tmpld));
+    
                 tmpld = maestro.getFecMovAporta();
                 if (!ObjectUtils.isEmpty(tmpld))
-                    rs.updateDate("FecAportacion", java.sql.Date.valueOf(tmpld));
-
+                    ps.setDate(28, java.sql.Date.valueOf(tmpld));
+ 
                 tmpld = maestro.getFecMovMiscel();
                 if (!ObjectUtils.isEmpty(tmpld))
-                    rs.updateDate("FecMiscelaneo", java.sql.Date.valueOf(tmpld));
-
+                    ps.setDate(29, java.sql.Date.valueOf(tmpld));
+    
                 tmpld = maestro.getFecMovCert1();
                 if (!ObjectUtils.isEmpty(tmpld))
-                    rs.updateDate("FecCertificado1", java.sql.Date.valueOf(tmpld));
-
+                    ps.setDate(30, java.sql.Date.valueOf(tmpld));
+    
                 tmpld = maestro.getFecMovCert2();
                 if (!ObjectUtils.isEmpty(tmpld))
-                    rs.updateDate("FecCertificado2", java.sql.Date.valueOf(tmpld));
-
+                    ps.setDate(31, java.sql.Date.valueOf(tmpld));
+    
                 tmpld = maestro.getFecMovPSFirma();
                 if (!ObjectUtils.isEmpty(tmpld))
-                    rs.updateDate("FecPresSolaFirma", java.sql.Date.valueOf(tmpld));
-
+                    ps.setDate(32, java.sql.Date.valueOf(tmpld));
+          
                 tmpld = maestro.getFecMovPCPlazo();
                 if (!ObjectUtils.isEmpty(tmpld))
-                    rs.updateDate("FecPresCortoPlazo", java.sql.Date.valueOf(tmpld));
-
+                    ps.setDate(33, java.sql.Date.valueOf(tmpld));
+    
                 tmpld = maestro.getFecMovPMPlazo();
                 if (!ObjectUtils.isEmpty(tmpld))
-                    rs.updateDate("FecPresMedianoPlazo", java.sql.Date.valueOf(tmpld));
-
+                    ps.setDate(34, java.sql.Date.valueOf(tmpld));
+    
                 tmpld = maestro.getFecMovPLPlazo();
                 if (!ObjectUtils.isEmpty(tmpld))
-                    rs.updateDate("FecPresLargoPlazo", java.sql.Date.valueOf(tmpld));
-
+                    ps.setDate(35, java.sql.Date.valueOf(tmpld));
+                       
                 tmpld = maestro.getFecMovPHipot();
                 if (!ObjectUtils.isEmpty(tmpld))
-                    rs.updateDate("FecPresHipotecario", java.sql.Date.valueOf(tmpld));
-
+                    ps.setDate(36, java.sql.Date.valueOf(tmpld));
+    
                 tmpld = maestro.getFecMovPConsum();
                 if (!ObjectUtils.isEmpty(tmpld))
-                    rs.updateDate("FecPresConsumo", java.sql.Date.valueOf(tmpld));
-
+                    ps.setDate(37, java.sql.Date.valueOf(tmpld));
+    
                 tmpld = maestro.getFecMovPAuto();
                 if (!ObjectUtils.isEmpty(tmpld))
-                    rs.updateDate("FecPresAuto", java.sql.Date.valueOf(tmpld));
-
+                    ps.setDate(38, java.sql.Date.valueOf(tmpld));
+    
                 tmpld = maestro.getFecMovPPS1();
                 if (!ObjectUtils.isEmpty(tmpld))
-                    rs.updateDate("FecPresPS1", java.sql.Date.valueOf(tmpld));
-
+                    ps.setDate(39, java.sql.Date.valueOf(tmpld));
+    
                 tmpld = maestro.getFecMovPEsp1();
                 if (!ObjectUtils.isEmpty(tmpld))
-                    rs.updateDate("FecPresEsp1", java.sql.Date.valueOf(tmpld));
-
+                    ps.setDate(40, java.sql.Date.valueOf(tmpld));
+    
                 tmpld = maestro.getFecMovPEsp2();
                 if (!ObjectUtils.isEmpty(tmpld))
-                    rs.updateDate("FecPresEsp2", java.sql.Date.valueOf(tmpld));
+                    ps.setDate(41, java.sql.Date.valueOf(tmpld));
+    
+                ps.addBatch();
 
-                rs.insertRow();
-
+                if(++count % batchSize == 0) {
+                    ps.executeBatch();
+                }
+   
             } // while
 
-            // Close the ResultSet
-            rs.close();
-            logger.trace("**** Closed JDBC ResultSet");
+            ps.executeBatch();
+            ps.close();
 
-            con.commit();
-         
+            logger.trace("**** Closed JDBC ResultSet");
+        
         } catch (final IOException e) {
             logger.error(e);
 
@@ -1086,6 +1107,7 @@ public class CoopeCargaFiles {
             PreparedStatement ps = con.prepareStatement(sql);
             final int batchSize = 500;
             int count = 0;
+
             while ((filerow = fileReader.readLine()) != null) {
 
                 logger.trace(filerow);
@@ -1117,8 +1139,6 @@ public class CoopeCargaFiles {
             ps.close();
 
             logger.trace("**** Closed JDBC ResultSet");
-
-   //         con.commit();
 
         } catch (final IOException e) {
             logger.error(e);
