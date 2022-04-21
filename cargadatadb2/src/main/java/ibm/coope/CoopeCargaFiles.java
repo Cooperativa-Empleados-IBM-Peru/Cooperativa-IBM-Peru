@@ -24,9 +24,7 @@ public class CoopeCargaFiles {
     Logger logger = null;
    
     private Connection con;
-    private Statement stmt;
-    private ResultSet rs;
-
+ 
     BufferedReader fileReader;
 
     @Getter(AccessLevel.NONE)
@@ -727,41 +725,44 @@ public class CoopeCargaFiles {
         logger.debug("Iniciando variables cargaGarantes");
         String filerow = "";
         String sql = "";
+        String sqldet = "";
         String tipodocgarante;
         String docidgarante;
         String nombregarante;
-
-        Statement stmtdet;
-        ResultSet rsdet;
-    
+   
         CoopeGarantesDetalle garantedet;
         
         try {
 
-            stmtdet = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            logger.debug("**** Created JDBC Statement Details object");
-
-            sql = "SELECT * FROM GARANTESDETALLETEMP";
-            rsdet = stmtdet.executeQuery(sql);
-
-            sql = "SELECT * FROM GARANTESTEMP";
-            rs = stmt.executeQuery(sql);
-
+            sqldet = "INSERT INTO GARANTESDETALLETEMP (CodEmpleado, NumOperacion, " +
+            " TipoDocGarante, DocIdGarante, NombreGarante ) " +
+            " VALUES (?, ?, ?, ?, ? )";
+    
+            sql = "INSERT INTO GARANTESTEMP (CodEmpleado, NumOperacion, " +
+            " IdMovimiento, TipoDoc ) " +
+            " VALUES (?, ?, ?, ? )";
+    
+            PreparedStatement ps = con.prepareStatement(sql);
+            int count = 0;
+            PreparedStatement psdet = con.prepareStatement(sqldet);
+            int countdet = 0;
+ 
             while ((filerow = fileReader.readLine()) != null) {
 
                 logger.trace(filerow);
 
                 CoopeGarantes garante = new CoopeGarantes(filerow);
-
-                // INSERT NEW RECORD
-                rs.moveToInsertRow();
-
-                rs.updateString("NumOperacion", garante.getNumOperacion() );
-                rs.updateString("CodEmpleado", garante.getCodEmpleado() );
-                rs.updateString("IdMovimiento", garante.getIdMovim() );
-                rs.updateString("TipoDoc", garante.getTipoDoc() );
+   
+                ps.setString(1, garante.getCodEmpleado() );
+                ps.setString(2, garante.getNumOperacion() );
+                ps.setString(3, garante.getIdMovim() );
+                ps.setString(4, garante.getTipoDoc() );
      
-                rs.insertRow();
+                ps.addBatch();
+
+                if(++count % batchSize == 0) {
+                    ps.executeBatch();
+                }
     
                 //Detalles
                 tipodocgarante = filerow.substring(25, 26).trim();
@@ -769,64 +770,76 @@ public class CoopeCargaFiles {
                 nombregarante = filerow.substring(37, 67).trim();
                 if (tipodocgarante.length() > 0 && docidgarante.length() > 0 ) {  
                     garantedet = new CoopeGarantesDetalle(garante.getCodEmpleado(), garante.getNumOperacion(), tipodocgarante, docidgarante, nombregarante);
-                    rsdet.moveToInsertRow();
- 
-                    rsdet.updateString("CodEmpleado", garantedet.getCodEmpleado() );
-                    rsdet.updateString("TipoDocGarante", garantedet.getTipoDocGarante() );
-                    rsdet.updateString("DocIdgarante", garantedet.getDocIdGarante() );
-                    rsdet.updateString("NombreGarante", garantedet.getNomGarante() );
-                    rsdet.updateString("NumOperacion", garantedet.getNumOperacion() );
- 
-                    rsdet.insertRow();
-                }    
+    
+                    psdet.setString(1, garantedet.getCodEmpleado() );
+                    psdet.setString(2, garantedet.getNumOperacion() );
+                    psdet.setString(3, garantedet.getTipoDocGarante() );
+                    psdet.setString(4, garantedet.getDocIdGarante() );
+                    psdet.setString(5, garantedet.getNomGarante() );
+    
+                    psdet.addBatch();
+
+                    if(++countdet % batchSize == 0) {
+                        psdet.executeBatch();
+                    }
+                 }    
 
                 tipodocgarante = filerow.substring(67, 68).trim();
                 docidgarante = filerow.substring(68, 79).trim();
                 nombregarante = filerow.substring(79, 109).trim();
                 if (tipodocgarante.length() > 0 && docidgarante.length() > 0 ) {  
                     garantedet = new CoopeGarantesDetalle(garante.getCodEmpleado(), garante.getNumOperacion(), tipodocgarante, docidgarante, nombregarante);
-                    rsdet.moveToInsertRow();
- 
-                    rsdet.updateString("CodEmpleado", garantedet.getCodEmpleado() );
-                    rsdet.updateString("TipoDocGarante", garantedet.getTipoDocGarante() );
-                    rsdet.updateString("DocIdgarante", garantedet.getDocIdGarante() );
-                    rsdet.updateString("NombreGarante", garantedet.getNomGarante() );
-                    rsdet.updateString("NumOperacion", garantedet.getNumOperacion() );
- 
-                    rsdet.insertRow();                   
-                }    
+
+                    psdet.setString(1, garantedet.getCodEmpleado() );
+                    psdet.setString(2, garantedet.getNumOperacion() );
+                    psdet.setString(3, garantedet.getTipoDocGarante() );
+                    psdet.setString(4, garantedet.getDocIdGarante() );
+                    psdet.setString(5, garantedet.getNomGarante() );
+    
+                    psdet.addBatch();
+
+                    if(++countdet % batchSize == 0) {
+                        psdet.executeBatch();
+                    }
+               }    
                      
                 tipodocgarante = filerow.substring(109, 110).trim();
                 docidgarante = filerow.substring(110, 121).trim();
                 nombregarante = filerow.substring(121, 151).trim();
                 if (tipodocgarante.length() > 0 && docidgarante.length() > 0 ) { 
                     garantedet = new CoopeGarantesDetalle(garante.getCodEmpleado(), garante.getNumOperacion(), tipodocgarante, docidgarante, nombregarante);
-                    rsdet.moveToInsertRow();
-
-                    rsdet.updateString("CodEmpleado", garantedet.getCodEmpleado() );
-                    rsdet.updateString("TipoDocGarante", garantedet.getTipoDocGarante() );
-                    rsdet.updateString("DocIdgarante", garantedet.getDocIdGarante() );
-                    rsdet.updateString("NombreGarante", garantedet.getNomGarante() );
-                    rsdet.updateString("NumOperacion", garantedet.getNumOperacion() );
  
-                    rsdet.insertRow();                    
-                }    
+                    psdet.setString(1, garantedet.getCodEmpleado() );
+                    psdet.setString(2, garantedet.getNumOperacion() );
+                    psdet.setString(3, garantedet.getTipoDocGarante() );
+                    psdet.setString(4, garantedet.getDocIdGarante() );
+                    psdet.setString(5, garantedet.getNomGarante() );
+    
+                    psdet.addBatch();
+
+                    if(++countdet % batchSize == 0) {
+                        psdet.executeBatch();
+                    }
+               }    
                       
                 tipodocgarante = filerow.substring(151, 152).trim();
                 docidgarante = filerow.substring(152, 163).trim();
                 nombregarante = filerow.substring(163, 193).trim();
                 if (tipodocgarante.length() > 0 && docidgarante.length() > 0 ){
                     garantedet = new CoopeGarantesDetalle(garante.getCodEmpleado(), garante.getNumOperacion(), tipodocgarante, docidgarante, nombregarante);
-                    rsdet.moveToInsertRow();
  
-                    rsdet.updateString("CodEmpleado", garantedet.getCodEmpleado() );
-                    rsdet.updateString("TipoDocGarante", garantedet.getTipoDocGarante() );
-                    rsdet.updateString("DocIdgarante", garantedet.getDocIdGarante() );
-                    rsdet.updateString("NombreGarante", garantedet.getNomGarante() );
-                    rsdet.updateString("NumOperacion", garantedet.getNumOperacion() );
- 
-                    rsdet.insertRow();                   
-                }    
+                    psdet.setString(1, garantedet.getCodEmpleado() );
+                    psdet.setString(2, garantedet.getNumOperacion() );
+                    psdet.setString(3, garantedet.getTipoDocGarante() );
+                    psdet.setString(4, garantedet.getDocIdGarante() );
+                    psdet.setString(5, garantedet.getNomGarante() );
+    
+                    psdet.addBatch();
+
+                    if(++countdet % batchSize == 0) {
+                        psdet.executeBatch();
+                    }
+               }    
        
                 
                 tipodocgarante = filerow.substring(193, 194).trim();
@@ -834,22 +847,29 @@ public class CoopeCargaFiles {
                 nombregarante = filerow.substring(205, 235).trim();
                 if (tipodocgarante.length() > 0 && docidgarante.length() > 0 ) {
                     garantedet = new CoopeGarantesDetalle(garante.getCodEmpleado(), garante.getNumOperacion(), tipodocgarante, docidgarante, nombregarante);
-                    rsdet.moveToInsertRow();
  
-                    rsdet.updateString("CodEmpleado", garantedet.getCodEmpleado() );
-                    rsdet.updateString("TipoDocGarante", garantedet.getTipoDocGarante() );
-                    rsdet.updateString("DocIdgarante", garantedet.getDocIdGarante() );
-                    rsdet.updateString("NombreGarante", garantedet.getNomGarante() );
-                    rsdet.updateString("NumOperacion", garantedet.getNumOperacion() );
- 
-                    rsdet.insertRow();                   
+                    psdet.setString(1, garantedet.getCodEmpleado() );
+                    psdet.setString(2, garantedet.getNumOperacion() );
+                    psdet.setString(3, garantedet.getTipoDocGarante() );
+                    psdet.setString(4, garantedet.getDocIdGarante() );
+                    psdet.setString(5, garantedet.getNomGarante() );
+    
+                    psdet.addBatch();
+
+                    if(++countdet % batchSize == 0) {
+                        psdet.executeBatch();
+                    }
                 }    
        
            }
 
-          // Close the ResultSet
-          rs.close();
-          logger.trace("**** Closed JDBC PreparedStatement");
+           ps.executeBatch();
+           ps.close();
+
+           psdet.executeBatch();
+           psdet.close();
+
+           logger.trace("**** Closed JDBC PreparedStatement");
 
           con.commit();
 
@@ -1300,9 +1320,6 @@ public class CoopeCargaFiles {
             con.setAutoCommit(false);
             logger.info("**** Created a JDBC connection to the data source. Autocommit : " + con.getAutoCommit() );
 
-            stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            logger.debug("**** Created JDBC Statement object");
-
         } catch (final ClassNotFoundException e) {
             logger.error("Could not load JDBC driver");
             logger.error(e);
@@ -1329,9 +1346,6 @@ public class CoopeCargaFiles {
     private void closedb2Connection() {
 
         try {
-              // Close the Statement
-              stmt.close();
-              logger.info("**** Closed JDBC Statement");
            
               // Close the connection
               logger.debug("Closing connection to db2");
