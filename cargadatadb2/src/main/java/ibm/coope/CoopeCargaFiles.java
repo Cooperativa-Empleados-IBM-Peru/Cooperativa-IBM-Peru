@@ -559,8 +559,13 @@ public class CoopeCargaFiles {
 
         try {
 
-            sql = "SELECT * FROM PLANPAGOSTEMP";
-            rs = stmt.executeQuery(sql);
+            sql = "INSERT INTO PLANPAGOSTEMP (NumOperacion, IdMovimiento, " +
+            " Cuota, FecVencimiento, FecPago, " +
+            " Monto, Interes, InteresMoratorio ) " +
+            " VALUES (?, ?, ?, ?, ?, ?, ?, ? )";
+ 
+            PreparedStatement ps = con.prepareStatement(sql);
+            int count = 0;
 
             while ((filerow = fileReader.readLine()) != null) {
 
@@ -568,33 +573,34 @@ public class CoopeCargaFiles {
 
                 CoopePlanpg pago = new CoopePlanpg(filerow);
 
-                rs.moveToInsertRow();
-
-                rs.updateString("NumOperacion", pago.getNumOpera());
-                rs.updateString("IdMovimiento", pago.getIdMov());
-                rs.updateInt("Cuota", pago.getNroCuota());
+                ps.setString(1, pago.getNumOpera());
+                ps.setString(2, pago.getIdMov());
+                ps.setInt(3, pago.getNroCuota());
 
                 tmpld = pago.getFecVencimiento();
                 if (!ObjectUtils.isEmpty(tmpld))
-                    rs.updateDate("FecVencimiento", java.sql.Date.valueOf(tmpld));
+                    ps.setDate(4, java.sql.Date.valueOf(tmpld));
 
                 tmpld = pago.getFecPago();
                 if (!ObjectUtils.isEmpty(tmpld))
-                    rs.updateDate("FecPago", java.sql.Date.valueOf(tmpld));
+                    ps.setDate(5, java.sql.Date.valueOf(tmpld));
 
-                rs.updateDouble("Monto", pago.getMonto());
-                rs.updateDouble("Interes", pago.getInteres());
-                rs.updateDouble("InteresMoratorio", pago.getInteresMoratorio());
+                ps.setDouble(6, pago.getMonto());
+                ps.setDouble(7, pago.getInteres());
+                ps.setDouble(8, pago.getInteresMoratorio());
 
-                rs.insertRow();
+                ps.addBatch();
+
+                if(++count % batchSize == 0) {
+                    ps.executeBatch();
+                }
 
             } // while
 
-            // Close the ResultSet
-            rs.close();
-            logger.trace("**** Closed JDBC PreparedStatement");
+            ps.executeBatch();
+            ps.close();
 
-            con.commit();
+            logger.trace("**** Closed JDBC PreparedStatement");
 
         } catch (final IOException e) {
             logger.error(e);
