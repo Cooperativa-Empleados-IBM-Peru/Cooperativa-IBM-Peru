@@ -1050,18 +1050,17 @@ public class CoopeCargaFiles {
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(6, java.sql.Date.valueOf(tmpld));
 
-                ps.setString(7, fra.getPropietario() );
+                ps.setString(7, fra.getModelo() );
                 ps.setString(8, fra.getMarca() );
-                ps.setString(9, fra.getModelo() );
-                ps.setString(10, fra.getClase() );
-                ps.setString(11, fra.getColor() );
-                ps.setShort(12, fra.getAnnoFabricacion() );
-                ps.setString(13, fra.getSerie() );
-                ps.setString(14, fra.getMotor() );
-                ps.setString(15, fra.getTarjeta() );
+                ps.setString(9, fra.getClase() );
+                ps.setString(10, fra.getColor() );
+                ps.setShort(11, fra.getAnnoFabricacion() );
+                ps.setString(12, fra.getSerie() );
+                ps.setString(13, fra.getMotor() );
+                ps.setString(14, fra.getTarjeta() );
                  
-                ps.setDouble(16, fra.getValor() );
-                ps.setDouble(17, fra.getAccesorios() );
+                ps.setDouble(15, fra.getValor() );
+                ps.setDouble(16, fra.getAccesorios() );
 
                 ps.addBatch();
 
