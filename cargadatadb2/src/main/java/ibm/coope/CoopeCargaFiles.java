@@ -1028,7 +1028,7 @@ public class CoopeCargaFiles {
             " Modelo, Marca, Clase, Color, AnnoFabricacion, " +
             " Serie, Motor, Tarjeta, Valor, Accesorios) " +
             " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
-            " ?, ?, ?, ?, ?, ?, ?)";
+            " ?, ?, ?, ?, ?, ? )";
  
             PreparedStatement ps = con.prepareStatement(sql);
             int count = 0;
