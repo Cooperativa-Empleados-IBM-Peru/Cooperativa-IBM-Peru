@@ -640,49 +640,58 @@ public class CoopeCargaFiles {
 
         try {
 
-            sql = "SELECT * FROM CERTIFICADOSTEMP";
-            rs = stmt.executeQuery(sql);
-  
+            sql = "INSERT INTO CERTIFICADOSTEMP (TipoId, CodEmpleado, " +
+            " CtaCliente, DocId, TipoCert, NumDoc, " +
+            " Vers, Plazp, TipoPago, " +
+            " Monto, InteresP, InteresC, Interes, " +
+            " FecEmision, FecVencimiento ) " +
+            " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
+            " ?, ?, ?, ?, ?)";
+ 
+            PreparedStatement ps = con.prepareStatement(sql);
+            int count = 0;
+
             while ((filerow = fileReader.readLine()) != null) {
 
                 logger.trace(filerow);
 
                 CoopeCertificados certificado = new CoopeCertificados(filerow);
-
-                rs.moveToInsertRow();
-  
-                rs.updateString("TipoId", certificado.getTipoId() );
-                rs.updateString("CodEmpleado", certificado.getCodEmpleado() );
-                rs.updateString("CtaCliente", certificado.getCtaCliente() );
-                rs.updateString("DocId", certificado.getDocId() );
-                rs.updateString("TipoCert", certificado.getTipoCert() );
-                rs.updateString("NumDoc", certificado.getNumDoc() );
-                rs.updateString("Vers", certificado.getVers() );
-                rs.updateInt("Plazo", certificado.getPlazo() );
-                rs.updateString("TipoPago", certificado.getTipoPago() );
+ 
+                ps.setString(1, certificado.getTipoId() );
+                ps.setString(2, certificado.getCodEmpleado() );
+                ps.setString(3, certificado.getCtaCliente() );
+                ps.setString(4, certificado.getDocId() );
+                ps.setString(5, certificado.getTipoCert() );
+                ps.setString(6, certificado.getNumDoc() );
+                ps.setString(7, certificado.getVers() );
+                ps.setInt(8, certificado.getPlazo() );
+                ps.setString(9, certificado.getTipoPago() );
    
-                rs.updateDouble("Monto", certificado.getMonto() );
-                rs.updateDouble("InteresP", certificado.getInteresP() );
-                rs.updateDouble("InteresC", certificado.getInteresC() );
-                rs.updateDouble("Interes", certificado.getInteres() );
+                ps.setDouble(10, certificado.getMonto() );
+                ps.setDouble(11, certificado.getInteresP() );
+                ps.setDouble(12, certificado.getInteresC() );
+                ps.setDouble(13, certificado.getInteres() );
 
                 tmpld = certificado.getFecEmision();
                 if (!ObjectUtils.isEmpty(tmpld))
-                    rs.updateDate("FecEmision", java.sql.Date.valueOf(tmpld));
+                    ps.setDate(14, java.sql.Date.valueOf(tmpld));
 
                 tmpld = certificado.getFecVencimiento();
                 if (!ObjectUtils.isEmpty(tmpld))
-                    rs.updateDate("FecVencimiento", java.sql.Date.valueOf(tmpld));
+                    ps.setDate(15, java.sql.Date.valueOf(tmpld));
 
-                rs.insertRow();
+                ps.addBatch();
 
+                if(++count % batchSize == 0) {
+                    ps.executeBatch();
+                }
+    
             }  // while
 
-            // Close the ResultSet
-            rs.close();
+            ps.executeBatch();
+            ps.close();
+
             logger.trace("**** Closed JDBC PreparedStatement");
-           
-            con.commit();
            
         } catch (final IOException e) {
             logger.error(e);
