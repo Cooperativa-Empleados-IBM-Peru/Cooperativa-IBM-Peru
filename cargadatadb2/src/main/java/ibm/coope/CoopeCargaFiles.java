@@ -251,7 +251,6 @@ public class CoopeCargaFiles {
                 ps.setDouble(15, maestro.getSalCert2());
                 ps.setDouble(16, maestro.getSalPSFirma());
                 ps.setDouble(17, maestro.getSalPCPlazo());
-
                 ps.setDouble(18, maestro.getSalPMPlazo());
                 ps.setDouble(19, maestro.getSalPLPlazo());
                 ps.setDouble(20, maestro.getSalPHipot());
@@ -687,7 +686,6 @@ public class CoopeCargaFiles {
                 ps.setString(7, certificado.getVers() );
                 ps.setInt(8, certificado.getPlazo() );
                 ps.setString(9, certificado.getTipoPago() );
-   
                 ps.setDouble(10, certificado.getMonto() );
                 ps.setDouble(11, certificado.getInteresP() );
                 ps.setDouble(12, certificado.getInteresC() );
@@ -1058,7 +1056,6 @@ public class CoopeCargaFiles {
                 ps.setString(12, fra.getSerie() );
                 ps.setString(13, fra.getMotor() );
                 ps.setString(14, fra.getTarjeta() );
-                 
                 ps.setDouble(15, fra.getValor() );
                 ps.setDouble(16, fra.getAccesorios() );
 
@@ -1141,8 +1138,6 @@ public class CoopeCargaFiles {
                 ps.setString(5, siniestro.getCodigo() );
                 ps.setString(6, siniestro.getDescripcion() );
                 ps.setString(7, siniestro.getNumero() );
-                 
- 
                 ps.setString(8, siniestro.getEstado() );
                 ps.setString(9, siniestro.getLugar() );
                 ps.setString(10, siniestro.getFranquicia() );
