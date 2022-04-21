@@ -426,7 +426,7 @@ public class CoopeCargaFiles {
 
             ps.executeBatch();
             ps.close();
-            
+
             logger.trace("**** Closed JDBC PreparedStatement");
 
             con.commit();      
@@ -469,48 +469,58 @@ public class CoopeCargaFiles {
 
         try {
 
-            sql = "SELECT * FROM MAESTROPRESTAMOSTEMP";
-            rs = stmt.executeQuery(sql);
+            sql = "INSERT INTO MAESTROPRESTAMOSTEMP (TipoId, DocId, " +
+            " IdMovimiento, CodEmpresa, CtaCliente, NumOperacion, " + 
+            " FecCartera, FecRenovacion, FecVencimiento, " +
+            " TipoPago, Monto, Saldo, Interes, NroCuotas) " +
+            " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
+            " ?, ?, ?, ?)";
 
+            PreparedStatement ps = con.prepareStatement(sql);
+            int count = 0;
+ 
             while ((filerow = fileReader.readLine()) != null) {
 
                 logger.trace(filerow);
 
                 CoopeMaepre prestamo = new CoopeMaepre(filerow);
 
-                rs.moveToInsertRow();
-
-                rs.updateString("TipoId", prestamo.getTipoId());
-                rs.updateString("DocId", prestamo.getDocId());
-                rs.updateString("Idmovimiento", prestamo.getIdMov());
-                rs.updateString("CodEmpresa", prestamo.getCodEmpr());
-                rs.updateString("CtaCliente", prestamo.getCtaCliente());
-                rs.updateString("NumOperacion", prestamo.getNumeOperacion());
+                ps.setString(1, prestamo.getTipoId());
+                ps.setString(2, prestamo.getDocId());
+                ps.setString(3, prestamo.getIdMov());
+                ps.setString(4, prestamo.getCodEmpr());
+                ps.setString(5, prestamo.getCtaCliente());
+                ps.setString(6, prestamo.getNumeOperacion());
 
                 tmpld = prestamo.getFecCartera();
                 if (!ObjectUtils.isEmpty(tmpld))
-                    rs.updateDate("FecCartera", java.sql.Date.valueOf(tmpld));
+                    ps.setDate(7, java.sql.Date.valueOf(tmpld));
 
                 tmpld = prestamo.getFecRenovacion();
                 if (!ObjectUtils.isEmpty(tmpld))
-                    rs.updateDate("FecRenovacion", java.sql.Date.valueOf(tmpld));
+                    ps.setDate(8, java.sql.Date.valueOf(tmpld));
 
                 tmpld = prestamo.getFecVencimiento();
                 if (!ObjectUtils.isEmpty(tmpld))
-                    rs.updateDate("FecVencimiento", java.sql.Date.valueOf(tmpld));
+                    ps.setDate(9, java.sql.Date.valueOf(tmpld));
 
-                rs.updateString("TipoPago", prestamo.getTipoPago());
-                rs.updateDouble("Monto", prestamo.getMonto());
-                rs.updateDouble("Saldo", prestamo.getSaldo());
-                rs.updateDouble("Interes", prestamo.getInteres());
-                rs.updateInt("NroCuotas", prestamo.getNroCuotas());
+                ps.setString(10, prestamo.getTipoPago());
+                ps.setDouble(11, prestamo.getMonto());
+                ps.setDouble(12, prestamo.getSaldo());
+                ps.setDouble(13, prestamo.getInteres());
+                ps.setInt(14, prestamo.getNroCuotas());
 
-                rs.insertRow();
+                ps.addBatch();
+
+                if(++count % batchSize == 0) {
+                    ps.executeBatch();
+                }
 
             }
 
-            // Close the ResultSet
-            rs.close();
+            ps.executeBatch();
+            ps.close();
+            
             logger.trace("**** Closed JDBC PreparedStatement");
 
             con.commit();
