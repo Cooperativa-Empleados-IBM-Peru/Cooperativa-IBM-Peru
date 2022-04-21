@@ -892,44 +892,52 @@ public class CoopeCargaFiles {
 
         try {
 
-            sql = "SELECT * FROM GARANTIZADOSTEMP";
-            rs = stmt.executeQuery(sql);
+            sql = "INSERT INTO GARANTIZADOSTEMP (TipoDoc, CodEmpleado, " +
+            " NombreSocio, TipoDocGarantizado, DocIdGarantizado, NombreSocioGarantizado, " +
+            " IdMovimiento, NombreProducto, NumOperacion, FecPrestamo, " +
+            " Moneda, Monto, Saldo) " +
+            " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
+            " ?, ?, ?)";
+ 
+            PreparedStatement ps = con.prepareStatement(sql);
+            int count = 0;
+
             while ((filerow = fileReader.readLine()) != null) {
 
                 logger.trace(filerow);
 
                 CoopeGarantizados garantizado = new CoopeGarantizados(filerow);
 
-                // INSERT NEW RECORD
-                rs.moveToInsertRow();
-
-                rs.updateString("TipoDoc", garantizado.getTipoDoc() );
-                rs.updateString("CodEmpleado", garantizado.getCodEmpleado() );
-                rs.updateString("NombreSocio", garantizado.getNomSocio() );
-                rs.updateString("TipoDocGarantizado", garantizado.getTipoDocIdGarantizado() );
-                rs.updateString("DocIdGarantizado", garantizado.getDocIdGarantizado() );
-                rs.updateString("NombreSocioGarantizado", garantizado.getNomSocioGarantizado() );
-                rs.updateString("IdMovimiento", garantizado.getIdMovim() );
-                rs.updateString("NombreProducto", garantizado.getNomProducto() );
-                rs.updateString("numOperacion", garantizado.getNumOperacion() );
+                ps.setString(1, garantizado.getTipoDoc() );
+                ps.setString(2, garantizado.getCodEmpleado() );
+                ps.setString(3, garantizado.getNomSocio() );
+                ps.setString(4, garantizado.getTipoDocIdGarantizado() );
+                ps.setString(5, garantizado.getDocIdGarantizado() );
+                ps.setString(6, garantizado.getNomSocioGarantizado() );
+                ps.setString(7, garantizado.getIdMovim() );
+                ps.setString(8, garantizado.getNomProducto() );
+                ps.setString(9, garantizado.getNumOperacion() );
 
                 tmpld = garantizado.getFecPrestamo();
                 if (!ObjectUtils.isEmpty(tmpld))
-                    rs.updateDate("FecPrestamo", java.sql.Date.valueOf(tmpld));
+                    ps.setDate(10, java.sql.Date.valueOf(tmpld));
 
-                rs.updateString("Moneda", garantizado.getMoneda() );
-                rs.updateDouble("Monto", garantizado.getMonto() );
-                rs.updateDouble("Saldo", garantizado.getSaldo() );
+                ps.setString(11, garantizado.getMoneda() );
+                ps.setDouble(12, garantizado.getMonto() );
+                ps.setDouble(13, garantizado.getSaldo() );
 
-                rs.insertRow();
-            
+                ps.addBatch();
+
+                if(++count % batchSize == 0) {
+                    ps.executeBatch();
+                }
+           
             }
 
-          // Close the ResultSet
-          rs.close();
-          logger.trace("**** Closed JDBC PreparedStatement");
+            ps.executeBatch();
+            ps.close();
 
-          con.commit();
+            logger.trace("**** Closed JDBC PreparedStatement");
 
         } catch (final IOException e) {
             logger.error(e);
