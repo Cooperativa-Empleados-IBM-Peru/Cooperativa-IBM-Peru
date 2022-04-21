@@ -22,8 +22,7 @@ import lombok.AccessLevel;
 public class CoopeCargaFiles {
 
     Logger logger = null;
-    private boolean loaddb = true;
-
+   
     private Connection con;
     private Statement stmt;
     private ResultSet rs;
@@ -216,7 +215,6 @@ public class CoopeCargaFiles {
 
                 CoopePrusal maestro = new CoopePrusal(filerow);
 
-                if (loaddb) {
                 rs.moveToInsertRow();
 
                 rs.updateString("TipoId", maestro.getTipoID());
@@ -312,7 +310,6 @@ public class CoopeCargaFiles {
 
                 rs.insertRow();
 
-                } // loaddb
             } // while
 
             // Close the ResultSet
@@ -369,7 +366,6 @@ public class CoopeCargaFiles {
 
                 CoopeMovimiento movim = new CoopeMovimiento(filerow);
 
-                if (loaddb) {
                 rs.moveToInsertRow();
 
                 rs.updateString("TipoMov", tipomov);
@@ -395,7 +391,6 @@ public class CoopeCargaFiles {
 
                 rs.insertRow();
 
-                } // loaddb
             } // while
 
             // Close the ResultSet
@@ -451,7 +446,6 @@ public class CoopeCargaFiles {
 
                 CoopeMaepre prestamo = new CoopeMaepre(filerow);
 
-                if (loaddb) {
                 rs.moveToInsertRow();
 
                 rs.updateString("TipoId", prestamo.getTipoId());
@@ -481,7 +475,6 @@ public class CoopeCargaFiles {
 
                 rs.insertRow();
 
-                } // loaddb
             }
 
             // Close the ResultSet
@@ -537,7 +530,6 @@ public class CoopeCargaFiles {
 
                 CoopePlanpg pago = new CoopePlanpg(filerow);
 
-                if (loaddb) {
                 rs.moveToInsertRow();
 
                 rs.updateString("NumOperacion", pago.getNumOpera());
@@ -558,7 +550,6 @@ public class CoopeCargaFiles {
 
                 rs.insertRow();
 
-                } // loaddb
             } // while
 
             // Close the ResultSet
@@ -614,7 +605,6 @@ public class CoopeCargaFiles {
 
                 CoopeCertificados certificado = new CoopeCertificados(filerow);
 
-                if (loaddb) {
                 rs.moveToInsertRow();
   
                 rs.updateString("TipoId", certificado.getTipoId() );
@@ -642,7 +632,6 @@ public class CoopeCargaFiles {
 
                 rs.insertRow();
 
-                } // loaddb
             }  // while
 
             // Close the ResultSet
@@ -711,7 +700,6 @@ public class CoopeCargaFiles {
 
                 CoopeGarantes garante = new CoopeGarantes(filerow);
 
-                if (loaddb) {
                 // INSERT NEW RECORD
                 rs.moveToInsertRow();
 
@@ -804,8 +792,7 @@ public class CoopeCargaFiles {
                     rsdet.insertRow();                   
                 }    
        
-                } // loaddb
-            }
+           }
 
           // Close the ResultSet
           rs.close();
@@ -860,7 +847,6 @@ public class CoopeCargaFiles {
 
                 CoopeGarantizados garantizado = new CoopeGarantizados(filerow);
 
-                if (loaddb) {
                 // INSERT NEW RECORD
                 rs.moveToInsertRow();
 
@@ -884,7 +870,6 @@ public class CoopeCargaFiles {
 
                 rs.insertRow();
             
-                } // loaddb
             }
 
           // Close the ResultSet
@@ -940,7 +925,6 @@ public class CoopeCargaFiles {
 
                 CoopeFRA fra = new CoopeFRA(filerow);
 
-                if (loaddb) {
                 // INSERT NEW RECORD
                 rs.moveToInsertRow();
 
@@ -969,7 +953,6 @@ public class CoopeCargaFiles {
 
                 rs.insertRow();
 
-                } // loaddb
             }
 
             // Close the ResultSet
@@ -1025,7 +1008,6 @@ public class CoopeCargaFiles {
 
                 CoopeSiniestros siniestro = new CoopeSiniestros(filerow);
 
-                if (loaddb) {
                 // INSERT NEW RECORD
                 rs.moveToInsertRow();
 
@@ -1050,7 +1032,6 @@ public class CoopeCargaFiles {
 
                 rs.insertRow();
 
-                } // loaddb
             }
 
             // Close the ResultSet
@@ -1097,43 +1078,47 @@ public class CoopeCargaFiles {
 
         try {
 
-            sql = "SELECT * FROM VIDEOSTEMP";
-            rs = stmt.executeQuery(sql);
+            sql = "INSERT INTO VIDEOSTEMP (CodGenero, Genero, Codigo, " +
+                "TituloCastellano, Titulo, Protagonista1, Protagonista2, " +
+                "Protagonista3, Protagonista4, Director, Idioma, Pais, Anno ) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 
+            PreparedStatement ps = con.prepareStatement(sql);
+            final int batchSize = 500;
+            int count = 0;
             while ((filerow = fileReader.readLine()) != null) {
 
                 logger.trace(filerow);
 
                 CoopeVideos video = new CoopeVideos(filerow);
 
-                if (loaddb) {
-                // INSERT NEW RECORD
-                rs.moveToInsertRow();
+                ps.setString(1, video.getCodGenVid());
+                ps.setString(2, video.getGenVideo());
+                ps.setString(3, video.getCodVideo());
+                ps.setString(4, video.getTitCastVideo());
+                ps.setString(5, video.getTitNavVideo());
+                ps.setString(6, video.getProtagVideo1());
+                ps.setString(7, video.getProtagVideo2());
+                ps.setString(8, video.getProtagVideo3());
+                ps.setString(9, video.getProtagVideo4());
+                ps.setString(10, video.getDirecVideo());
+                ps.setString(11, video.getIdiomaVideo());
+                ps.setString(12, video.getPaisVideo());
+                ps.setInt(13, video.getAnnoVideo());
+                ps.addBatch();
 
-                rs.updateString("CodGenero", video.getCodGenVid());
-                rs.updateString("Genero", video.getGenVideo());
-                rs.updateString("Codigo", video.getCodVideo());
-                rs.updateString("TituloCastellano", video.getTitCastVideo());
-                rs.updateString("Titulo", video.getTitNavVideo());
-                rs.updateString("Protagonista1", video.getProtagVideo1());
-                rs.updateString("Protagonista2", video.getProtagVideo2());
-                rs.updateString("Protagonista3", video.getProtagVideo3());
-                rs.updateString("Protagonista4", video.getProtagVideo4());
-                rs.updateString("Director", video.getDirecVideo());
-                rs.updateString("Idioma", video.getIdiomaVideo());
-                rs.updateString("Pais", video.getPaisVideo());
-                rs.updateInt("Anno", video.getAnnoVideo());
+                if(++count % batchSize == 0) {
+                        ps.executeBatch();
+                }
 
-                rs.insertRow();
+            }  //while
 
-                } // loaddb
-            } // while
+            ps.executeBatch();
+            ps.close();
 
-            // Close the ResultSet
-            rs.close();
             logger.trace("**** Closed JDBC ResultSet");
 
-            con.commit();
+   //         con.commit();
 
         } catch (final IOException e) {
             logger.error(e);
@@ -1172,11 +1157,9 @@ public class CoopeCargaFiles {
      //       Statement statement = con.prepareCall(sql);
             Statement statement = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
  
-            if (loaddb) {
                 statement.execute(sql);
                 statement.close();
-            }
-
+    
         } catch (SQLException e) {
             logger.error("Error in Stored Procedure : " + spname);
             logger.error(e);
