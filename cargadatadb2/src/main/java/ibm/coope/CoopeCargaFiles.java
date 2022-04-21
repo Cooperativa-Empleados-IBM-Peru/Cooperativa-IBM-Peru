@@ -261,66 +261,82 @@ public class CoopeCargaFiles {
                 ps.setDouble(24, maestro.getSalPEsp1());
                 ps.setDouble(25, maestro.getSalPEsp2());
 
+                ps.setNull(26, Types.DATE);
                 tmpld = maestro.getFecMovDisAho();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(26, java.sql.Date.valueOf(tmpld));
 
+                ps.setNull(27, Types.DATE);
                 tmpld = maestro.getFecMovBloAho();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(27, java.sql.Date.valueOf(tmpld));
     
+                ps.setNull(28, Types.DATE);
                 tmpld = maestro.getFecMovAporta();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(28, java.sql.Date.valueOf(tmpld));
  
+                ps.setNull(29, Types.DATE);
                 tmpld = maestro.getFecMovMiscel();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(29, java.sql.Date.valueOf(tmpld));
     
+                ps.setNull(30, Types.DATE);
                 tmpld = maestro.getFecMovCert1();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(30, java.sql.Date.valueOf(tmpld));
     
+                ps.setNull(31, Types.DATE);
                 tmpld = maestro.getFecMovCert2();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(31, java.sql.Date.valueOf(tmpld));
     
+                ps.setNull(32, Types.DATE);
                 tmpld = maestro.getFecMovPSFirma();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(32, java.sql.Date.valueOf(tmpld));
           
+                ps.setNull(33, Types.DATE);
                 tmpld = maestro.getFecMovPCPlazo();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(33, java.sql.Date.valueOf(tmpld));
     
+                ps.setNull(34, Types.DATE);
                 tmpld = maestro.getFecMovPMPlazo();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(34, java.sql.Date.valueOf(tmpld));
     
+                ps.setNull(35, Types.DATE);
                 tmpld = maestro.getFecMovPLPlazo();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(35, java.sql.Date.valueOf(tmpld));
                        
+                ps.setNull(36, Types.DATE);
                 tmpld = maestro.getFecMovPHipot();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(36, java.sql.Date.valueOf(tmpld));
     
+                ps.setNull(37, Types.DATE);
                 tmpld = maestro.getFecMovPConsum();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(37, java.sql.Date.valueOf(tmpld));
     
+                ps.setNull(38, Types.DATE);
                 tmpld = maestro.getFecMovPAuto();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(38, java.sql.Date.valueOf(tmpld));
     
+                ps.setNull(39, Types.DATE);
                 tmpld = maestro.getFecMovPPS1();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(39, java.sql.Date.valueOf(tmpld));
     
+                ps.setNull(40, Types.DATE);
                 tmpld = maestro.getFecMovPEsp1();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(40, java.sql.Date.valueOf(tmpld));
     
+                ps.setNull(41, Types.DATE);
                 tmpld = maestro.getFecMovPEsp2();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(41, java.sql.Date.valueOf(tmpld));
