@@ -419,10 +419,12 @@ public class CoopeCargaFiles {
                 ps.setString(8, movim.getReferAlfa());
                 ps.setString(9, movim.getNumDepo());
    
+                ps.setNull(10, Types.TIMESTAMP);
                 tmpldt = movim.getFecEmision();
                 if (!ObjectUtils.isEmpty(tmpldt))
                     ps.setTimestamp(10, java.sql.Timestamp.valueOf(tmpldt));
 
+                ps.setNull(11, Types.DATE);
                 tmpld = movim.getFecVencimiento();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(11, java.sql.Date.valueOf(tmpld));
@@ -504,14 +506,17 @@ public class CoopeCargaFiles {
                 ps.setString(5, prestamo.getCtaCliente());
                 ps.setString(6, prestamo.getNumeOperacion());
 
+                ps.setNull(7, Types.DATE);
                 tmpld = prestamo.getFecCartera();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(7, java.sql.Date.valueOf(tmpld));
 
+                ps.setNull(8, Types.DATE);
                 tmpld = prestamo.getFecRenovacion();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(8, java.sql.Date.valueOf(tmpld));
 
+                ps.setNull(9, Types.DATE);
                 tmpld = prestamo.getFecVencimiento();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(9, java.sql.Date.valueOf(tmpld));
@@ -591,10 +596,12 @@ public class CoopeCargaFiles {
                 ps.setString(2, pago.getIdMov());
                 ps.setInt(3, pago.getNroCuota());
 
+                ps.setNull(4, Types.DATE);
                 tmpld = pago.getFecVencimiento();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(4, java.sql.Date.valueOf(tmpld));
 
+                ps.setNull(5, Types.DATE);
                 tmpld = pago.getFecPago();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(5, java.sql.Date.valueOf(tmpld));
@@ -686,10 +693,12 @@ public class CoopeCargaFiles {
                 ps.setDouble(12, certificado.getInteresC() );
                 ps.setDouble(13, certificado.getInteres() );
 
+                ps.setNull(14, Types.DATE);
                 tmpld = certificado.getFecEmision();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(14, java.sql.Date.valueOf(tmpld));
 
+                ps.setNull(15, Types.DATE);
                 tmpld = certificado.getFecVencimiento();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(15, java.sql.Date.valueOf(tmpld));
@@ -954,6 +963,7 @@ public class CoopeCargaFiles {
                 ps.setString(8, garantizado.getNomProducto() );
                 ps.setString(9, garantizado.getNumOperacion() );
 
+                ps.setNull(10, Types.DATE);
                 tmpld = garantizado.getFecPrestamo();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(10, java.sql.Date.valueOf(tmpld));
@@ -1035,6 +1045,7 @@ public class CoopeCargaFiles {
                 ps.setString(4, fra.getPlaca() );
                 ps.setString(5, fra.getPropietario() );
 
+                ps.setNull(6, Types.DATE);
                 tmpld = fra.getFecInscripcion();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(6, java.sql.Date.valueOf(tmpld));
@@ -1126,6 +1137,7 @@ public class CoopeCargaFiles {
                 ps.setString(5, siniestro.getCodigo() );
                 ps.setString(6, siniestro.getDescripcion() );
                 
+                ps.setNull(7, Types.DATE);
                 tmpld = siniestro.getFecSiniestro();
                 if (!ObjectUtils.isEmpty(tmpld))
                     ps.setDate(7, java.sql.Date.valueOf(tmpld));
