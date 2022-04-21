@@ -663,7 +663,7 @@ public class CoopeCargaFiles {
 
             sql = "INSERT INTO CERTIFICADOSTEMP (TipoId, CodEmpleado, " +
             " CtaCliente, DocId, TipoCert, NumDoc, " +
-            " Vers, Plazp, TipoPago, " +
+            " Vers, Plazo, TipoPago, " +
             " Monto, InteresP, InteresC, Interes, " +
             " FecEmision, FecVencimiento ) " +
             " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
@@ -1028,7 +1028,7 @@ public class CoopeCargaFiles {
             " Modelo, Marca, Clase, Color, AnnoFabricacion, " +
             " Serie, Motor, Tarjeta, Valor, Accesorios) " +
             " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
-            " ?, ?, ?, ?, ?, ?)";
+            " ?, ?, ?, ?, ?, ?, ?)";
  
             PreparedStatement ps = con.prepareStatement(sql);
             int count = 0;
@@ -1133,15 +1133,17 @@ public class CoopeCargaFiles {
                 ps.setString(1, siniestro.getTipoDoc() );
                 ps.setString(2, siniestro.getCodEmpleado() );
                 ps.setString(3, siniestro.getPlaca() );
-                ps.setString(4, siniestro.getNumero() );
-                ps.setString(5, siniestro.getCodigo() );
-                ps.setString(6, siniestro.getDescripcion() );
-                
-                ps.setNull(7, Types.DATE);
+
+                ps.setNull(4, Types.DATE);
                 tmpld = siniestro.getFecSiniestro();
                 if (!ObjectUtils.isEmpty(tmpld))
-                    ps.setDate(7, java.sql.Date.valueOf(tmpld));
+                    ps.setDate(4, java.sql.Date.valueOf(tmpld));
 
+                ps.setString(5, siniestro.getCodigo() );
+                ps.setString(6, siniestro.getDescripcion() );
+                ps.setString(7, siniestro.getNumero() );
+                 
+ 
                 ps.setString(8, siniestro.getEstado() );
                 ps.setString(9, siniestro.getLugar() );
                 ps.setString(10, siniestro.getFranquicia() );
