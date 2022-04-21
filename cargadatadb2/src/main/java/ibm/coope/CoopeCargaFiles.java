@@ -33,6 +33,8 @@ public class CoopeCargaFiles {
     @Setter(AccessLevel.NONE)
     private Properties prop;
 
+    final int batchSize = 500;
+  
     CoopeCargaFiles(Properties vprop) {
 
         logger = LogManager.getLogger(CoopeCargaFiles.class);
@@ -226,7 +228,6 @@ public class CoopeCargaFiles {
             " ?)";
             
             PreparedStatement ps = con.prepareStatement(sql);
-            final int batchSize = 500;
             int count = 0;
  
             while ((filerow = fileReader.readLine()) != null) {
@@ -337,7 +338,7 @@ public class CoopeCargaFiles {
             ps.executeBatch();
             ps.close();
 
-            logger.trace("**** Closed JDBC ResultSet");
+            logger.trace("**** Closed JDBC PreparedStatement");
         
         } catch (final IOException e) {
             logger.error(e);
@@ -378,45 +379,55 @@ public class CoopeCargaFiles {
 
         try {
 
-            sql = "SELECT * FROM MOVIMIENTOSTEMP";
-            rs = stmt.executeQuery(sql);
-
+            sql = "INSERT INTO MOVIMIENTOSTEMP (TipoMov, CtaCliente, " +
+            " IdMov, CodEmpresa, TipoPago, Transaccion, " +
+            " Referencia, RefAlfa, NumDepo, " +
+            " FecEmision, FecVencimiento, Importe, Texto) " +
+            " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
+            " ?, ?, ?)";
+            
+            PreparedStatement ps = con.prepareStatement(sql);
+            int count = 0;
+ 
             while ((filerow = fileReader.readLine()) != null) {
 
                 logger.trace(filerow);
 
                 CoopeMovimiento movim = new CoopeMovimiento(filerow);
 
-                rs.moveToInsertRow();
-
-                rs.updateString("TipoMov", tipomov);
-                rs.updateString("CtaCliente", movim.getCtaCliente());
-                rs.updateString("Idmov", movim.getIdMov());
-                rs.updateString("CodEmpresa", movim.getCodEmpr());
-                rs.updateString("TipoPago", movim.getTipoPago());
-                rs.updateString("Transaccion", movim.getTransac());
-                rs.updateString("Referencia", movim.getReferencia());
-                rs.updateString("RefAlfa", movim.getReferAlfa());
-                rs.updateString("NumDEpo", movim.getNumDepo());
-
+                ps.setString(1, tipomov);
+                ps.setString(2, movim.getCtaCliente());
+                ps.setString(3, movim.getIdMov());
+                ps.setString(4, movim.getCodEmpr());
+                ps.setString(5, movim.getTipoPago());
+                ps.setString(6, movim.getTransac());
+                ps.setString(7, movim.getReferencia());
+                ps.setString(8, movim.getReferAlfa());
+                ps.setString(9, movim.getNumDepo());
+   
                 tmpldt = movim.getFecEmision();
                 if (!ObjectUtils.isEmpty(tmpldt))
-                    rs.updateTimestamp("FecEmision", java.sql.Timestamp.valueOf(tmpldt));
+                    ps.setTimestamp(10, java.sql.Timestamp.valueOf(tmpldt));
 
                 tmpld = movim.getFecVencimiento();
                 if (!ObjectUtils.isEmpty(tmpld))
-                    rs.updateDate("FecVencimiento", java.sql.Date.valueOf(tmpld));
+                    ps.setDate(11, java.sql.Date.valueOf(tmpld));
 
-                rs.updateDouble("Importe", movim.getImporte());
-                rs.updateString("Texto", movim.getTexto());
+                ps.setDouble(12, movim.getImporte());
+                ps.setString(13, movim.getTexto());
 
-                rs.insertRow();
+                ps.addBatch();
 
+                if(++count % batchSize == 0) {
+                    ps.executeBatch();
+                }
+  
             } // while
 
-            // Close the ResultSet
-            rs.close();
-            logger.trace("**** Closed JDBC ResultSet");
+            ps.executeBatch();
+            ps.close();
+            
+            logger.trace("**** Closed JDBC PreparedStatement");
 
             con.commit();      
 
@@ -500,7 +511,7 @@ public class CoopeCargaFiles {
 
             // Close the ResultSet
             rs.close();
-            logger.trace("**** Closed JDBC ResultSet");
+            logger.trace("**** Closed JDBC PreparedStatement");
 
             con.commit();
 
@@ -575,7 +586,7 @@ public class CoopeCargaFiles {
 
             // Close the ResultSet
             rs.close();
-            logger.trace("**** Closed JDBC ResultSet");
+            logger.trace("**** Closed JDBC PreparedStatement");
 
             con.commit();
 
@@ -657,7 +668,7 @@ public class CoopeCargaFiles {
 
             // Close the ResultSet
             rs.close();
-            logger.trace("**** Closed JDBC ResultSet");
+            logger.trace("**** Closed JDBC PreparedStatement");
            
             con.commit();
            
@@ -817,7 +828,7 @@ public class CoopeCargaFiles {
 
           // Close the ResultSet
           rs.close();
-          logger.trace("**** Closed JDBC ResultSet");
+          logger.trace("**** Closed JDBC PreparedStatement");
 
           con.commit();
 
@@ -895,7 +906,7 @@ public class CoopeCargaFiles {
 
           // Close the ResultSet
           rs.close();
-          logger.trace("**** Closed JDBC ResultSet");
+          logger.trace("**** Closed JDBC PreparedStatement");
 
           con.commit();
 
@@ -978,7 +989,7 @@ public class CoopeCargaFiles {
 
             // Close the ResultSet
             rs.close();
-            logger.trace("**** Closed JDBC ResultSet");
+            logger.trace("**** Closed JDBC PreparedStatement");
 
             con.commit();
 
@@ -1057,7 +1068,7 @@ public class CoopeCargaFiles {
 
             // Close the ResultSet
             rs.close();
-            logger.trace("**** Closed JDBC ResultSet");
+            logger.trace("**** Closed JDBC PreparedStatement");
 
           con.commit();
 
@@ -1105,7 +1116,6 @@ public class CoopeCargaFiles {
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 
             PreparedStatement ps = con.prepareStatement(sql);
-            final int batchSize = 500;
             int count = 0;
 
             while ((filerow = fileReader.readLine()) != null) {
@@ -1138,7 +1148,7 @@ public class CoopeCargaFiles {
             ps.executeBatch();
             ps.close();
 
-            logger.trace("**** Closed JDBC ResultSet");
+            logger.trace("**** Closed JDBC PreparedStatement");
 
         } catch (final IOException e) {
             logger.error(e);
