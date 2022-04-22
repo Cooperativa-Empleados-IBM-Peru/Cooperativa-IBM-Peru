@@ -14,6 +14,27 @@ const routes: Routes = [
 			),
 	},
 	{
+		path: 'nosotros',
+		loadChildren: () =>
+			import('./nosotros/nosotros.module').then(
+				(m) => m.NosotrosModule
+			),
+	},
+	{
+		path: 'prestamos',
+		loadChildren: () =>
+			import('./prestamos/prestamos.module').then(
+				(m) => m.PrestamosModule
+			),
+	},
+	{
+		path: 'servicios',
+		loadChildren: () =>
+			import('./servicios/servicios.module').then(
+				(m) => m.ServiciosModule
+			),
+	},
+	{
 		path: 'herramientas',
 		loadChildren: () =>
 			import('./herramientas/herramientas.module').then(
@@ -25,6 +46,13 @@ const routes: Routes = [
 		loadChildren: () =>
 			import('./avisos/avisos.module').then(
 				(m) => m.AvisosModule
+			),
+	},
+	{
+		path: 'proveedores',
+		loadChildren: () =>
+			import('./proveedores/proveedores.module').then(
+				(m) => m.ProveedoresModule
 			),
 	},
 	{
