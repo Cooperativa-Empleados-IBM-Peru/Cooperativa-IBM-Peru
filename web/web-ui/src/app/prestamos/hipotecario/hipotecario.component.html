@@ -1,0 +1,92 @@
+<div class="content-home">
+    <div ibmGrid class="bx--grid--full-width landing-page" *ngIf="ibmidservice.LoggedIn; else Loading">
+        <div ibmRow class="landing-page__banner">
+            <div ibmCol [columnNumbers]="{'lg': 12, 'md' : 5}">
+                <h1 class="landing-page__heading">
+                    Cooperativa de Empleados IBM Perú
+                </h1>
+            </div>
+            <div ibmCol [columnNumbers]="{'lg': 4, 'md' : 3}">
+                <h1 class="coope__subheading2">
+                    {{ibmidservice.EmailEmpleado}}
+                </h1>
+                <h2 class="coope__subheading2">
+                    {{ibmidservice.CodEmpleado}}
+                </h2>
+            </div>
+    
+        </div>
+        <div ibmRow class="landing-page__r2">
+            <div ibmCol class="bx--no-gutter">
+                         <div ibmGrid class="bx--grid--no-gutter bx--grid--full-width">
+                            <!-- <div ibmRow *ngIf="ibmidservice.IsAdmin">
+                                <div ibmCol>
+                                        <button class="btn-edit" (click)= "openModal()">
+                                            <svg icon ibmIconEdit size="16"></svg>
+                                        </button>
+                                </div>
+                            </div> --> 
+                            <div ibmRow class="landing-page__tab-content">
+                                <div ibmCol [columnNumbers]="{'md': 4, 'lg': 7}">
+                                    <h2 class="landing-page__subheading">
+                                       Hipotecario    
+                                    </h2>
+                                    <p Class= "landing-page__p texto-justificado">
+                                        El préstamo hipotecario tiene el propósito de ayudar a los socios para la adquisición, 
+                                        construcción, refacción, remodelación, ampliación, mejoramiento y subdivisión de vivienda
+                                        propia, siempre que tales créditos se otorguen amparados con hipotecas debidamente 
+                                        inscritas.
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                        Se incluyen también en esta categoría los créditos para la adquisición o construcción
+                                         de vivienda propia que a la fecha de la operación, por tratarse de bienes futuros, 
+                                         bienes en proceso de independización o bienes en proceso de inscripción de dominio,
+                                         no es posible constituir sobre ellos la hipoteca individualizada que deriva del
+                                         crédito otorgado.                                        
+
+                                    </p>
+                                    <ul>
+                                        <li Class= "lista texto-justificado">•	El pagaré lo firma el socio , cónyuge (si fuera casado) y 4 garantes.</li>
+                                        <li Class= "lista texto-justificado">•	Los garantes  deben ser socios de la cooperativa y tener mínimo un año de antigüedad, 
+                                            deben firmar y completar su dirección y DNI, no completar fecha ni  monto.</li>
+                                        <li Class= "lista texto-justificado">•	Solicitar a la cooperativa información de socios que no pueden garantizar.</li>
+                                        <li Class= "lista texto-justificado">•	Adjuntar Copia DNI socio y cónyuge en caso de ser casado.</li>
+                                        <li Class= "lista texto-justificado">•	Adjuntar copia de las dos últimas boletas de haberes.</li>
+                                        <li Class= "lista texto-justificado">•	En el caso de tener deuda con los bancos, indicar por correo entidad y monto de  pago mensual.</li>
+                                        <li Class= "lista texto-justificado">•	Enviar número de la partida registral del departamento,  estacionamiento y depósito si lo hubiera del terreno o  casa.</li>
+                                    </ul>
+                                    <p class="landing-page__p texto-justificado">
+                                        Luego de la aprobación  de la línea de crédito debe coordinar a la brevedad cita para
+                                         la tasación del inmueble con el Ingeniero Edgardo Manrique
+                                         manriquetasadores@infonegocio.net.pe 
+                                         valuaciones@emtasa.com  Celular 998675424.
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                        Contacto: Diana Huanay (dhuanay@pe.ibm.com)
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                        Conoce más acerca de Préstamo Hipotecario en el siguiente enlace:
+                                    <a href="https://ibm.ent.box.com/s/fv10hpuduvoffatolgy6du9ep5u1xnbb" 
+                                    target="_blank">Hipotecario</a>
+                                    </p>
+                                </div>
+                                <div ibmCol class="bx--offset-lg-1" [columnNumbers]="{'md': 4, 'lg': 8}">
+                                    <img
+                                    class="landing-page__illo"
+                                    src="../../../assets/hipotecario.jpg"
+                                    alt="money"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+             </div>
+        </div>
+    </div>
+    
+    <ng-template #Loading>
+            <div class="loading">
+                    <ibm-loading [isActive]="isActive" [size]="size"></ibm-loading>
+            </div>
+    </ng-template>
+    
+</div>

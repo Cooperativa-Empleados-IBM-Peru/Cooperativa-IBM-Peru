@@ -1,0 +1,88 @@
+<div class="content-home">
+    <div ibmGrid class="bx--grid--full-width landing-page" *ngIf="ibmidservice.LoggedIn; else Loading">
+        <div ibmRow class="landing-page__banner">
+            <div ibmCol [columnNumbers]="{'lg': 12, 'md' : 5}">
+                <h1 class="landing-page__heading">
+                    Cooperativa de Empleados IBM Perú
+                </h1>
+            </div>
+            <div ibmCol [columnNumbers]="{'lg': 4, 'md' : 3}">
+                <h1 class="coope__subheading2">
+                    {{ibmidservice.EmailEmpleado}}
+                </h1>
+                <h2 class="coope__subheading2">
+                    {{ibmidservice.CodEmpleado}}
+                </h2>
+            </div>
+    
+        </div>
+        <div ibmRow class="landing-page__r2">
+            <div ibmCol class="bx--no-gutter">
+                         <div ibmGrid class="bx--grid--no-gutter bx--grid--full-width">
+                            <!-- <div ibmRow *ngIf="ibmidservice.IsAdmin">
+                                <div ibmCol>
+                                        <button class="btn-edit" (click)= "openModal()">
+                                            <svg icon ibmIconEdit size="16"></svg>
+                                        </button>
+                                </div>
+                            </div> --> 
+                            <div ibmRow class="landing-page__tab-content">
+                                <div ibmCol [columnNumbers]="{'md': 4, 'lg': 7}">
+                                    <h2 class="landing-page__subheading">
+                                       Telefonía Celular
+                                    </h2>
+                                    <p Class= "landing-page__p texto-justificado">
+                                        Desde el año 2005 tenemos un convenio Corporativo con Telefónica del Perú, 
+                                        con el objetivo de brindar a nuestros socios planes individuales con tarifas 
+                                        corporativas, preferenciales y precios de equipos diferenciados.
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                        El servicio que ofrece la Cooperativa es para los socios y sus familiares directos (cónyuge, padres, hijos y hermanos).  
+                                        Si un socio desea adquirir este servicio a través de la Cooperativa debe tener conocimiento lo siguiente : 
+                                    </p>
+                                    <ul>
+                                        <li Class= "lista texto-justificado">•	Bloqueamos S/ 600 soles por cada línea celular que adquieras con la Cooperativa (esto es una garantía, no es un pago adelantado y estará 
+                                            
+                                            bloqueado el tiempo que tengas el servicio de telefonía con nosotros generando intereses en tu
+                                            cuenta de ahorros).</li>
+                                        <li Class= "lista texto-justificado">•	Debe llenar el formulario con los datos del socio y luego con los datos de la persona que usara la línea.</li>
+                                        <li Class= "lista texto-justificado">•	No vendemos equipos solos, se adquiere equipo con línea y plan tarifario.</li>
+                                        <li Class= "lista texto-justificado">•	Los contratos mínimos de equipos y línea son 18 meses y si solo es chip simcard contrato 6 meses.</li>
+                                        <li Class= "lista texto-justificado">•	No contamos con catálogo de equipos actualizado, pero adjuntamos los planes vigentes.</li>
+                                        <li Class= "lista texto-justificado">•	Se puede solicitar Cesión de Línea de Coop a Persona Natural (no hacemos portabilidad).</li>
+                                        <li Class= "lista texto-justificado">•	Las portabilidades de número celular ( Claro ) es personal.</li>
+                                        <li Class= "lista texto-justificado">•	Para realizar la Cesión de línea adjunto los documentos que debes llenar, firmar y envíar a jrios@pe.ibm.com.</li>
+                                        <li Class= "lista texto-justificado">•	Adjuntar DNI del titular de la línea - Recibo de luz y/o Agua.</li>
+                                    </ul>
+                                    <p class="landing-page__p texto-justificado">
+                                        Contacto: Janet Rios (jrios@pe.ibm.com)
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                        Conoce más acerca del Servicio Telefonía Celular en el siguiente enlace:                                  
+                                    <a href="https://ibm.ent.box.com/s/mehe7fkulc4nwxcmyscuuk0ijj762lio" 
+                                     target="_blank">Telefonía Celular</a>
+                                    </p>
+                                </div>
+                                <div ibmCol class="bx--offset-lg-1" [columnNumbers]="{'md': 4, 'lg': 8}">
+                                    <img
+                                    class="landing-page__illo"
+                                    src="../../../assets/telefoniacelular.jpg"
+                                    alt="money"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+    
+    <ng-template #Loading>
+            <div class="loading">
+                    <ibm-loading [isActive]="isActive" [size]="size"></ibm-loading>
+            </div>
+    </ng-template>
+    
+    </div>
+
+
+

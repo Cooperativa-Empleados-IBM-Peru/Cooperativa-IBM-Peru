@@ -1,0 +1,139 @@
+<div class="content-home">
+    <div ibmGrid class="bx--grid--full-width landing-page" *ngIf="ibmidservice.LoggedIn; else Loading">
+        <div ibmRow class="landing-page__banner">
+            <div ibmCol [columnNumbers]="{'lg': 12, 'md' : 5}">
+                <h1 class="landing-page__heading">
+                    Cooperativa de Empleados IBM Perú
+                </h1>
+            </div>
+            <div ibmCol [columnNumbers]="{'lg': 4, 'md' : 3}">
+                <h1 class="coope__subheading2">
+                    {{ibmidservice.EmailEmpleado}}
+                </h1>
+                <h2 class="coope__subheading2">
+                    {{ibmidservice.CodEmpleado}}
+                </h2>
+            </div>
+    
+        </div>
+        <div ibmRow class="landing-page__r2">
+            <div ibmCol class="bx--no-gutter">
+                         <div ibmGrid class="bx--grid--no-gutter bx--grid--full-width">
+                            <!-- <div ibmRow *ngIf="ibmidservice.IsAdmin">
+                                <div ibmCol>
+                                        <button class="btn-edit" (click)= "openModal()">
+                                            <svg icon ibmIconEdit size="16"></svg>
+                                        </button>
+                                </div>
+                            </div> --> 
+                            <div ibmRow class="landing-page__tab-content">
+                                <div ibmCol [columnNumbers]="{'md': 4, 'lg': 7}">
+                                    <h2 class="landing-page__subheading">
+                                       Automotriz    
+                                    </h2>
+                                    <p Class= "landing-page__p texto-justificado">
+                                        El préstamo automotriz está destinado para la compra de auto nuevo o usado
+                                         o la transferencia a la Cooperativa la deuda contraída por el socio con otra 
+                                         entidad financiera para este fin. El préstamo se otorga en dólares americanos
+                                          hasta $40,000 y se financia hasta el 80% del valor del auto por un plazo máximo 
+                                          de 60 meses. 
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                        Se requieren los siguientes documentos:
+                                    </p>  
+                                    <ul>
+                                        <li Class= "lista texto-justificado">•	El pagaré lo firma el socio y  cónyuge si fuera casado y 4 garantes.</li>
+                                        <li Class= "lista texto-justificado">•	Los garantes  deben ser socios de la cooperativa y tener mínimo un año de antigüedad,
+                                        deben firmar y completar su dirección y DNI, no completar fecha ni  monto.</li>
+                                        <li Class= "lista texto-justificado">•	Solicitar a la cooperativa información de socios que no pueden garantizar.</li>
+                                        <li Class= "lista texto-justificado">•	Adjuntar Copia del  DNI del socio y  cónyuge si fuera casado y de uno de los garantes que firmo el  pagare (será aval prendario).</li>
+                                        <li Class= "lista texto-justificado">•	Adjuntar copia de las dos últimas boletas de haberes.</li>
+                                        <li Class= "lista texto-justificado">•	En el caso de tener deuda con los bancos, indicar por correo, entidad  y monto del pago mensual de su cuota.</li>
+                                        <li Class= "lista texto-justificado">•	Adjuntar cotización de la marca vendedora, el crédito se girará a nombre de la Razón Social  de la marca elegida.</li>
+                                        <li Class= "lista texto-justificado">•	Luego de la aprobación del crédito, el socio  podrá abonar a la vendedora la parte que le corresponde a cuenta del valor de la unidad, la diferencia será girada por la cooperativa en cheque de gerencia.</li>
+                                        <li Class= "lista texto-justificado">•	A partir del pago a cuenta, la empresa vendedora podrá entregar al socio los datos de la  unidad asignada como número de motor, chasis, y otros que se reflejaran en la boleta de compra venta, con esa información nuestro asesor legal ya podrá  preparar la minuta de crédito automotriz.</li>
+                                        <li Class= "lista texto-justificado">•	La tarjeta de propiedad debe salir a nombre del socio y cónyuge en caso de ser casado. </li>
+                                        <li Class= "lista texto-justificado">•	El auto se debe asegurar en la póliza de la cooperativa. </li>   
+                                    </ul>
+                                    <p class="landing-page__p texto-justificado">
+                                        Contacto: Diana Huanay (dhuanay@pe.ibm.com)   
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                        Conoce más acerca de Préstamo Automotriz en el siguiente enlace:
+                                        <a href="https://ibm.ent.box.com/s/tw57kaq4eey1ztno2qayjerpyt9t5i4m" 
+                                        target="_blank">Automotriz</a>
+                                    </p>
+                                </div>
+                                <div ibmCol class="bx--offset-lg-1" [columnNumbers]="{'md': 4, 'lg': 8}">
+                                    <img
+                                    class="landing-page__illo"
+                                    src="../../../assets/auto.jpg"
+                                    alt="money"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+    
+    <ng-template #Loading><div class="content-home">
+    <div ibmGrid class="bx--grid--full-width landing-page" *ngIf="ibmidservice.LoggedIn; else Loading">
+        <div ibmRow class="landing-page__banner">
+            <div ibmCol [columnNumbers]="{'lg': 12, 'md' : 5}">
+                <h1 class="landing-page__heading">
+                    Cooperativa de Empleados IBM Perú
+                </h1>
+            </div>
+            <div ibmCol [columnNumbers]="{'lg': 4, 'md' : 3}">
+                <h1 class="coope__subheading2">
+                    {{ibmidservice.EmailEmpleado}}
+                </h1>
+                <h2 class="coope__subheading2">
+                    {{ibmidservice.CodEmpleado}}
+                </h2>
+            </div>
+    
+        </div>
+        <div ibmRow class="landing-page__r2">
+            <div ibmCol class="bx--no-gutter">
+                         <div ibmGrid class="bx--grid--no-gutter bx--grid--full-width">
+                            <!-- <div ibmRow *ngIf="ibmidservice.IsAdmin">
+                                <div ibmCol>
+                                        <button class="btn-edit" (click)= "openModal()">
+                                            <svg icon ibmIconEdit size="16"></svg>
+                                        </button>
+                                </div>
+                            </div> --> 
+                            <div ibmRow class="landing-page__tab-content">
+                                <div ibmCol [columnNumbers]="{'md': 4, 'lg': 7}">
+                                    <h2 class="landing-page__subheading">
+                                        Directiva    
+                                    </h2>
+                                </div>
+                                <!-- <div ibmCol class="bx--offset-lg-1" [columnNumbers]="{'md': 4, 'lg': 8}">
+                                    <img
+                                    class="landing-page__illo"
+                                    src="../../../assets/foto-4.jpg"
+                                    alt="money"
+                                    />
+                                </div> -->
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+    
+    <ng-template #Loading>
+            <div class="loading">
+                    <ibm-loading [isActive]="isActive" [size]="size"></ibm-loading>
+            </div>
+    </ng-template>
+    
+    </div>
+            <div class="loading">
+                    <ibm-loading [isActive]="isActive" [size]="size"></ibm-loading>
+            </div>
+    </ng-template>
+    
+    </div>

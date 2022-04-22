@@ -1,0 +1,80 @@
+<div class="content-home">
+    <div ibmGrid class="bx--grid--full-width landing-page" *ngIf="ibmidservice.LoggedIn; else Loading">
+        <div ibmRow class="landing-page__banner">
+            <div ibmCol [columnNumbers]="{'lg': 12, 'md' : 5}">
+                <h1 class="landing-page__heading">
+                    Cooperativa de Empleados IBM Perú
+                </h1>
+            </div>
+            <div ibmCol [columnNumbers]="{'lg': 4, 'md' : 3}">
+                <h1 class="coope__subheading2">
+                    {{ibmidservice.EmailEmpleado}}
+                </h1>
+                <h2 class="coope__subheading2">
+                    {{ibmidservice.CodEmpleado}}
+                </h2>
+            </div>
+    
+        </div>
+        <div ibmRow class="landing-page__r2">
+            <div ibmCol class="bx--no-gutter">
+                         <div ibmGrid class="bx--grid--no-gutter bx--grid--full-width">
+                            <!-- <div ibmRow *ngIf="ibmidservice.IsAdmin">
+                                <div ibmCol>
+                                        <button class="btn-edit" (click)= "openModal()">
+                                            <svg icon ibmIconEdit size="16"></svg>
+                                        </button>
+                                </div>
+                            </div>   -->
+                            <div ibmRow class="landing-page__tab-content">
+                                <div ibmCol [columnNumbers]="{'md': 4, 'lg': 7}">
+                                    <h2 class="landing-page__subheading">
+                                       Solo Firma    
+                                    </h2>
+                                    <p Class= "landing-page__p texto-justificado">
+                                        El Préstamo a Sola Firma se otorga para pago de deudas pequeñas, gastos del hogar, pago de productos adquiridos a través de la Cooperativa, etc.
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                        El monto máximo son S/ 3,000 y se pueden cancelar hasta en seis cuotas mensuales.
+                                        El socio puede solicitar este préstamo al día siguiente que se hace socio de la Cooperativa. 
+
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                        Los documentos requeridos son:
+                                    </p>
+                                    <ul>
+                                        <li Class= "lista texto-justificado">•	Solicitud de Préstamo A Sola Firma.</li>
+                                        <li Class= "lista texto-justificado">•	Certificado del Seguro de Desgravamen.</li>
+                                        <li Class= "lista texto-justificado">•	Copia del DNI.</li>
+                                        <li Class= "lista texto-justificado">•	Pagaré en soles, solo si es la primera vez.</li>
+                                    </ul>
+                                    <p class="landing-page__p texto-justificado">
+                                            Contacto: Eliana Barreda (ebarreda@pe.ibm.com)
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                    Conoce más acerca de Préstamo Solo Firma en el siguiente enlace:
+                                    <a href="https://ibm.ent.box.com/s/vzisprq78ez3vjzsh6059wciv9vrtymh" 
+                                     target="_blank">Solo Firma</a>
+                                    </p>
+                                </div>
+                                <div ibmCol class="bx--offset-lg-1" [columnNumbers]="{'md': 4, 'lg': 8}">
+                                    <img
+                                    class="landing-page__illo"
+                                    src="../../../assets/solofirma.jpg"
+                                    alt="money"
+                                    />
+                                </div>
+                            </div>
+                            
+                        </div>
+            </div>
+        </div>
+    </div>
+    
+    <ng-template #Loading>
+            <div class="loading">
+                    <ibm-loading [isActive]="isActive" [size]="size"></ibm-loading>
+            </div>
+    </ng-template>
+    
+    </div>

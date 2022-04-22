@@ -1,0 +1,20 @@
+@import "~carbon-components/scss/globals/scss/vendor/@carbon/type/scss/font-family";
+@import "~carbon-components/scss/globals/scss/typography";
+//@import "~carbon-components/scss/components/modal/modal";
+//@import "~carbon-components/scss/components/link/link";
+
+@import "../../../assets/coope";
+
+.texto-justificado{
+    text-align: justify;
+    }
+
+.lista{
+        @include carbon--type-style('productive-heading-03');
+        margin-top: $spacing-01;
+        // margin-bottom: $spacing-08;
+    
+        @include carbon--breakpoint-between((320px + 1), md) {
+            max-width: 75%;
+        }
+}

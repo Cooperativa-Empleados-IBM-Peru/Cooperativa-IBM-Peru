@@ -1,0 +1,97 @@
+<div class="content-home">
+    <div ibmGrid class="bx--grid--full-width landing-page" *ngIf="ibmidservice.LoggedIn; else Loading">
+        <div ibmRow class="landing-page__banner">
+            <div ibmCol [columnNumbers]="{'lg': 12, 'md' : 5}">
+                <h1 class="landing-page__heading">
+                    Cooperativa de Empleados IBM Perú
+                </h1>
+            </div>
+            <div ibmCol [columnNumbers]="{'lg': 4, 'md' : 3}">
+                <h1 class="coope__subheading2">
+                    {{ibmidservice.EmailEmpleado}}
+                </h1>
+                <h2 class="coope__subheading2">
+                    {{ibmidservice.CodEmpleado}}
+                </h2>
+            </div>
+    
+        </div>
+        <div ibmRow class="landing-page__r2">
+            <div ibmCol class="bx--no-gutter">
+                         <div ibmGrid class="bx--grid--no-gutter bx--grid--full-width">
+                            <!-- <div ibmRow *ngIf="ibmidservice.IsAdmin">
+                                <div ibmCol>
+                                        <button class="btn-edit" (click)= "openModal()">
+                                            <svg icon ibmIconEdit size="16"></svg>
+                                        </button>
+                                </div>
+                            </div> --> 
+                            <div ibmRow class="landing-page__tab-content">
+                                <div ibmCol [columnNumbers]="{'md': 4, 'lg': 7}">
+                                    <h2 class="landing-page__subheading">
+                                       Académico    
+                                    </h2>
+                                    <p Class= "landing-page__p texto-justificado">
+                                        Este crédito tiene como finalidad financiar los derechos Académicos de maestrías 
+                                        y otros estudios de Post Grado de similar nivel relacionados directamente con la 
+                                        carrera y el desarrollo profesional del socio en IBM o Kyndryl. 
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                        Las condiciones especiales que se consideran a este crédito: 
+                                    </p>
+                                        <ul>
+                                            <li Class= "lista texto-justificado">• Solo aplica para estudios del socio, la línea presta hasta S/ 50,000 soles o $18,000 dólares.</li>
+                                            <li Class= "lista texto-justificado">• Se puede otorgar hasta en 3 préstamos concurrentes.</li>
+                                            <li Class= "lista texto-justificado">• Se puede pagar desde 1 mes hasta 48 meses como máximo, si desea con cuota dobles.</li>
+                                        </ul>
+                                    
+                                    <p class="landing-page__p texto-justificado">
+                                        Deben considerar que el pagaré lo firmaran 4 avales y el socio con el conyugue si estuviera casado donde 
+                                        indica FIRMA y no se debe llenar con datos personales, ni monto, ni con fecha. En ese sentido el socio deberá 
+                                        adjuntar el DNI del conyugue.   
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                        Para solicitar el préstamo el socio debe tener 6 meses como mínimo inscrito en
+                                        la Cooperativa y presentar los siguientes documentos, llenados y firmados.
+                                    </p>
+                                        <ul>
+                                            <li Class= "lista texto-justificado">•	2 boletas de pago de los últimos meses.</li>
+                                            <li Class= "lista texto-justificado">•	2 boletas de pago de los últimos meses.</li>
+                                            <li Class= "lista texto-justificado">•	DNI del socio. </li>
+                                            <li Class= "lista texto-justificado">•	DNI de los avales.</li>
+                                            <li Class= "lista texto-justificado">•	Constancia de Admisión al Programa de la Maestría y el monto del curso.</li>
+                                            <li Class= "lista texto-justificado">•	Indicar el pago mensual que realiza por cada una de sus tarjetas de crédito y préstamos en el sistema financiero.</li>
+                                            <li Class= "lista texto-justificado">•	Los avales que firmen su pagaré deben tener +6 meses como socio inscrito en la Cooperativa. </li>
+                                            <li Class= "lista texto-justificado">•	Solicitud, pagare, seguro desgravamen pag.1-pag6 , seguro de salud.</li>
+                                        </ul>
+                                       
+                                    <p class="landing-page__p texto-justificado"> 
+                                        Contacto: Janet Rios (jrios@pe.ibm.com)
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                        Conoce más acerca de Préstamo Académico en el siguiente enlace:
+                                        <a href="https://ibm.ent.box.com/s/13vioftknx5eda2k7eylzq7yvd950bz6" 
+                                        target="_blank">Académico</a>
+                                    </p>
+                                   
+                                </div>
+                                <div ibmCol class="bx--offset-lg-1" [columnNumbers]="{'md': 4, 'lg': 8}">
+                                    <img
+                                    class="landing-page__illo"
+                                    src="../../../assets/academico.jpg"
+                                    alt="money"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+    
+    <ng-template #Loading>
+            <div class="loading">
+                    <ibm-loading [isActive]="isActive" [size]="size"></ibm-loading>
+            </div>
+    </ng-template>
+    
+    </div>

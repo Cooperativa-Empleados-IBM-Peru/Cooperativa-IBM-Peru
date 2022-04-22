@@ -1,0 +1,81 @@
+<div class="content-home">
+    <div ibmGrid class="bx--grid--full-width landing-page" *ngIf="ibmidservice.LoggedIn; else Loading">
+        <div ibmRow class="landing-page__banner">
+            <div ibmCol [columnNumbers]="{'lg': 12, 'md' : 5}">
+                <h1 class="landing-page__heading">
+                    Cooperativa de Empleados IBM Perú
+                </h1>
+            </div>
+            <div ibmCol [columnNumbers]="{'lg': 4, 'md' : 3}">
+                <h1 class="coope__subheading2">
+                    {{ibmidservice.EmailEmpleado}}
+                </h1>
+                <h2 class="coope__subheading2">
+                    {{ibmidservice.CodEmpleado}}
+                </h2>
+            </div>
+    
+        </div>
+        <div ibmRow class="landing-page__r2">
+            <div ibmCol class="bx--no-gutter">
+                         <div ibmGrid class="bx--grid--no-gutter bx--grid--full-width">
+                            <!-- <div ibmRow *ngIf="ibmidservice.IsAdmin">
+                                <div ibmCol>
+                                        <button class="btn-edit" (click)= "openModal()">
+                                            <svg icon ibmIconEdit size="16"></svg>
+                                        </button>
+                                </div>
+                            </div> --> 
+                            <div ibmRow class="landing-page__tab-content">
+                                <div ibmCol [columnNumbers]="{'md': 4, 'lg': 7}">
+                                    <h2 class="landing-page__subheading">
+                                       Escolar    
+                                    </h2>
+                                    <p Class= "landing-page__p texto-justificado">
+                                        Esta Línea fue creada para la ayuda exclusiva de los gastos escolares y/o universitarios, el socio debe sustentar la totalidad del monto solicitado presentando los gastos de esta línea.
+                                        El monto que presta es hasta S/ 6,000 soles y se paga dentro del mismo año que se ofrece la línea dependiendo de la fecha que se abre la Campaña.
+                                         
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                        El socio debe tener 6 meses como mínimo inscrito en la Cooperativa para solicitar la línea de crédito. 
+                                        Para solicitar esta línea de crédito se debe presentar los siguientes documentos, llenados y firmados.
+                                    </p>
+                                    <ul>
+                                        <li Class= "lista texto-justificado">•	1 boleta de pago de los últimos meses.</li>
+                                        <li Class= "lista texto-justificado">•	DNI del socio.</li> 
+                                        <li Class= "lista texto-justificado">•	DNI del hijo.</li>
+                                        <li Class= "lista texto-justificado">•	Indicar el pago mensual que realiza por cada una de sus tarjetas de crédito y préstamos en el sistema financiero.</li>
+                                        <li Class= "lista texto-justificado">•	Solicitud y seguro desgravamen pag.1-pag6 .</li>
+                                        <li Class= "lista texto-justificado">•	Adjuntar boleta de venta por gastos de útiles escolares, uniformes, etc.</li>
+                                        <li Class= "lista texto-justificado">•	Adjuntar pago de matrícula, pensión del Colegio y/o Universidad del año en curso. (no pendientes).</li>
+                                        <li Class= "lista texto-justificado">•	Si recién van a hacer las compras y/o pagos tienen 15 días útiles para presentar la documentación de sustento de la línea.</li>
+                                    </ul>
+                                    <p class="landing-page__p texto-justificado">   
+                                        Contacto: Janet Rios (jrios@pe.ibm.com)   
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                        Conoce más acerca de Préstamo Escolar en el siguiente enlace:
+                                    <a href="https://ibm.ent.box.com/s/utn78c64hnlhoz9hog5bcoa8kg59yfmb" 
+                                    target="_blank">Escolar</a>
+                                    </p>
+                                </div>
+                                <div ibmCol class="bx--offset-lg-1" [columnNumbers]="{'md': 4, 'lg': 8}">
+                                    <img
+                                    class="landing-page__illo"
+                                    src="../../../assets/escolar.jpg"
+                                    alt="money"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+    
+    <ng-template #Loading>
+            <div class="loading">
+                    <ibm-loading [isActive]="isActive" [size]="size"></ibm-loading>
+            </div>
+    </ng-template>
+    
+    </div>

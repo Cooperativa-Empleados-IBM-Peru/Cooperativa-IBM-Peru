@@ -1,0 +1,92 @@
+<div class="content-home">
+    <div ibmGrid class="bx--grid--full-width landing-page" *ngIf="ibmidservice.LoggedIn; else Loading">
+        <div ibmRow class="landing-page__banner">
+            <div ibmCol [columnNumbers]="{'lg': 12, 'md' : 5}">
+                <h1 class="landing-page__heading">
+                    Cooperativa de Empleados IBM Perú
+                </h1>
+            </div>
+            <div ibmCol [columnNumbers]="{'lg': 4, 'md' : 3}">
+                <h1 class="coope__subheading2">
+                    {{ibmidservice.EmailEmpleado}}
+                </h1>
+                <h2 class="coope__subheading2">
+                    {{ibmidservice.CodEmpleado}}
+                </h2>
+            </div>
+    
+        </div>
+        <div ibmRow class="landing-page__r2">
+            <div ibmCol class="bx--no-gutter">
+                         <div ibmGrid class="bx--grid--no-gutter bx--grid--full-width">
+                            <!-- <div ibmRow *ngIf="ibmidservice.IsAdmin">
+                                <div ibmCol>
+                                        <button class="btn-edit" (click)= "openModal()">
+                                            <svg icon ibmIconEdit size="16"></svg>
+                                        </button>
+                                </div>
+                            </div> --> 
+                            <div ibmRow class="landing-page__tab-content">
+                                <div ibmCol [columnNumbers]="{'md': 4, 'lg': 7}">
+                                    <h2 class="landing-page__subheading">
+                                       Garantía Hipotecaria    
+                                    </h2>
+                                    <p Class= "landing-page__p texto-justificado">
+                                        Para montos superiores a los límites del crédito a largo plazo S/ 60,000 y $ 18,000, tenemos disponible la Línea Crédito con Garantía Hipotecaria.
+                                        El socio deberá sustentar el motivo del crédito y una vez desembolsado deberá enviar a la cooperativa
+                                        la constancia bancaria del abono del dinero para lo que fue requerido (ej. pago de tarjetas de crédito,
+                                        capital para inversión en emprendimiento, etc.)
+                                    </p>
+                                    <p Class= "landing-page__p texto-justificado">
+                                    Es requisito indispensable dejar en garantía un inmueble que garantice el monto de la 
+                                    deuda más los intereses.  El trámite es muy parecido al del crédito hipotecario con la 
+                                    diferencia que no será para adquirir un inmueble.
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                        Se requieren los siguientes documentos:
+                                    </p>
+                                    <ul>
+                                        <li Class= "lista texto-justificado">•	El pagaré lo firma el socio y  cónyuge (si fuera casado) y 4 garantes.</li>
+                                        <li Class= "lista texto-justificado">•	Los garantes  deben ser socios de la cooperativa y tener mínimo un año de antigüedad,
+                                            deben firmar y completar su dirección y DNI, no completar fecha ni  monto.</li>
+                                        <li Class= "lista texto-justificado">•	Solicitar a la cooperativa información de socios que no pueden garantizar.</li>
+                                        <li Class= "lista texto-justificado">•	Adjuntar Copia DNI socio y cónyuge en caso de ser casado.</li> 
+                                        <li Class= "lista texto-justificado">•	Adjuntar copia de las dos últimas boletas de haberes.</li>
+                                        <li Class= "lista texto-justificado">•	En el caso de tener deuda con los bancos indicar por correo entidad  y monto del pago mensual.</li>
+                                        <li Class= "lista texto-justificado">•	Enviar número de la partida registral del departamento,
+                                          estacionamiento y depósito si lo hubiera, del terreno o  casa.</li>
+                                        <li Class= "lista texto-justificado">•	Luego de la aprobación  de la línea de crédito : Coordinar a la brevedad cita
+                                         para la tasación del inmueble con el Ingeniero Edgardo Manrique 
+                                         manriquetasadores@infonegocio.net.pe
+                                         valuaciones@emtasa.com  
+                                         Celular 998675424</li>
+                                    </ul>
+                                    <p class="landing-page__p texto-justificado">
+                                        Contacto: Diana Huanay (dhuanay@pe.ibm.com)
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                    Conoce más acerca de Préstamo Garantía Hipotecaria en el siguiente enlace:
+                                    <a href="https://ibm.ent.box.com/s/jq26y9nhtfrk73naiwbcvk52eep8b33o" 
+                                    target="_blank">Garantía Hipotecaria</a>
+                                    </p>
+                                </div>
+                                <div ibmCol class="bx--offset-lg-1" [columnNumbers]="{'md': 4, 'lg': 8}">
+                                    <img
+                                    class="landing-page__illo"
+                                    src="../../../assets/garantiahipotecaria.jpg"
+                                    alt="money"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+    
+    <ng-template #Loading>
+            <div class="loading">
+                    <ibm-loading [isActive]="isActive" [size]="size"></ibm-loading>
+            </div>
+    </ng-template>
+    
+    </div>

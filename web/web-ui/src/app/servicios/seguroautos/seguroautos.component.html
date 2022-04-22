@@ -1,0 +1,83 @@
+<div class="content-home">
+    <div ibmGrid class="bx--grid--full-width landing-page" *ngIf="ibmidservice.LoggedIn; else Loading">
+        <div ibmRow class="landing-page__banner">
+            <div ibmCol [columnNumbers]="{'lg': 12, 'md' : 5}">
+                <h1 class="landing-page__heading">
+                    Cooperativa de Empleados IBM Perú
+                </h1>
+            </div>
+            <div ibmCol [columnNumbers]="{'lg': 4, 'md' : 3}">
+                <h1 class="coope__subheading2">
+                    {{ibmidservice.EmailEmpleado}}
+                </h1>
+                <h2 class="coope__subheading2">
+                    {{ibmidservice.CodEmpleado}}
+                </h2>
+            </div>
+    
+        </div>
+        <div ibmRow class="landing-page__r2">
+            <div ibmCol class="bx--no-gutter">
+                         <div ibmGrid class="bx--grid--no-gutter bx--grid--full-width">
+                            <!-- <div ibmRow *ngIf="ibmidservice.IsAdmin">
+                                <div ibmCol>
+                                        <button class="btn-edit" (click)= "openModal()">
+                                            <svg icon ibmIconEdit size="16"></svg>
+                                        </button>
+                                </div>
+                            </div> --> 
+                            <div ibmRow class="landing-page__tab-content">
+                                <div ibmCol [columnNumbers]="{'md': 4, 'lg': 7}">
+                                    <h2 class="landing-page__subheading">
+                                       Seguro Auto
+                                    </h2>
+                                    <p Class= "landing-page__p texto-justificado">
+                                        La Cooperativa cuenta con un convenio Corporativo con Rímac
+                                         Seguros y Reaseguros que nos permite tener tarifas preferenciales
+                                          y una diversidad de coberturas mejores que las que existen en el 
+                                          mercado. Nuestros socios tienen la facilidad de pagar la prima anual 
+                                          en 12 cuotas mensuales sin intereses.
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                        De estar interesado el socio debe adjuntar:
+                                    </p>
+                                    <ul> 
+                                        <li Class= "lista texto-justificado">1)	Copia de la Tarjeta de Propiedad.</li>
+                                        <li Class= "lista texto-justificado">2)	Copia del Certificado SOAT vigente (sólo en casos de vehículos usados).</li>	
+                                        <li Class= "lista texto-justificado">3)	Constancia de instalación de equipo GPS en caso Rimac la requiera para cobertura de Robo Total.</li>   
+                                    </ul>
+                                    <p class="landing-page__p texto-justificado">
+                                        Los autos que han sido adquiridos con préstamos bancarios no podrán ser asegurados. 
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                        Contacto: Diana Huanay (dhuanay@pe.ibm.com).
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                        Conoce más acerca del Servicio Seguro Autos en el siguiente enlace:
+                                        <a href="https://ibm.ent.box.com/s/rjxh78x4q3khny2pk1fkdmwt5o6fd41y" 
+                                        target="_blank">Seguro Auto</a>
+                                    </p>
+                                </div>
+                                <div ibmCol class="bx--offset-lg-1" [columnNumbers]="{'md': 4, 'lg': 8}">
+                                    <img
+                                    class="landing-page__illo"
+                                    src="../../../assets/seguroautos.jpg"
+                                    alt="money"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+    
+    <ng-template #Loading>
+            <div class="loading">
+                    <ibm-loading [isActive]="isActive" [size]="size"></ibm-loading>
+            </div>
+    </ng-template>
+    
+    </div>
+
+
+

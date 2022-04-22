@@ -1,0 +1,88 @@
+<div class="content-home">
+    <div ibmGrid class="bx--grid--full-width landing-page" *ngIf="ibmidservice.LoggedIn; else Loading">
+        <div ibmRow class="landing-page__banner">
+            <div ibmCol [columnNumbers]="{'lg': 12, 'md' : 5}">
+                <h1 class="landing-page__heading">
+                    Cooperativa de Empleados IBM Perú
+                </h1>
+            </div>
+            <div ibmCol [columnNumbers]="{'lg': 4, 'md' : 3}">
+                <h1 class="coope__subheading2">
+                    {{ibmidservice.EmailEmpleado}}
+                </h1>
+                <h2 class="coope__subheading2">
+                    {{ibmidservice.CodEmpleado}}
+                </h2>
+            </div>
+    
+        </div>
+        <div ibmRow class="landing-page__r2">
+            <div ibmCol class="bx--no-gutter">
+                         <div ibmGrid class="bx--grid--no-gutter bx--grid--full-width">
+                            <!-- <div ibmRow *ngIf="ibmidservice.IsAdmin">
+                                <div ibmCol>
+                                        <button class="btn-edit" (click)= "openModal()">
+                                            <svg icon ibmIconEdit size="16"></svg>
+                                        </button>
+                                </div>
+                            </div> --> 
+                            <div ibmRow class="landing-page__tab-content">
+                                <div ibmCol [columnNumbers]="{'md': 4, 'lg': 7}">
+                                    <h2 class="landing-page__subheading">
+                                       Oncosalud    
+                                    </h2>
+                                    <p Class= "landing-page__p texto-justificado">
+                                        Desde el año 2015 tenemos un convenio corporativo con Oncosalud SA logrando unificar más de 300 cuentas individuales 
+                                        de nuestros socios en una sola cuenta , logrando así un descuento del 20% del precio 
+                                        en la renovación anual de la poliza y también en la afiliación de nuestros socios al
+                                         programa Oncológico.
+
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                        Este programa tiene una asesora de Oncosalud encargada de brindar la información, orientación 
+                                        y precios del plan que deseen adquirir y todo de acuerdo a la edad del afiliado 
+                                        (no hay descuento para personas mayores de 60 años).
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                        Otro beneficio de nuestro programa es que el Fumador paga el mismo valor que el NO Fumador, 
+                                        también si el socio sale de la compañía puede llevarse su póliza manteniendo la 
+                                        continuidad de los años aportados.
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                        Nuestros socios pueden solicitar la información comunicandose a Jane Pye 
+                                        (jane.pye@asesorasoncosalud.com.pe) y los descuentos se realizan por planilla 
+                                        de Cooperativa, el cual también puede ser financiado a través de un préstamo corto.
+                                         (No pago en efectivo - Ni tarjeta de crédito). 
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                        Si desean tener mas información referente al descuento del servicio en la Cooperativa comunicarse con Janet Rios (jrios@pe.ibm.com)
+                                        Adjuntamos los precios del año 2021-2022 y Condicionado 2021 .                                        
+                                    </p>  
+                                    <p class="landing-page__p texto-justificado">
+                                        Conoce más acerca del Servicio Oncosalud en el siguiente enlace:
+                                        <a href="https://ibm.ent.box.com/s/kbz26t3yk3vcq5j2exmarpb4zotq64zu" 
+                                         target="_blank">Oncosalud</a>
+                                    </p>
+                                </div>
+                                <div ibmCol class="bx--offset-lg-1" [columnNumbers]="{'md': 4, 'lg': 8}">
+                                    <img
+                                    class="landing-page__illo"
+                                    src="../../../assets/oncosalud.jpg"
+                                    alt="money"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+    
+    <ng-template #Loading>
+            <div class="loading">
+                    <ibm-loading [isActive]="isActive" [size]="size"></ibm-loading>
+            </div>
+    </ng-template>
+    
+    </div>
+
+

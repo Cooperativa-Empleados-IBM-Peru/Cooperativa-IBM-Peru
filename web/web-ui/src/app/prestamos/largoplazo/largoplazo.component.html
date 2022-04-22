@@ -1,0 +1,79 @@
+<div class="content-home">
+    <div ibmGrid class="bx--grid--full-width landing-page" *ngIf="ibmidservice.LoggedIn; else Loading">
+        <div ibmRow class="landing-page__banner">
+            <div ibmCol [columnNumbers]="{'lg': 12, 'md' : 5}">
+                <h1 class="landing-page__heading">
+                    Cooperativa de Empleados IBM Perú
+                </h1>
+            </div>
+            <div ibmCol [columnNumbers]="{'lg': 4, 'md' : 3}">
+                <h1 class="coope__subheading2">
+                    {{ibmidservice.EmailEmpleado}}
+                </h1>
+                <h2 class="coope__subheading2">
+                    {{ibmidservice.CodEmpleado}}
+                </h2>
+            </div>
+    
+        </div>
+        <div ibmRow class="landing-page__r2">
+            <div ibmCol class="bx--no-gutter">
+                         <div ibmGrid class="bx--grid--no-gutter bx--grid--full-width">
+                            <!-- <div ibmRow *ngIf="ibmidservice.IsAdmin">
+                                <div ibmCol>
+                                        <button class="btn-edit" (click)= "openModal()">
+                                            <svg icon ibmIconEdit size="16"></svg>
+                                        </button>
+                                </div>
+                            </div> --> 
+                            <div ibmRow class="landing-page__tab-content">
+                                <div ibmCol [columnNumbers]="{'md': 4, 'lg': 7}">
+                                    <h2 class="landing-page__subheading">
+                                       Largo Plazo    
+                                    </h2>
+                                    <p Class= "landing-page__p texto-justificado">
+                                        El préstamo Largo Plazo MN presta hasta S/ 60,000 y el préstamo Largo Plazo ME, presta hasta $18,000.
+                                        Se puede otorgar hasta en 3 préstamos concurrentes.  Se puede pagar desde 1 mes hasta 48 meses como máximo, si desea con cuota dobles 
+                                        Deben considerar que el pagaré lo firma el socio y conyugue si estuviera casado donde indica FIRMA y no se debe llenar con datos personales, ni monto, ni con fecha. 
+
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                        Para solicitar el préstamo debes tener 6 meses como mínimo de socio inscrito en la Coop. y presentar los siguientes documentos, llenados y firmados.
+                                    </p> 
+                                    <ul>
+                                        <li Class= "lista texto-justificado">•	2 boletas de pago de los últimos meses.</li>
+                                        <li Class= "lista texto-justificado">•	DNI del socio y cónyuge.</li>
+                                        <li Class= "lista texto-justificado">•	DNI de los avales.</li>
+                                        <li Class= "lista texto-justificado">•	Indicar el pago mensual que realiza por cada una de sus tarjetas de crédito y préstamo en el sistema financiero.</li>
+                                        <li Class= "lista texto-justificado">•	Los avales que firmen su pagaré deben tener más de 6 meses como socio inscrito en la Cooperativa. </li>
+                                        <li Class= "lista texto-justificado">•	Solicitud, Pagaré, Seguro Desgravamen (pag.1 a 6), Declaración de Salud.</li>
+                                    </ul>  
+                                    <p class="landing-page__p texto-justificado">
+                                        Contacto: Janet Rios (jrios@pe.ibm.com)
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                        Conoce más acerca de Préstamo a Largo Plazo en el siguiente enlace:
+                                    <a href="https://ibm.ent.box.com/s/oh9bwm3wt27d8gboozdbekcu9447qocn" 
+                                    target="_blank">Largo Plazo</a>
+                                    </p>
+                                </div>
+                                <div ibmCol class="bx--offset-lg-1" [columnNumbers]="{'md': 4, 'lg': 8}">
+                                    <img
+                                    class="landing-page__illo"
+                                    src="../../../assets/largoplazo.jpg"
+                                    alt="money"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+    
+    <ng-template #Loading>
+            <div class="loading">
+                    <ibm-loading [isActive]="isActive" [size]="size"></ibm-loading>
+            </div>
+    </ng-template>
+    
+    </div>
