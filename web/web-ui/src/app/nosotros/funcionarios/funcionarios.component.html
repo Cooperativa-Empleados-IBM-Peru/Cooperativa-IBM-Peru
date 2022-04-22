@@ -1,0 +1,83 @@
+<div class="content-home">
+    <div ibmGrid class="bx--grid--full-width landing-page" *ngIf="ibmidservice.LoggedIn; else Loading">
+        <div ibmRow class="landing-page__banner">
+            <div ibmCol [columnNumbers]="{'lg': 12, 'md' : 5}">
+                <h1 class="landing-page__heading">
+                    Cooperativa de Empleados IBM Perú
+                </h1>
+            </div>
+            <div ibmCol [columnNumbers]="{'lg': 4, 'md' : 3}">
+                <h1 class="coope__subheading2">
+                    {{ibmidservice.EmailEmpleado}}
+                </h1>
+                <h2 class="coope__subheading2">
+                    {{ibmidservice.CodEmpleado}}
+                </h2>
+            </div>
+    
+        </div>
+        <div ibmCol [columnNumbers]="{'md': 4, 'lg': 7}">
+            <h2 class="landing-page__subheading">
+               Organigrama   
+            </h2>
+        </div>
+        
+        <div  fxLayout="row wrap" fxLayoutAlign="center stretch" >
+            <div ibmCol class="bx--offset-lg-1" [columnNumbers]="{'md': 6, 'lg': 6}">
+                <img
+                class="landing-page__illo"
+                src="../../../assets/organizacion.JPG"
+                alt="organizacion"
+                />
+            </div>
+        
+            <div ibmCol class="bx--offset-lg-1" [columnNumbers]="{'md': 6, 'lg': 6}">
+                <img
+                class="landing-page__illo"
+                src="../../../assets/gestion.JPG"
+                alt="gestion"
+                />
+            </div>
+                                                                 
+            <div ibmCol class="bx--offset-lg-1" [columnNumbers]="{'md': 6, 'lg': 6}">
+                <img
+                class="landing-page__illo"
+                src="../../../assets/administracion.JPG"
+                alt="administracion"
+                />
+            </div>
+            
+                <div ibmCol class="bx--offset-lg-1" [columnNumbers]="{'md': 6, 'lg': 6}">
+                    <img
+                    class="landing-page__illo"
+                    src="../../../assets/vigilancia.JPG"
+                    alt="vigilancia"
+                    />
+                </div>
+            
+                <div ibmCol class="bx--offset-lg-1" [columnNumbers]="{'md': 6, 'lg': 6}">
+                    <img
+                    class="landing-page__illo"
+                    src="../../../assets/electoral.JPG"
+                    alt="electoral"
+                    />
+                </div>
+           
+                <div ibmCol class="bx--offset-lg-1" [columnNumbers]="{'md': 6, 'lg': 6}">
+                    <img
+                    class="landing-page__illo"
+                    src="../../../assets/educacion.JPG"
+                    alt="educacion"
+                    />
+                </div>
+        </div>
+        
+    </div>
+    
+    <ng-template #Loading>
+            <div class="loading">
+                    <ibm-loading [isActive]="isActive" [size]="size"></ibm-loading>
+            </div>
+    </ng-template>
+    
+    </div>

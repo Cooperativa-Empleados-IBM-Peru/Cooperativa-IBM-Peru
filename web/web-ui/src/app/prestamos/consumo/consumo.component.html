@@ -1,0 +1,77 @@
+<div class="content-home">
+    <div ibmGrid class="bx--grid--full-width landing-page" *ngIf="ibmidservice.LoggedIn; else Loading">
+        <div ibmRow class="landing-page__banner">
+            <div ibmCol [columnNumbers]="{'lg': 12, 'md' : 5}">
+                <h1 class="landing-page__heading">
+                    Cooperativa de Empleados IBM Perú
+                </h1>
+            </div>
+            <div ibmCol [columnNumbers]="{'lg': 4, 'md' : 3}">
+                <h1 class="coope__subheading2">
+                    {{ibmidservice.EmailEmpleado}}
+                </h1>
+                <h2 class="coope__subheading2">
+                    {{ibmidservice.CodEmpleado}}
+                </h2>
+            </div>
+    
+        </div>
+        <div ibmRow class="landing-page__r2">
+            <div ibmCol class="bx--no-gutter">
+                         <div ibmGrid class="bx--grid--no-gutter bx--grid--full-width">
+                            <!-- <div ibmRow *ngIf="ibmidservice.IsAdmin">
+                                <div ibmCol>
+                                        <button class="btn-edit" (click)= "openModal()">
+                                            <svg icon ibmIconEdit size="16"></svg>
+                                        </button>
+                                </div>
+                            </div> --> 
+                            <div ibmRow class="landing-page__tab-content">
+                                <div ibmCol [columnNumbers]="{'md': 4, 'lg': 7}">
+                                    <h2 class="landing-page__subheading">
+                                       Consumo    
+                                    </h2>
+                                    <p Class= "landing-page__p texto-justificado">
+                                        El préstamo Consumo no requiere de aval y presta en soles y/o dólares, se puede pagar desde 1 mes hasta 12 meses como máximo, con la opción de cuotas dobles.
+                                        Lo montos a financiar son hasta S/ 10,000 soles y en dólares hasta $ 3,000 dólares. 
+                                        En ambos casos se puede tener hasta 3 préstamos concurrentes.
+                                        El socio debe tener 6 meses como mínimo inscrito en la Cooperativa para solicitar la línea de crédito.
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                        Para solicitar esta línea de crédito se debe presentar los siguientes documentos, llenados y firmados.
+                                    </p>
+                                    <ul>
+                                        <li Class= "lista texto-justificado">•	1 boleta de pago de los últimos meses.</li>
+                                        <li Class= "lista texto-justificado">•	DNI del socio.</li>
+                                        <li Class= "lista texto-justificado">•	Indicar el pago mensual que realiza por cada una de sus tarjetas de crédito y préstamos en el sistema financiero.</li>
+                                        <li Class= "lista texto-justificado">•	Solicitud y seguro desgravamen (pag.1 a pag.6)</li>
+                                    </ul>
+                                    <p class="landing-page__p texto-justificado">   
+                                        Contacto: Janet Rios (jrios@pe.ibm.com)                                     
+                                    </p>
+                                    <p class="landing-page__p texto-justificado">
+                                        Conoce más acerca de Préstamo de Consumo en el siguiente enlace:
+                                    <a href="https://ibm.ent.box.com/s/lp7f3g1pyhvtfqtfkzxbnvkol1a2k3o0" 
+                                     target="_blank">Consumo</a>
+                                    </p>
+                                </div>
+                                <div ibmCol class="bx--offset-lg-1" [columnNumbers]="{'md': 4, 'lg': 8}">
+                                    <img
+                                    class="landing-page__illo"
+                                    src="../../../assets/consumo.jpg"
+                                    alt="money"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+    
+    <ng-template #Loading>
+            <div class="loading">
+                    <ibm-loading [isActive]="isActive" [size]="size"></ibm-loading>
+            </div>
+    </ng-template>
+    
+    </div>
