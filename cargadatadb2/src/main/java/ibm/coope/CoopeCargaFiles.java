@@ -191,7 +191,6 @@ public class CoopeCargaFiles {
         } // if connectdb2
 
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
                 logger.error(e);
             }
 
