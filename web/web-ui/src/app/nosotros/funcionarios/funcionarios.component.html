@@ -16,68 +16,67 @@
             </div>
     
         </div>
+       
+      
         <div ibmCol [columnNumbers]="{'md': 4, 'lg': 7}">
-            <h2 class="landing-page__subheading">
-               Organigrama   
+            <h2 class="landing-page__subheading  padding-subtitulo">
+               Organigramas   
             </h2>
         </div>
-        
-        <div  fxLayout="row wrap" fxLayoutAlign="center stretch" >
-            <div ibmCol class="bx--offset-lg-1" [columnNumbers]="{'md': 6, 'lg': 6}">
-                <img
-                class="landing-page__illo"
-                src="../../../assets/organizacion.JPG"
-                alt="organizacion"
-                />
-            </div>
-        
-            <div ibmCol class="bx--offset-lg-1" [columnNumbers]="{'md': 6, 'lg': 6}">
-                <img
-                class="landing-page__illo"
-                src="../../../assets/gestion.JPG"
-                alt="gestion"
-                />
-            </div>
-                                                                 
-            <div ibmCol class="bx--offset-lg-1" [columnNumbers]="{'md': 6, 'lg': 6}">
-                <img
-                class="landing-page__illo"
-                src="../../../assets/administracion.JPG"
-                alt="administracion"
-                />
-            </div>
-            
-                <div ibmCol class="bx--offset-lg-1" [columnNumbers]="{'md': 6, 'lg': 6}">
-                    <img
-                    class="landing-page__illo"
-                    src="../../../assets/vigilancia.JPG"
-                    alt="vigilancia"
-                    />
-                </div>
-            
-                <div ibmCol class="bx--offset-lg-1" [columnNumbers]="{'md': 6, 'lg': 6}">
-                    <img
-                    class="landing-page__illo"
-                    src="../../../assets/electoral.JPG"
-                    alt="electoral"
-                    />
-                </div>
-           
-                <div ibmCol class="bx--offset-lg-1" [columnNumbers]="{'md': 6, 'lg': 6}">
-                    <img
-                    class="landing-page__illo"
-                    src="../../../assets/educacion.JPG"
-                    alt="educacion"
-                    />
-                </div>
-        </div>
-        
     </div>
-    
+
+<button class="accordion">Organización</button>
+<div class="panel">
+    <img
+    class="landing-page__illo central"
+    src="../../../assets/organizacion.jpg"
+    alt="organizacion"
+    />
+</div>
+
+<button class="accordion">Gestión</button>
+<div class="panel">
+    <img
+    class="landing-page__illo central"
+    src="../../../assets/gestion.jpg"
+    alt="gestion"
+    />
+</div>
+<button class="accordion">Consejo de Administración</button>
+<div class="panel">
+    <img
+    class="landing-page__illo central"
+    src="../../../assets/administracion.JPG"
+    alt="administracion"
+    />
+</div>
+<button class="accordion">Consejo de Vigilancia</button>
+<div class="panel">
+    <img
+    class="landing-page__illo central"
+    src="../../../assets/vigilancia.JPG"
+    alt="vigilancia"
+    />
+</div>
+<button class="accordion">Comité Electoral</button>
+<div class="panel">
+    <img
+    class="landing-page__illo central"
+    src="../../../assets/electoral.JPG"
+    alt="electoral"
+    />
+</div>
+<button class="accordion">Comité De Educación</button>
+<div class="panel">
+    <img
+    class="landing-page__illo central"
+    src="../../../assets/educacion.JPG"
+    alt="educacion"
+    />
+</div>
     <ng-template #Loading>
             <div class="loading">
                     <ibm-loading [isActive]="isActive" [size]="size"></ibm-loading>
             </div>
     </ng-template>
-    
-    </div>
+</div>
