@@ -12,6 +12,7 @@
 .lista{
         @include carbon--type-style('productive-heading-03');
         margin-top: $spacing-01;
+        font-size: 1rem !important;
         // margin-bottom: $spacing-08;
     
         @include carbon--breakpoint-between((320px + 1), md) {

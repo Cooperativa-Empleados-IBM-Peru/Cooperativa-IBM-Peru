@@ -3,26 +3,21 @@
     <ibm-header-navigation *ngIf="ibmidservice.LoggedIn">
         
         <ibm-header-menu title="Quienes Somos">
-            <ibm-header-item title ="Historia" [route]="['nosotros/historia']">Historia</ibm-header-item>
-            <ibm-header-item title ="Funcionarios" [route]="['nosotros/funcionarios']">Funcionarios</ibm-header-item>
-            <ibm-header-item title ="Directiva"><a href="https://ibm.ent.box.com/s/ynyvcprfjpbfrlk1y87zq7uqjmutgwcg" 
-            target="_blank">Directiva</a></ibm-header-item>
-            <ibm-header-item title ="Estados Financieros"> <a href="https://ibm.ent.box.com/s/94azbnixqtj3ha83whhz96v8uuvvds93" 
-                target="_blank">Estados Financieros</a></ibm-header-item>
-            <ibm-header-item title ="Memorias"> <a href="https://ibm.ent.box.com/s/wgzn8nmom9vxc4d629i1sy89cmidyjc1" 
-                target="_blank">Memorias</a></ibm-header-item>
-            <ibm-header-item title ="Estatuto"><a href="https://ibm.ent.box.com/s/4zsrdi5s4pczfydgikexdeqwck63uhqf" 
-                target="_blank">Estatuto</a></ibm-header-item>
-            <ibm-header-item title ="Reglamentos"> <a href="https://ibm.ent.box.com/s/zld4aadlg9xeioxy1a9l14t83vy24daf" 
-                target="_blank">Reglamentos</a></ibm-header-item>
+            <ibm-header-item title ="Historia" [route]="['nosotros/historia']">Historia &nbsp;</ibm-header-item>
+            <ibm-header-item title ="Funcionarios" [route]="['nosotros/funcionarios']">Funcionarios&nbsp;</ibm-header-item>
+            <ibm-header-item title ="Directiva"[route]="['nosotros/directiva']">Directiva&nbsp;</ibm-header-item>
+            <ibm-header-item title ="Estados Financieros"[route]="['nosotros/estadosfinancieros']">Estados Financieros &nbsp;</ibm-header-item>
+            <ibm-header-item title ="Memorias"[route]="['nosotros/memorias']">Memorias &nbsp;</ibm-header-item>
+            <ibm-header-item title ="Estatuto"[route]="['nosotros/estatuto']">Estatuto &nbsp;</ibm-header-item>
+            <ibm-header-item title ="Reglamentos"[route]="['nosotros/reglamentos']">Reglamentos &nbsp;</ibm-header-item>
         </ibm-header-menu>
 
         <ibm-header-menu title="Mis Cuentas">
-            <ibm-header-item title="Ahorros" [route]="['socios/ahorros']">Ahorros</ibm-header-item>
-            <ibm-header-item title="Certificados"  [route]="['socios/certificados']">Certificados</ibm-header-item>
-            <ibm-header-item title="Préstamos" [route]="['socios/prestamos']">Préstamos</ibm-header-item>
-            <ibm-header-item title="Garantías" [route]="['socios/garantizados']">Garantías</ibm-header-item>
-            <ibm-header-item title="Automovil" [route]="['socios/automovil']">Automóvil</ibm-header-item>
+            <ibm-header-item title="Ahorros" [route]="['socios/ahorros']">Ahorros &nbsp;</ibm-header-item>
+            <ibm-header-item title="Certificados"  [route]="['socios/certificados']">Certificados&nbsp;</ibm-header-item>
+            <ibm-header-item title="Préstamos" [route]="['socios/prestamos']">Préstamos &nbsp;</ibm-header-item>
+            <ibm-header-item title="Garantías" [route]="['socios/garantizados']">Garantías &nbsp;</ibm-header-item>
+            <ibm-header-item title="Automovil" [route]="['socios/automovil']">Automóvil &nbsp;</ibm-header-item>
         </ibm-header-menu> 
 
         <!-- <ibm-header-menu *ngIf="ibmidservice.IsAdmin" title="Administración">
@@ -32,26 +27,24 @@
         </ibm-header-menu> -->
 
       <ibm-header-menu title="Prestamos">
-            <ibm-header-item title ="Tasas de interes"> <a href="https://ibm.ent.box.com/s/8p4683wz94r30tu7ppp8cxnf0humakqx" 
-                target="_blank">Tasas de interés</a></ibm-header-item> 
-            <ibm-header-item  title ="Simulador" > <a href="https://ibm.ent.box.com/s/y0rigk1gpzpaogkdtwv8woav5f9mg8gi" 
-                target="_blank">Simulador</a></ibm-header-item> 
-            <ibm-header-item  title ="Solo Firma"[route]="['prestamos/solofirma']"> Solo Firma</ibm-header-item>
+            <ibm-header-item title ="Tasas de interés"[route]="['prestamos/tasasinteres']">Tasas de interés &nbsp;</ibm-header-item> 
+            <ibm-header-item  title ="Simulador"[route]="['prestamos/simulador']">Simulador &nbsp;</ibm-header-item> 
+            <ibm-header-item  title ="A Sola Firma"[route]="['prestamos/solofirma']">A Sola Firma&nbsp;</ibm-header-item>
             <ibm-header-item title ="Consumo" [route]="['prestamos/consumo']"> Consumo </ibm-header-item> 
-            <ibm-header-item title ="Largo Plazo"[route]="['prestamos/largoplazo']"> Largo Plazo </ibm-header-item> 
-            <ibm-header-item title ="Hipotecario"[route]="['prestamos/hipotecario']"> Hipotecario </ibm-header-item> 
-            <ibm-header-item title ="Garantía Hipotecaria" [route]="['prestamos/garantiahipotecaria']"> Garantía Hipotecaria </ibm-header-item> 
-            <ibm-header-item title ="Automotriz"[route]="['prestamos/automotriz']"> Automotriz</ibm-header-item> 
-            <ibm-header-item title ="Académico"[route]="['prestamos/academico']"> Académico</ibm-header-item> 
-            <ibm-header-item title ="Escolar" [route]="['prestamos/escolar']"> Escolar </ibm-header-item> 
+            <ibm-header-item title ="Largo Plazo"[route]="['prestamos/largoplazo']"> Largo Plazo &nbsp;</ibm-header-item> 
+            <ibm-header-item title ="Hipotecario"[route]="['prestamos/hipotecario']"> Hipotecario &nbsp;</ibm-header-item> 
+            <ibm-header-item title ="Garantía Hipotecaria" [route]="['prestamos/garantiahipotecaria']"> Garantía Hipotecaria &nbsp;</ibm-header-item> 
+            <ibm-header-item title ="Automotriz"[route]="['prestamos/automotriz']"> Automotriz&nbsp;</ibm-header-item> 
+            <ibm-header-item title ="Académico"[route]="['prestamos/academico']"> Académico&nbsp;</ibm-header-item> 
+            <ibm-header-item title ="Escolar" [route]="['prestamos/escolar']"> Escolar&nbsp;&nbsp; </ibm-header-item> 
                         
       </ibm-header-menu>
         
         <ibm-header-menu title="Servicios">
-            <ibm-header-item title ="Fondo Sepelio" [route]="['servicios/fondosepelio']">Fondo de Sepelio</ibm-header-item>
-            <ibm-header-item title ="Seguro Autos" [route]="['servicios/seguroautos']">Seguro Autos</ibm-header-item>
-            <ibm-header-item title ="Telefonía Celular" [route]="['servicios/telefoniacelular']">Telefonía Celular</ibm-header-item>
-            <ibm-header-item title ="Oncosalud" [route]="['servicios/oncosalud']">Oncosalud</ibm-header-item>
+            <ibm-header-item title ="Fondo Sepelio" [route]="['servicios/fondosepelio']">Fondo de Sepelio&nbsp;</ibm-header-item>
+            <ibm-header-item title ="Seguro Autos" [route]="['servicios/seguroautos']">Seguro Autos&nbsp;</ibm-header-item>
+            <ibm-header-item title ="Telefonía Celular" [route]="['servicios/telefoniacelular']">Telefonía Celular&nbsp;</ibm-header-item>
+            <ibm-header-item title ="Oncosalud" [route]="['servicios/oncosalud']">Oncosalud&nbsp;</ibm-header-item>
 	        <!-- <ibm-header-item *ngFor="let servicio of servicios" title={{servicio.url }}><a href={{servicio.url}} target="_blank">{{servicio.nombre}}</a></ibm-header-item> -->
           
         </ibm-header-menu>
@@ -63,21 +56,21 @@
             <ibm-header-item title="Pastelerías y Lacteos"><a href="https://ibm.ent.box.com/s/lzo8dzkbk7vusvqxqr7gq6gww5baexdc" 
                 target="_blank">Pastelerías y Lacteos</a></ibm-header-item>
             <ibm-header-item title="Vinos y Licores"><a href="https://ibm.ent.box.com/s/8hsw5a1pj5rvm9cmv71tvhtwefhwg4rt" 
-                target="_blank">Vinos y Licores</a></ibm-header-item>
+                target="_blank">Vinos y Licores &nbsp;</a></ibm-header-item>
             <ibm-header-item title="Mascotas"><a href="https://ibm.ent.box.com/s/mz9pu2wmzpuhcjtjo2906b9yp463e85j" 
-                target="_blank">Mascotas</a></ibm-header-item>
+                target="_blank">Mascotas &nbsp;</a></ibm-header-item>
             <ibm-header-item title="Menaje Decoración"><a href="https://ibm.ent.box.com/s/jgouihcbrwl99cb9bqa6jbfmhhlnf5vh" 
                 target="_blank">Menaje Decoración</a></ibm-header-item>
             <ibm-header-item title="Belleza"><a href="https://ibm.ent.box.com/s/6uc11kp0p4029lm91ltlsf1bko9h90b7" 
-                target="_blank">Belleza</a></ibm-header-item>
+                target="_blank">Belleza &nbsp;</a></ibm-header-item>
             <ibm-header-item title="Viajes y Hoteles"><a href="https://ibm.ent.box.com/s/xdov1sbb2y9ajmetsolidgm929zevzcg" 
                 target="_blank">Viajes y Hoteles</a></ibm-header-item>
             <ibm-header-item title="Gimnasios"><a href="https://ibm.ent.box.com/s/913uy4er5chv4qhagkhko3ouivcue81e" 
-                target="_blank">Gimnasios</a></ibm-header-item>
+                target="_blank">Gimnasios &nbsp;</a></ibm-header-item>
             <ibm-header-item title="Restaurantes"><a href="https://ibm.ent.box.com/s/nc4z7gtj5uulowhihla4gu2ot0vjksdu" 
-                target="_blank">Restaurantes</a></ibm-header-item>
+                target="_blank">Restaurantes &nbsp;</a></ibm-header-item>
             <ibm-header-item title="Automotriz"><a href="https://ibm.ent.box.com/s/xoddqmiweshidvostf20b97tepvid4ij" 
-                target="_blank">Automotriz</a></ibm-header-item>
+                target="_blank">Automotriz &nbsp;</a></ibm-header-item>
             <!-- <ibm-header-item [route]="['avisos/proveedores']">Proveedores</ibm-header-item>
             <ibm-header-item [route]="['avisos/internos']">Internos</ibm-header-item>
             <ibm-header-item [route]="['avisos/noticias']">Noticias</ibm-header-item>  -->
