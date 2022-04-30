@@ -28,3 +28,11 @@ docker run --rm -it -v "$PWD"/sql:/flyway/sql -v "$PWD"/conf:/flyway/conf -v "$P
 
 Este comando ejecutará las migraciones de la bd desde una imagen docker de flyway
 
+Otros comandos de flyway
+```
+clean
+info
+validate
+baseline
+repair
+```

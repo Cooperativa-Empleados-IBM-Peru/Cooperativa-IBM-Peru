@@ -1,18 +1,13 @@
-name: Cooperativa web dataapi UAT
-on:
-  pull_request_target:
-    types: [opened, synchronize, closed]
-    branches:    
-      - 'master'
-    paths:
-      - 'web/dataapi/**'
+name: Cooperativa web dataapi PROD
+on: 
+  workflow_dispatch:
 env:
   working-directory: ./web/dataapi
 jobs:
   build:
     name: Build app
     runs-on: ubuntu-latest
-    environment: UAT
+    environment: PROD
     steps:
     - name: Update OS
       run: |
@@ -77,9 +72,8 @@ jobs:
   deploy:
     name: Deploy app
     needs: [build]
-    if: ${{ github.event.pull_request.merged == true }}
     runs-on: ubuntu-latest
-    environment: UAT
+    environment: PROD
     steps:
     - name: Downloading artifacts
       uses: actions/download-artifact@v3
@@ -92,4 +86,4 @@ jobs:
         IBM_CLOUD_CF_API: https://api.ng.bluemix.net
         IBM_CLOUD_CF_ORG: ${{ secrets.IBM_CLOUD_ORG }}
         IBM_CLOUD_CF_SPACE: ${{ secrets.IBM_CLOUD_SPACE }}
-        APP_MANIFEST_FILE: manifest-dev.yml
+        APP_MANIFEST_FILE: manifest.yml

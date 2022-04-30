@@ -17,9 +17,13 @@ on:
 #  pull_request:
     # The branches below must be a subset of the branches above
 #    branches: [ master ]
+  pull_request_target:
+    types: [opened, synchronize, closed]
+    branches:    
+      - 'master'
   schedule:
     - cron: '0 5 * * *'
-
+  workflow_dispatch:
 jobs:
   analyze:
     name: Analyze
