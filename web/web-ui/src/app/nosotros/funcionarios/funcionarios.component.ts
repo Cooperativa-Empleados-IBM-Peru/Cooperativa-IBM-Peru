@@ -4,8 +4,6 @@ import { IbmidService } from 'src/app/services/ibmid.service';
 import { Image } from 'src/app/administracion/servicios/image.model';
 import { Subscription } from 'rxjs/internal/Subscription';
 
-import { storiesOf, moduleMetadata } from "@storybook/angular";
-import { action } from "@storybook/addon-actions";
 
 @Component({
 	selector: 'app-funcionarios',
