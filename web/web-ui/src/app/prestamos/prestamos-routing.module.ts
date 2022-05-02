@@ -24,7 +24,7 @@ const routes: Routes = [
 			component: SimuladorComponent
 		  },
 		  {
-			path: 'solofirma',
+			path: 'asolafirma',
 			component: ASolafirmaComponent
 		  },
 		  {
