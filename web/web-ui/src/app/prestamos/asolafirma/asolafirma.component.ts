@@ -6,10 +6,10 @@ import { Subscription } from 'rxjs/internal/Subscription';
 
 @Component({
 	selector: 'app-solofirma',
-	templateUrl: './solofirma.component.html',
-	styleUrls: ['./solofirma.component.scss']
+	templateUrl: './asolafirma.component.html',
+	styleUrls: ['./asolafirma.component.scss']
 })
-export class SolofirmaComponent implements OnInit {
+export class ASolafirmaComponent implements OnInit {
 
 	imagenes: Image[] = [];
 	size= "normal";
