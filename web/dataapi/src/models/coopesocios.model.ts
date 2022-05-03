@@ -54,6 +54,15 @@ export class Coopesocios extends Entity {
   emailempleado?: string;
 
   @property({
+    type: 'string',
+    length: 70,
+    // precision: ,
+    scale: 0,
+    db2: {columnName: 'EMAILEMPLEADO2', dataType: 'CHARACTER', dataLength: 70, dataPrecision: undefined, dataScale: 0, nullable: 'Y'},
+  })
+  emailempleado2?: string;
+
+  @property({
     type: 'date',
     length: 13,
     // precision: ,

@@ -4,6 +4,7 @@ export interface CoopeSocios {
     codempleado : string,
     codpais : string,
     emailempleado : string,
+    emailempleado2 : string,
     fecmodificacion : string,
     inbluepages: boolean,
     isadmin: boolean,

@@ -371,6 +371,7 @@ export class ListasociosComponent implements OnInit {
 			'codempleado': '',
 			'codpais': '',
 			'emailempleado': '',
+			'emailempleado2': '',
 			'fecmodificacion': '',
 			'inbluepages': true,
 			'isadmin': false,
@@ -396,13 +397,14 @@ export class ListasociosComponent implements OnInit {
 	//	console.log('Row item selected:', index);
 		this.id = this.modelIbmer.data[index][3].data.id;
 
-		this.db2service.getIbmerById(this.id.trim()).subscribe(
+		this.db2service.getSocioById(this.id.trim()).subscribe(
 			(resp: any) => {
 				if (resp) {
 					this.socioCoope = resp;
 					this.socioCoope.codempleado = this.socioCoope.codempleado.trim();
 					this.socioCoope.codpais = this.socioCoope.codpais.trim();
 					this.socioCoope.emailempleado = this.socioCoope.emailempleado.trim();
+					this.socioCoope.emailempleado2 = this.socioCoope.emailempleado2.trim();
 					this.socioCoope.nombreempleado = this.socioCoope.nombreempleado.trim();
 	//	console.log(this.socioCoope);
 				}
@@ -413,7 +415,7 @@ export class ListasociosComponent implements OnInit {
 	//	console.log('Row item selected:', index);
 		this.id = this.modelExibmer.data[index][3].data.id;
 	//	console.log(this.id);
-		this.db2service.getExibmerById(this.id.trim()).subscribe(
+		this.db2service.getSocioById(this.id.trim()).subscribe(
 			(resp: any) => {
 
 				if (resp) {
@@ -422,6 +424,7 @@ export class ListasociosComponent implements OnInit {
 					this.socioCoope.codempleado = this.socioCoope.codempleado.trim();
 					this.socioCoope.codpais = this.socioCoope.codpais.trim();
 					this.socioCoope.emailempleado = this.socioCoope.emailempleado.trim();
+					this.socioCoope.emailempleado2 = this.socioCoope.emailempleado2.trim();
 					this.socioCoope.nombreempleado = this.socioCoope.nombreempleado.trim();
 					// console.log(this.socioCoope);
 				}
@@ -439,6 +442,7 @@ export class ListasociosComponent implements OnInit {
 					this.socioCoope.codempleado = this.socioCoope.codempleado.trim();
 					this.socioCoope.codpais = this.socioCoope.codpais.trim();
 					this.socioCoope.emailempleado = this.socioCoope.emailempleado.trim();
+					this.socioCoope.emailempleado2 = this.socioCoope.emailempleado2.trim();
 					this.socioCoope.nombreempleado = this.socioCoope.nombreempleado.trim();
 	//				console.log(this.socioCoope);
 				}

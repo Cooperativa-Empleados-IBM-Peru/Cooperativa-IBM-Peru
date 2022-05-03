@@ -20,12 +20,6 @@
             <ibm-header-item title="Automovil" [route]="['socios/automovil']">Automóvil &nbsp;</ibm-header-item>
         </ibm-header-menu> 
 
-        <!-- <ibm-header-menu *ngIf="ibmidservice.IsAdmin" title="Administración">
-			<ibm-header-item [route]="['administracion/listasocios']">Lista de Socios</ibm-header-item>
-			<ibm-header-item [route]="['administracion/servicios']">Mantenimiento</ibm-header-item>
-			<ibm-header-item [route]="['administracion/proveedor']">Lista Proveedores</ibm-header-item>
-        </ibm-header-menu> -->
-
       <ibm-header-menu title="Prestamos">
             <ibm-header-item title ="Tasas de interés"[route]="['prestamos/tasasinteres']">Tasas de interés &nbsp;</ibm-header-item> 
             <ibm-header-item  title ="Simulador"[route]="['prestamos/simulador']">Simulador &nbsp;</ibm-header-item> 
@@ -48,6 +42,7 @@
 	        <!-- <ibm-header-item *ngFor="let servicio of servicios" title={{servicio.url }}><a href={{servicio.url}} target="_blank">{{servicio.nombre}}</a></ibm-header-item> -->
           
         </ibm-header-menu>
+
         <ibm-header-menu title="Proveedores">
             <ibm-header-item title="Tecnología Para el Hogar"><a href="https://ibm.ent.box.com/s/ipz35b7ftpayqhk0mn57186fesh9a3m9" 
                 target="_blank">Tecnología Para el Hogar</a></ibm-header-item>
@@ -76,39 +71,16 @@
             <ibm-header-item [route]="['avisos/noticias']">Noticias</ibm-header-item>  -->
         </ibm-header-menu> 
    
+        <ibm-header-menu *ngIf="ibmidservice.IsAdmin" title="Administración">
+			<ibm-header-item [route]="['administracion/listasocios']">Lista de Socios</ibm-header-item>
+		<!--	<ibm-header-item [route]="['administracion/servicios']">Mantenimiento</ibm-header-item>
+			<ibm-header-item [route]="['administracion/proveedor']">Lista Proveedores</ibm-header-item>  -->
+        </ibm-header-menu>
+
     </ibm-header-navigation>
     
     <ibm-header-global>
 		<!--
-        <ibm-header-action title="login" *ngIf="!ibmidservice.LoggedIn"
-            (selected)="loguearUser('user1@sample.com');">
-            <svg icon ibmIconUserAvatar size="20"></svg>
-        </ibm-header-action>
-        <ibm-header-action title="login" *ngIf="!ibmidservice.LoggedIn"
-            (selected)="loguearUser('user2@sample.com');">
-            <svg icon ibmIconUserAvatar size="20"></svg>
-        </ibm-header-action>
-        <ibm-header-action title="login" *ngIf="!ibmidservice.LoggedIn"
-            (selected)="loguearUser('user3@sample.com');">
-            <svg icon ibmIconUserAvatar size="20"></svg>
-        </ibm-header-action>
-        <ibm-header-action title="login" *ngIf="!ibmidservice.LoggedIn"
-            (selected)="loguearUser('user4@sample.com');">
-            <svg icon ibmIconUserAvatar size="20"></svg>
-        </ibm-header-action>
-        <ibm-header-action title="login" *ngIf="!ibmidservice.LoggedIn"
-            (selected)="loguearUser('user5@sample.com');">
-            <svg icon ibmIconUserAvatar size="20"></svg>
-        </ibm-header-action>
-        <ibm-header-action title="login" *ngIf="!ibmidservice.LoggedIn"
-            (selected)="loguearUser('user6@sample.com');">
-            <svg icon ibmIconUserAvatar size="20"></svg>
-        </ibm-header-action>
-        <ibm-header-action title="login" *ngIf="!ibmidservice.LoggedIn"
-            (selected)="loguearUser('admin@sample.com');">
-            <svg icon ibmIconUserAvatar size="20"></svg>
-        </ibm-header-action>
-
         <ibm-header-action title="logout" *ngIf="ibmidservice.LoggedIn"
             (selected)="logout();">
             <svg icon ibmIconUserAvatarFilled size="20"></svg>

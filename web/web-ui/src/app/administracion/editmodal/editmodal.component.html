@@ -36,6 +36,16 @@
 			</div>
 			<div class = "col-form">
 				<ibm-label class="item-name">
+					Email 2
+					<input [value]="socio.emailempleado2"
+							(change)="onChangeEmail2($event)"
+							autocomplete="off" ibmText placeholder="Correo Electronico 2" type="text" />
+				</ibm-label>
+			</div>
+		</div>
+		<div class="row-form">
+			<div class = "col-form">
+				<ibm-label class="item-name">
 					Nombre
 					<input [value]="socio.nombreempleado"
 							(change)="onChangeName($event)"

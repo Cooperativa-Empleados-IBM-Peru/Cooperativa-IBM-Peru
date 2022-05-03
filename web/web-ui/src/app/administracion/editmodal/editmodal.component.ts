@@ -38,6 +38,9 @@ export class EditmodalComponent extends BaseModal {
   	onChangeEmail(event) {
 		this.socio.emailempleado = event.target.value;
 	}
+	onChangeEmail2(event) {
+		this.socio.emailempleado2 = event.target.value;
+	}
   	onChangeName(event) {
 		this.socio.nombreempleado = event.target.value;
 	}
@@ -59,7 +62,7 @@ export class EditmodalComponent extends BaseModal {
 			this.socio.fecmodificacion =  new Date().toISOString();
 	//		console.log(this.socio);
 
-			this.db2Service.updateSocio(this.socio.codempleado.trim(), this.socio).subscribe((response: any) => {
+			this.db2Service.updateSocio(this.socio.uuid.trim(), this.socio).subscribe((response: any) => {
 	//			console.log('updated');
 				this.redirectTo('/administracion/listasocios');
 				this.modalService.destroy();
