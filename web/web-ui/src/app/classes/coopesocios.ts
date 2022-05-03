@@ -3,6 +3,7 @@ export interface CoopeSocios {
     activo : boolean,
     codempleado : string,
     codpais : string,
+    company : string,
     emailempleado : string,
     emailempleado2 : string,
     fecmodificacion : string,

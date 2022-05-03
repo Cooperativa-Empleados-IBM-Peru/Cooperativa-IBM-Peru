@@ -337,7 +337,7 @@ export class Db2Service {
 
 	addSocio(socio: Object) :Observable<any>{
 	  	const params = new HttpParams()
-
+console.log(socio);
 		  return this.http.post(endpoint + 'coopesocios', socio ,{ params, 'headers': this.secureService.httpSecureOptions(), responseType: 'json'} )
 		  .pipe(
 		    catchError(this.secureService.handleError)

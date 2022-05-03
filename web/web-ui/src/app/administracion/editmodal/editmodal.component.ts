@@ -34,6 +34,9 @@ export class EditmodalComponent extends BaseModal {
 	onChangeCodPais(event) {
 		this.socio.codpais = event.target.value;
 	}
+	onChangeCompany(event) {
+		this.socio.company = event.target.value;
+	}
 
   	onChangeEmail(event) {
 		this.socio.emailempleado = event.target.value;
@@ -56,14 +59,13 @@ export class EditmodalComponent extends BaseModal {
 	}
 
 	saveSocio(btn: number) {
+		if (this.activo) {this.socio.activo = (this.activo.trim() === 'si') ? true : false; }
+		if (this.blue) { this.socio.inbluepages = (this.blue.trim() === 'si') ? true : false; }
+		this.socio.fecmodificacion =  new Date().toISOString();
+
 		if (btn === 1) {
-			if (this.activo) {this.socio.activo = (this.activo.trim() === 'si') ? true : false; }
-			if (this.blue) { this.socio.inbluepages = (this.blue.trim() === 'si') ? true : false; }
-			this.socio.fecmodificacion =  new Date().toISOString();
-	//		console.log(this.socio);
 
 			this.db2Service.updateSocio(this.socio.uuid.trim(), this.socio).subscribe((response: any) => {
-	//			console.log('updated');
 				this.redirectTo('/administracion/listasocios');
 				this.modalService.destroy();
 				setTimeout(() => {
@@ -71,13 +73,10 @@ export class EditmodalComponent extends BaseModal {
 				}, 2000);
 			});
 		} else {
-			if (this.activo) {this.socio.activo = (this.activo.trim() === 'si') ? true : false; }
-			if (this.blue) { this.socio.inbluepages = (this.blue.trim() === 'si') ? true : false; }
-			this.socio.fecmodificacion =  new Date().toISOString();
 			this.socio.uuid = this.db2Service.generateUUID();
-	//		console.log(this.socio);
+
 			this.db2Service.addSocio(this.socio).subscribe(() => {
-	//			console.log('añadido');
+
 				this.redirectTo('/administracion/listasocios');
 				this.modalService.destroy();
 				setTimeout(() => {
@@ -86,6 +85,7 @@ export class EditmodalComponent extends BaseModal {
 			});
 		}
 	}
+
 	redirectTo(uri: string) {
 		this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
 		this.router.navigate([uri]));

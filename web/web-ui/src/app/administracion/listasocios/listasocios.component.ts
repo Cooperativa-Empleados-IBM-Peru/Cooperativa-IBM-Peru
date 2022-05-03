@@ -370,6 +370,7 @@ export class ListasociosComponent implements OnInit {
 			'activo': true,
 			'codempleado': '',
 			'codpais': '',
+			'company': '',
 			'emailempleado': '',
 			'emailempleado2': '',
 			'fecmodificacion': '',
@@ -394,7 +395,6 @@ export class ListasociosComponent implements OnInit {
 	}
 
   	onRowClickIbmer(index: number) {
-	//	console.log('Row item selected:', index);
 		this.id = this.modelIbmer.data[index][3].data.id;
 
 		this.db2service.getSocioById(this.id.trim()).subscribe(
@@ -403,18 +403,16 @@ export class ListasociosComponent implements OnInit {
 					this.socioCoope = resp;
 					this.socioCoope.codempleado = this.socioCoope.codempleado.trim();
 					this.socioCoope.codpais = this.socioCoope.codpais.trim();
+					this.socioCoope.company = this.socioCoope.company.trim();
 					this.socioCoope.emailempleado = this.socioCoope.emailempleado.trim();
 					this.socioCoope.emailempleado2 = this.socioCoope.emailempleado2.trim();
 					this.socioCoope.nombreempleado = this.socioCoope.nombreempleado.trim();
-	//	console.log(this.socioCoope);
 				}
 		});
 
 	}
 	onRowClickExIbmer(index: number) {
-	//	console.log('Row item selected:', index);
 		this.id = this.modelExibmer.data[index][3].data.id;
-	//	console.log(this.id);
 		this.db2service.getSocioById(this.id.trim()).subscribe(
 			(resp: any) => {
 
@@ -423,16 +421,15 @@ export class ListasociosComponent implements OnInit {
 					this.socioCoope = resp;
 					this.socioCoope.codempleado = this.socioCoope.codempleado.trim();
 					this.socioCoope.codpais = this.socioCoope.codpais.trim();
+					this.socioCoope.company = this.socioCoope.company.trim();
 					this.socioCoope.emailempleado = this.socioCoope.emailempleado.trim();
 					this.socioCoope.emailempleado2 = this.socioCoope.emailempleado2.trim();
 					this.socioCoope.nombreempleado = this.socioCoope.nombreempleado.trim();
-					// console.log(this.socioCoope);
 				}
 		});
 	}
 
 	onRowClickExSocio(index: number) {
-	//	console.log('Row item selected:', index);
 		this.id = this.modelExSocio.data[index][3].data.id;
 
 		this.db2service.getExSociobyId(this.id.trim()).subscribe(
@@ -441,10 +438,10 @@ export class ListasociosComponent implements OnInit {
 					this.socioCoope = resp;
 					this.socioCoope.codempleado = this.socioCoope.codempleado.trim();
 					this.socioCoope.codpais = this.socioCoope.codpais.trim();
+					this.socioCoope.company = this.socioCoope.company.trim();
 					this.socioCoope.emailempleado = this.socioCoope.emailempleado.trim();
 					this.socioCoope.emailempleado2 = this.socioCoope.emailempleado2.trim();
 					this.socioCoope.nombreempleado = this.socioCoope.nombreempleado.trim();
-	//				console.log(this.socioCoope);
 				}
 		});
 	}
