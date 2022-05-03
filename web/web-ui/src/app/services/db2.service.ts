@@ -294,23 +294,14 @@ export class Db2Service {
         )
   }
 
-	getIbmerById(id: string) : Observable<any>{
-        const params = new HttpParams()
+  getSocioById(id: string) : Observable<any>{
+    const params = new HttpParams()
 
-          return this.http.get(endpoint + `vwibmers/${id}`, { params, 'headers': this.secureService.httpSecureOptions(), responseType: 'json'} )
-          .pipe(
-           catchError(this.secureService.handleError)
-          )
-	}
-
-	getExibmerById(id: string) : Observable<any>{
-        const params = new HttpParams()
-
-          return this.http.get(endpoint + `vwexibmers/${id}`, { params, 'headers': this.secureService.httpSecureOptions(), responseType: 'json'} )
-          .pipe(
-           catchError(this.secureService.handleError)
-          )
-	}
+      return this.http.get(endpoint + `coopesocios/${id}`, { params, 'headers': this.secureService.httpSecureOptions(), responseType: 'json'} )
+      .pipe(
+       catchError(this.secureService.handleError)
+      )
+}
 
 	getExsocios() : Observable<any>{
 	  	const params = new HttpParams()
@@ -324,10 +315,14 @@ export class Db2Service {
   updateSocio(id: string, socio: Object) :  Observable<any>{
         const params = new HttpParams()
 
-          return this.http.put(endpoint + `coopesocios/${id}`, socio ,{ params, 'headers': this.secureService.httpSecureOptions(), responseType: 'json'} )
+        const updSocio = JSON.parse(JSON.stringify(socio));
+        updSocio.uuid = updSocio.uuid.trim();
+        updSocio.nombreempleado = updSocio.nombreempleado.trim();
+       
+        return this.http.put(endpoint + `coopesocios/${id}`, updSocio ,{ params, 'headers': this.secureService.httpSecureOptions(), responseType: 'json'} )
           .pipe(
-           catchError(this.secureService.handleError)
-          )
+          catchError(this.secureService.handleError)
+        )
 	}
 
 	deleteSocio(id: string) : Observable<any>{
@@ -342,7 +337,7 @@ export class Db2Service {
 
 	addSocio(socio: Object) :Observable<any>{
 	  	const params = new HttpParams()
-
+console.log(socio);
 		  return this.http.post(endpoint + 'coopesocios', socio ,{ params, 'headers': this.secureService.httpSecureOptions(), responseType: 'json'} )
 		  .pipe(
 		    catchError(this.secureService.handleError)

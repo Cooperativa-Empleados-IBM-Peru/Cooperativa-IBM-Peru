@@ -6,8 +6,6 @@ const dotenv = require('dotenv');
 const bodyParser = require("body-parser");
 const ibmdb = require('ibm_db');
 const { v4: uuidv4 } = require('uuid');
-const cron = require('node-cron');
-const converter = require('json-2-csv');
 
 const WebAppStrategy = appID.WebAppStrategy;
 
@@ -22,40 +20,6 @@ const app = express();
 const port = process.env.PORT || 6001;
 
 var env = process.env.NODE_ENV || "dev";
-
-const sched5 = cron.schedule("*/15 * * * *", () => {
-	var currdatetime = new Date();
-    console.log('running a task every 15 minutes!! ' + currdatetime);
-
-	ibmdb.open(connStr, function (err,conn) {
-		if (err) reject(err);
-		
-		// Save last login info
-		var sql = `SELECT * FROM ${process.env.DB2_USER}.USERSLOGIN`;
-
-		conn.query(sql, function (err, data) {
-			if (err) {
-				reject(err);
-			  } else {
-//				console.log(data);
-
-				converter.json2csv(data, (err, csv) => {
-					if (err) {
-						throw err;
-					}
-				
-					// print CSV string
-//					console.log(csv);
-				});
-
-			  }
-	
-		  conn.close();
-		});
-
-	  });
-
-});
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
