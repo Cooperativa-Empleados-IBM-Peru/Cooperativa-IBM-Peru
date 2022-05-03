@@ -12,6 +12,7 @@ export class EditmodalComponent extends BaseModal {
 
 	activo: string;
 	blue: string;
+	comp = 'IBM';
   constructor(
     @Inject('modalText') public modalText,
 	@Inject('size') public size,
@@ -35,7 +36,7 @@ export class EditmodalComponent extends BaseModal {
 		this.socio.codpais = event.target.value;
 	}
 	onChangeCompany(event) {
-		this.socio.company = event.target.value;
+		this.comp = event.target.value;
 	}
 
   	onChangeEmail(event) {
@@ -61,6 +62,8 @@ export class EditmodalComponent extends BaseModal {
 	saveSocio(btn: number) {
 		if (this.activo) {this.socio.activo = (this.activo.trim() === 'si') ? true : false; }
 		if (this.blue) { this.socio.inbluepages = (this.blue.trim() === 'si') ? true : false; }
+		this.socio.company = this.comp.trim();
+
 		this.socio.fecmodificacion =  new Date().toISOString();
 
 		if (btn === 1) {

@@ -1,5 +1,5 @@
 export interface CoopeSocios {
-	uuid : string,
+	  uuid : string,
     activo : boolean,
     codempleado : string,
     codpais : string,
@@ -9,6 +9,6 @@ export interface CoopeSocios {
     fecmodificacion : string,
     inbluepages: boolean,
     isadmin: boolean,
-	nombreempleado: string
+	  nombreempleado: string
   }
 

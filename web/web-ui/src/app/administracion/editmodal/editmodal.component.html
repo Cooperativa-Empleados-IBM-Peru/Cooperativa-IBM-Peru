@@ -57,30 +57,30 @@
 					Compañia
 					<ibm-radio-group
 						aria-label="radiogroup"
-						(change)="onChangeActivo($event)">
+						(change)="onChangeCompany($event)" *ngIf="socio.company.trim() === 'KYNDRYL'; else Company">
 						<ibm-radio
 							value="IBM"
-							[checked]="true">
+							[checked]="false">
 							IBM
 						</ibm-radio>
 						<ibm-radio
 							value="KYNDRYL"
-							[checked]="false">
+							[checked]="true">
 							KYNDRYL
 						</ibm-radio>
 					</ibm-radio-group>
 					<ng-template #Company>
 						<ibm-radio-group
 						aria-label="radio"
-						(change)="onChangeBlue($event)">
+						(change)="onChangeCompany($event)">
 							<ibm-radio
 								value="IBM"
-								[checked]="false">
+								[checked]="true">
 								IBM
 							</ibm-radio>
 							<ibm-radio
 								value="KYNDRYL"
-								[checked]="true">
+								[checked]="false">
 								KYNDRYL
 							</ibm-radio>
 						</ibm-radio-group>
@@ -110,7 +110,7 @@
 						<ng-template #Blue>
 							<ibm-radio-group
 							aria-label="radio"
-							(change)="onChangeCompany($event)">
+							(change)="onChangeBlue($event)">
 								<ibm-radio
 									value="si"
 									[checked]="false">
