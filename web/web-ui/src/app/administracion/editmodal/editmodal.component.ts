@@ -36,7 +36,7 @@ export class EditmodalComponent extends BaseModal {
 		this.socio.codpais = event.target.value;
 	}
 	onChangeCompany(event) {
-		this.comp = event.target.value;
+		this.comp = event.value;
 	}
 
   	onChangeEmail(event) {
