@@ -50,10 +50,10 @@
 
 .landing-page__p {
 	@include carbon--type-style('productive-heading-03');
-	margin-top: $spacing-06;
-	margin-bottom: $spacing-08;
+	// margin-top: $spacing-06;
 	font-size: 1rem !important;
-	
+	margin-top:1rem !important;
+	margin-bottom: 1rem !important;
 
 	@include carbon--breakpoint-between((320px + 1), md) {
 		max-width: 75%;
