@@ -76,7 +76,7 @@ jobs:
           web/web-ui/server.js
           web/web-ui/localdev-config.json
           web/web-ui/.env
-          web/web-ui/manifest-dev.yml
+          web/web-ui/manifest.yml
           web/web-ui/package.json
           web/web-ui/package-lock.json
   deploy:
