@@ -4,8 +4,8 @@
   "version": "1.3.12",
   "description": "Web UI para Cooperativa IBM",
   "engines": {
-    "node": "^16.14.2",
-                                                                                                                                  "npm": "^8.7.0"
+    "node": "^16.15.0",
+    "npm": "^8.9.0"
   },
   "scripts": {
     "ng": "ng",
@@ -34,14 +34,14 @@
     "@angular/platform-browser": "12.2.16",
     "@angular/platform-browser-dynamic": "12.2.16",
     "@angular/router": "12.2.16",
-    "@carbon/charts": "^0.57.0",
-    "@carbon/charts-angular": "^0.57.0",
+    "@carbon/charts": "^0.57.1",
+    "@carbon/charts-angular": "^0.57.1",
     "@carbon/icons-angular": "^11.2.2",
     "angular2-uuid": "^1.1.1",
     "body-parser": "^1.20.0",
     "carbon-components": "^10.56.0",
-    "carbon-components-angular": "^4.58.0",
-    "carbon-components-svelte": "^0.63.7",
+    "carbon-components-angular": "^4.58.1",
+    "carbon-components-svelte": "^0.63.8",
     "cookie-session": "^2.0.0",
     "d3": "~7.4.4",
     "dotenv": "^16.0.0",
@@ -53,7 +53,7 @@
     "json-2-csv": "^3.17.1",
     "ngx-owl-carousel": "^2.0.7",
     "ngx-owl-carousel-o": "^6.0.2",
-    "ngx-quill": "^16.2.0",
+    "ngx-quill": "^15.0.0",
     "passport": "^0.5.2",
     "quill": "^1.3.7",
     "request": "^2.88.2",
