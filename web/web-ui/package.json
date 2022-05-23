@@ -54,7 +54,7 @@
     "ngx-owl-carousel": "^2.0.7",
     "ngx-owl-carousel-o": "^6.0.2",
     "ngx-quill": "^15.0.0",
-    "passport": "^0.5.2",
+    "passport": "^0.5.3",
     "quill": "^1.3.7",
     "request": "^2.88.2",
     "rxjs": "^6.6.7",
