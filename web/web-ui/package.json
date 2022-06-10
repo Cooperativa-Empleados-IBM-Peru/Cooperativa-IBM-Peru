@@ -50,7 +50,6 @@
     "ibm_db": "^2.8.1",
     "ibmcloud-appid": "^6.2.5",
     "ibmcloud-appid-js": "^1.0.1",
-    "json-2-csv": "^3.17.1",
     "ngx-owl-carousel": "^2.0.7",
     "ngx-owl-carousel-o": "^6.0.2",
     "ngx-quill": "^15.0.0",
