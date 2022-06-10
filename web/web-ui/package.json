@@ -96,6 +96,6 @@
     "type": "git"
   },
   "resolutions": {
-    "webpack": "^5.72.1"
+    "webpack": "^5.73.0"
   }
 }
