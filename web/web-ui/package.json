@@ -4,7 +4,7 @@
   "version": "1.3.13",
   "description": "Web UI para Cooperativa IBM",
   "engines": {
-    "node": "^18.5.0",
+    "node": "^16.16.0",
     "npm": "^8.14.0"
   },
   "scripts": {
