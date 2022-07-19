@@ -9,7 +9,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {
-    "node": "^18.5.0",
+    "node": "^16.16.0",
     "npm": "^8.14.0"
   },
   "scripts": {
