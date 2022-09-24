@@ -95,7 +95,7 @@ jobs:
     - name: Downloading artifacts
       uses: actions/download-artifact@v3
       with:
-        name: dataapi-dist
+        name: ui-dist
     - name: Deploy to IBM Cloud Foundry
       uses: IBM/cloudfoundry-deploy@master
       with:
