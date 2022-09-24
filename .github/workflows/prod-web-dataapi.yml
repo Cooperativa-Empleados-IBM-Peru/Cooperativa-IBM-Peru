@@ -1,4 +1,4 @@
-name: Cooperativa web dataapi PROD
+name: Cooperativa web dataapi PROD deploy
 on: 
   workflow_dispatch:
 env:

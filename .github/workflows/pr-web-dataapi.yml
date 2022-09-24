@@ -1,4 +1,4 @@
-name: Cooperativa web dataapi UAT
+name: Cooperativa web dataapi UAT PR
 on:
   pull_request_target:
     types: [opened, synchronize, closed]
