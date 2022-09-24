@@ -6,6 +6,7 @@ on:
       - 'master'
     paths:
       - 'web/dataapi/**'
+  workflow_dispatch:
 env:
   working-directory: ./web/dataapi
 jobs:
@@ -48,6 +49,7 @@ jobs:
         sed -i 's|<CLOUDANT.PASSWORD>|${{secrets.CLOUDANT_PWD}}|g' ./src/datasources/env.ts
         sed -i 's|<CLOUDANT.URL>|${{secrets.CLOUDANT_URL}}|g' ./src/datasources/env.ts
         sed -i 's|<CLOUDANT.USERNAME>|${{secrets.CLOUDANT_USER}}|g' ./src/datasources/env.ts
+        
         sed -i 's|<DB2DB.DB>|${{secrets.DB2_DATABASE}}|g' ./src/datasources/env.ts
         sed -i 's|<DB2DB.HOST>|${{secrets.DB2_HOSTNAME}}|g' ./src/datasources/env.ts
         sed -i 's|<DB2DB.PASSWORD>|${{secrets.DB2_PASSWORD}}|g' ./src/datasources/env.ts

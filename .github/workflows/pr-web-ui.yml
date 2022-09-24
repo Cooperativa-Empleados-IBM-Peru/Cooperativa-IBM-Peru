@@ -1,13 +1,14 @@
-name: Cooperativa web ui UAT
+name: Cooperativa web dataapi UAT
 on:
   pull_request_target:
     types: [opened, synchronize, closed]
     branches:    
       - 'master'
     paths:
-      - 'web/web-ui/**'
+      - 'web/dataapi/**'
+  workflow_dispatch:
 env:
-  working-directory: ./web/web-ui
+  working-directory: ./web/dataapi
 jobs:
   build:
     name: Build app
@@ -28,8 +29,8 @@ jobs:
         npm config set legacy-peer-deps true
         node -v
         npm -version
-    - name: Install Angular
-      run: npm install -g @angular/cli
+    - name: Install loopback
+      run: npm install -g @loopback/cli
     - name: Checkout repository
       uses: actions/checkout@v3
     - name: Install packages
@@ -37,36 +38,30 @@ jobs:
         npm install --legacy-peer-deps
         npm prune
       working-directory: ${{env.working-directory}}
-    - name : Prepare env files
+    - name : Prepare env file
       run: |
-        cp ./src/environments/env.ts.template ./src/environments/env.ts
-        cp ./localdev-config.json.template ./localdev-config.json
-        cp ./.env.template ./.env
+        cp ./src/datasources/env.ts.template ./src/datasources/env.ts
       working-directory: ${{env.working-directory}}
-    - name: Update vars in env files
+    - name: Update vars in env file
       run: |  
-        sed -i 's|<COOPEAPI.URL>|${{secrets.COOPEAPI_URL}}|g' ./src/environments/env.ts
-        sed -i 's|<CLOUDANT.URL>|${{secrets.CLOUDANT_URL}}|g' ./src/environments/env.ts
-        sed -i 's|<CLOUDANT.USERNAME>|${{secrets.CLOUDANT_USER}}|g' ./src/environments/env.ts
-        sed -i 's|<CLOUDANT.PASSWORD>|${{secrets.CLOUDANT_PWD}}|g' ./src/environments/env.ts
-
-        sed -i 's|<APPID.CLIENTID>|${{secrets.APPID_ID}}|g' ./localdev-config.json
-        sed -i 's|<APPID.OAUTHSERVERURL>|${{secrets.APPID_OAUTHURL}}|g' ./localdev-config.json
-        sed -i 's|<APPID.PROFILESURL>|${{secrets.APPID_PROFILESURL}}|g' ./localdev-config.json
-        sed -i 's|<APPID.SECRET>|${{secrets.APPID_SECRET}}|g' ./localdev-config.json
-        sed -i 's|<APPID.TENANTID>|${{secrets.APPID_TENANTID}}|g' ./localdev-config.json
-        sed -i 's|<APPID.REDIRECTURI>|${{secrets.APPID_REDIRECTURL}}|g' ./localdev-config.json
-
-        sed -i 's|<DB2.DATABASE>|${{secrets.DB2_DATABASE}}|g' ./.env
-        sed -i 's|<DB2.HOSTNAME>|${{secrets.DB2_HOSTNAME}}|g' ./.env
-        sed -i 's|<DB2.USER>|${{secrets.DB2_USER}}|g' ./.env
-        sed -i 's|<DB2.PWD>|${{secrets.DB2_PASSWORD}}|g' ./.env
-        sed -i 's|<DB2.PORT>|${{secrets.DB2_PORT}}|g' ./.env
+        sed -i 's|<CLOUDANT.DB>|${{secrets.CLOUDANT_DB}}|g' ./src/datasources/env.ts
+        sed -i 's|<CLOUDANT.MODEL>|${{secrets.CLOUDANT_MODEL}}|g' ./src/datasources/env.ts
+        sed -i 's|<CLOUDANT.PASSWORD>|${{secrets.CLOUDANT_PWD}}|g' ./src/datasources/env.ts
+        sed -i 's|<CLOUDANT.URL>|${{secrets.CLOUDANT_URL}}|g' ./src/datasources/env.ts
+        sed -i 's|<CLOUDANT.USERNAME>|${{secrets.CLOUDANT_USER}}|g' ./src/datasources/env.ts
+        
+        sed -i 's|<DB2DB.DB>|${{secrets.DB2_DATABASE}}|g' ./src/datasources/env.ts
+        sed -i 's|<DB2DB.HOST>|${{secrets.DB2_HOSTNAME}}|g' ./src/datasources/env.ts
+        sed -i 's|<DB2DB.PASSWORD>|${{secrets.DB2_PASSWORD}}|g' ./src/datasources/env.ts
+        sed -i 's|<DB2DB.PORT>|${{secrets.DB2_PORT}}|g' ./src/datasources/env.ts
+        sed -i 's|<DB2DB.SSLDSN>|${{secrets.DB2_SSLDSN}}|g' ./src/datasources/env.ts
+        sed -i 's|<DB2DB.USERNAME>|${{secrets.DB2_USER}}|g' ./src/datasources/env.ts
       working-directory: ${{env.working-directory}} 
-    - name: build ui
+    - name: build dataapi
       run : |
         npm rebuild
-        npm run build:dev
+        npm run clean
+        npm run build
       working-directory: ${{env.working-directory}} 
     - name: clean modules
       run : |
@@ -75,15 +70,12 @@ jobs:
     - name: Uploading artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: ui-dist
+        name: dataapi-dist
         path: |
-          web/web-ui/dist/
-          web/web-ui/server.js
-          web/web-ui/localdev-config.json
-          web/web-ui/.env
-          web/web-ui/manifest-dev.yml
-          web/web-ui/package.json
-          web/web-ui/package-lock.json
+          web/dataapi/dist/
+          web/dataapi/manifest-dev.yml
+          web/dataapi/package.json
+          web/dataapi/package-lock.json
   deploy:
     name: Deploy app
     needs: [build]
@@ -94,7 +86,7 @@ jobs:
     - name: Downloading artifacts
       uses: actions/download-artifact@v3
       with:
-        name: ui-dist
+        name: dataapi-dist
     - name: Deploy to IBM Cloud Foundry
       uses: IBM/cloudfoundry-deploy@master
       with:
