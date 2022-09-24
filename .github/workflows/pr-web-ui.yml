@@ -1,11 +1,11 @@
-name: Cooperativa web ui UAT PR
+name: web ui PR
 on:
   pull_request_target:
     types: [opened, synchronize, closed]
     branches:    
       - 'master'
     paths:
-      - 'web/dataapi/**'
+      - 'web/web-ui/**'
   workflow_dispatch:
 env:
   working-directory: ./web/web-ui
