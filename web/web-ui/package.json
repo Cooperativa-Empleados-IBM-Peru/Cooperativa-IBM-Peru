@@ -34,14 +34,14 @@
     "@angular/platform-browser": "v12-lts",
     "@angular/platform-browser-dynamic": "v12-lts",
     "@angular/router": "v12-lts",
-    "@carbon/charts": "^1.5.6",
-    "@carbon/charts-angular": "^1.5.6",
+    "@carbon/charts": "^1.5.7",
+    "@carbon/charts-angular": "^1.5.7",
     "@carbon/icons-angular": "^11.2.2",
     "angular2-uuid": "^1.1.1",
     "body-parser": "^1.20.0",
     "carbon-components": "^10.58.1",
-    "carbon-components-angular": "^4.59.16",
-    "carbon-components-svelte": "^0.70.7",
+    "carbon-components-angular": "^4.59.19",
+    "carbon-components-svelte": "^0.70.9",
     "cookie-session": "^2.0.0",
     "d3": "~7.6.1",
     "dotenv": "^16.0.2",
@@ -81,7 +81,7 @@
     "codelyzer": "^6.0.2",
     "jasmine-core": "~4.4.0",
     "jasmine-spec-reporter": "~7.0.0",
-    "karma": "~6.4.0",
+    "karma": "~6.4.1",
     "karma-chrome-launcher": "~3.1.1",
     "karma-coverage-istanbul-reporter": "~3.0.3",
     "karma-jasmine": "~5.1.0",
@@ -96,6 +96,10 @@
     "type": "git"
   },
   "overrides": {
-    "webpack": "latest"
+    "webpack": "latest",
+    "@carbon/icons-angular": {
+      "@angular/core" : "v11-lts",
+      "@angular/compiler" : "v11-lts"
+    }
   }
 }

@@ -6,6 +6,7 @@ on:
       - 'master'
     paths:
       - 'web/dataapi/**'
+  workflow_dispatch:
 env:
   working-directory: ./web/dataapi
 jobs:
@@ -19,7 +20,7 @@ jobs:
         sudo apt-get update && sudo apt-get upgrade
         sudo apt autoremove
     - name: Install node
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v3.4.1
       with:
         node-version: '16.17.0'
     - name : Update npm
@@ -31,7 +32,7 @@ jobs:
     - name: Install loopback
       run: npm install -g @loopback/cli
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v3.0.2
     - name: Install packages
       run: |
         npm install --legacy-peer-deps
@@ -48,6 +49,7 @@ jobs:
         sed -i 's|<CLOUDANT.PASSWORD>|${{secrets.CLOUDANT_PWD}}|g' ./src/datasources/env.ts
         sed -i 's|<CLOUDANT.URL>|${{secrets.CLOUDANT_URL}}|g' ./src/datasources/env.ts
         sed -i 's|<CLOUDANT.USERNAME>|${{secrets.CLOUDANT_USER}}|g' ./src/datasources/env.ts
+        
         sed -i 's|<DB2DB.DB>|${{secrets.DB2_DATABASE}}|g' ./src/datasources/env.ts
         sed -i 's|<DB2DB.HOST>|${{secrets.DB2_HOSTNAME}}|g' ./src/datasources/env.ts
         sed -i 's|<DB2DB.PASSWORD>|${{secrets.DB2_PASSWORD}}|g' ./src/datasources/env.ts
@@ -66,7 +68,7 @@ jobs:
         npm prune --omit=dev
       working-directory: ${{env.working-directory}}
     - name: Uploading artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v3.1.0
       with:
         name: dataapi-dist
         path: |
