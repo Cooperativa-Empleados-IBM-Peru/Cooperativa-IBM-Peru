@@ -10,6 +10,10 @@
 # CooperativaIBMPeru
 Cooperativa de empleados de IBM del Perú
 
+## Issue with passport 0.6.0
+When upgrading passport library to v0.6.0, the app fails, it doesn't allow to login.  
+This is why we are using v.0.5.3 that works  
+
 ## Actions
 |                    |   Create PR  |     Merge master    |
 |--------------------|:------------:|:-------------------:|
