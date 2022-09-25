@@ -67,6 +67,7 @@ jobs:
         path: |
           web/dataapi/dist/
           web/dataapi/manifest.yml
+          web/dataapi/manifest-dev.yml
           web/dataapi/package.json
           web/dataapi/package-lock.json
   deploy:
