@@ -12,8 +12,6 @@ on:
         - UAT
 env:
   working-directory: ./web/web-ui
-  PROD-MANIFEST: manifest.yml
-  UAT-MANIFEST: manifest-dev.yml
 jobs:
   build:
     name: Build app
