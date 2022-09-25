@@ -1,13 +1,24 @@
-name: web dataapi UAT deploy
-on:
+name: web dataapi deploy
+on: 
   workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Environment'
+        required: true
+        default: 'PROD'
+        type: choice
+        options:
+        - PROD
+        - UAT
 env:
   working-directory: ./web/dataapi
+  PROD-MANIFEST: manifest.yml
+  UAT-MANIFEST: manifest-dev.yml
 jobs:
   build:
     name: Build app
     runs-on: ubuntu-latest
-    environment: UAT
+    environment: ${{ inputs.deployenv }} 
     steps:
     - name: Update OS
       run: |
@@ -29,8 +40,7 @@ jobs:
       uses: actions/checkout@v3.0.2
     - name: Install packages
       run: |
-        npm install --legacy-peer-deps
-        npm prune
+        npm ci
       working-directory: ${{env.working-directory}}
     - name : Prepare env file
       run: |
@@ -67,6 +77,7 @@ jobs:
         name: dataapi-dist
         path: |
           web/dataapi/dist/
+          web/dataapi/manifest.yml
           web/dataapi/manifest-dev.yml
           web/dataapi/package.json
           web/dataapi/package-lock.json
@@ -74,12 +85,17 @@ jobs:
     name: Deploy app
     needs: [build]
     runs-on: ubuntu-latest
-    environment: UAT
+    environment: ${{ inputs.deployenv }} 
     steps:
     - name: Downloading artifacts
       uses: actions/download-artifact@v3
       with:
         name: dataapi-dist
+    - name: Set manifest file
+      if: ${{ inputs.deployenv == 'UAT' }}
+      run : |
+        rm manifest.yml
+        mv manifest-dev.yml manifest.yml
     - name: Deploy to IBM Cloud Foundry
       uses: IBM/cloudfoundry-deploy@master
       with:
@@ -87,4 +103,4 @@ jobs:
         IBM_CLOUD_CF_API: https://api.ng.bluemix.net
         IBM_CLOUD_CF_ORG: ${{ secrets.IBM_CLOUD_ORG }}
         IBM_CLOUD_CF_SPACE: ${{ secrets.IBM_CLOUD_SPACE }}
-        APP_MANIFEST_FILE: manifest-dev.yml
+        APP_MANIFEST_FILE: manifest.yml

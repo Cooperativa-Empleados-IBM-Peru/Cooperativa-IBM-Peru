@@ -35,8 +35,7 @@ jobs:
       uses: actions/checkout@v3.0.2
     - name: Install packages
       run: |
-        npm install --legacy-peer-deps
-        npm prune
+        npm ci
       working-directory: ${{env.working-directory}}
     - name : Prepare env file
       run: |
