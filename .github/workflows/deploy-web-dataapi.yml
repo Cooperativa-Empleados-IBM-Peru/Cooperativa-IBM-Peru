@@ -79,6 +79,7 @@ jobs:
           web/dataapi/manifest-dev.yml
           web/dataapi/package.json
           web/dataapi/package-lock.json
+          web/dataapi/.cfignore
   deploy:
     name: Deploy app
     needs: [build]
