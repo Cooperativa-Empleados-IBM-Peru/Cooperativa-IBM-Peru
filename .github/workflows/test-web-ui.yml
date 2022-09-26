@@ -88,6 +88,7 @@ jobs:
           web/web-ui/manifest-dev.yml
           web/web-ui/package.json
           web/web-ui/package-lock.json
+          web/web-ui/.cfignore
   deploy:
     name: Deploy app
     needs: [build]
