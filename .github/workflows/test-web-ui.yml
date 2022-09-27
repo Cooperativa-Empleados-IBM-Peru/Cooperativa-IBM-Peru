@@ -71,7 +71,7 @@ jobs:
       working-directory: ${{env.working-directory}} 
     - name: clean and pack modules
       run : |
-        npm prune
+        npm prune --omit=dev
         zip -r -9 node_modules.zip node_modules
       working-directory: ${{env.working-directory}}
     - name: Uploading artifacts
