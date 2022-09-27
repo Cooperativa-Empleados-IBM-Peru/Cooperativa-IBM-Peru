@@ -53,7 +53,6 @@
     "@loopback/rest-crud": "^0.15.2",
     "@loopback/rest-explorer": "^5.0.3",
     "@loopback/service-proxy": "^5.0.3",
-    "cfenv": "^1.2.4",
     "ibm_db": "^3.0.0",
     "loopback-connector-cloudant": "^2.5.0",
     "loopback-connector-db2": "^2.2.3",
