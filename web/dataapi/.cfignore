@@ -1,5 +1,5 @@
 node_modules/.cache
-node_modules/ibm_db/installer
+node_modules/ibm_db/installer/clidriver
 node_modules/ibm_db/examples
 .vscode/
 .git
