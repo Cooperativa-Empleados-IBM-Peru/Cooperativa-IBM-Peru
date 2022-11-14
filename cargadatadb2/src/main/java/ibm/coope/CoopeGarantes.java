@@ -15,7 +15,7 @@ public class CoopeGarantes {
 		this.NumOperacion = arg1.substring(0, 9).trim();
 		this.IdMovim = arg1.substring(9, 13).trim();
 		this.TipoDoc = arg1.substring(13, 14).trim();
-		this.CodEmpleado = arg1.substring(14, 25).trim();
+		this.CodEmpleado = arg1.substring(14, arg1.length() >= 25 ? 25 : arg1.length()).trim();
 
 	}
 
