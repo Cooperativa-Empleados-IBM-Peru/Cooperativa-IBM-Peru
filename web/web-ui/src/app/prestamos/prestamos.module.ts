@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { PrestamosRoutingModule } from './prestamos-routing.module'; 
 import { TasasinteresComponent } from './tasasinteres/tasasinteres.component'; 
 import { SimuladorComponent } from './simulador/simulador.component'; 
-import { SolofirmaComponent } from './solofirma/solofirma.component'; 
+import { ASolafirmaComponent } from './asolafirma/asolafirma.component'; 
 import { ConsumoComponent } from './consumo/consumo.component'; 
 import { LargoplazoComponent } from './largoplazo/largoplazo.component'; 
 import { HipotecarioComponent } from './hipotecario/hipotecario.component'; 
@@ -30,7 +30,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { CatalogModule, UserModule, TableOfContentsModule } from '@carbon/icons-angular';
 
 @NgModule({
-	declarations: [TasasinteresComponent, SimuladorComponent, SolofirmaComponent, ConsumoComponent,
+	declarations: [TasasinteresComponent, SimuladorComponent, ASolafirmaComponent, ConsumoComponent,
 	LargoplazoComponent, 
 	HipotecarioComponent,
 	GarantiahipotecariaComponent,

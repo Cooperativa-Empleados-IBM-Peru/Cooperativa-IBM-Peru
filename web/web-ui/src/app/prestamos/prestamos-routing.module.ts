@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 //import { PrestamosComponent } from './prestamos/prestamos.component';
 import { TasasinteresComponent } from './tasasinteres/tasasinteres.component';
 import { SimuladorComponent } from './simulador/simulador.component';
-import { SolofirmaComponent } from './solofirma/solofirma.component';
+import { ASolafirmaComponent } from './asolafirma/asolafirma.component';
 import { ConsumoComponent } from './consumo/consumo.component';
 import { LargoplazoComponent } from './largoplazo/largoplazo.component';
 import { HipotecarioComponent } from './hipotecario/hipotecario.component';
@@ -25,7 +25,7 @@ const routes: Routes = [
 		  },
 		  {
 			path: 'solofirma',
-			component: SolofirmaComponent
+			component: ASolafirmaComponent
 		  },
 		  {
 			path: 'consumo',
