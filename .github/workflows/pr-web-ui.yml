@@ -35,7 +35,7 @@ jobs:
       uses: actions/checkout@v3.0.2
     - name: Install packages
       run: |
-        npm ci
+        npm i --package-lock-only
       working-directory: ${{env.working-directory}}
     - name : Prepare env files
       run: |
