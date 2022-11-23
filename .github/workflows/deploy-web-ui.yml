@@ -76,7 +76,7 @@ jobs:
         npm prune --omit=dev
       working-directory: ${{env.working-directory}}
     - name: Uploading artifacts
-      uses: actions/upload-artifactupload-artifact@v2.2.4
+      uses: actions/upload-artifact@v2.2.4
       with:
         name: ui-dist
         path: |
