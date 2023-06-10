@@ -43,7 +43,17 @@ app.use(passport.session());
 
 // Configurar Passport con APP ID
 const CALLBACK_URL = "/ibm/cloud/appid/callback";
-let webAppStrategy = new WebAppStrategy(getAppIDConfig());
+const APPID_REDIRECT_URI = process.env.APPID_REDIRECT_URI || 
+  process.env.NODE_ENV === 'production' ? `https://${process.env.CE_APP}.${process.env.CE_SUBDOMAIN}.${process.env.CE_DOMAIN}` : `http://localhost:${port}`;
+
+let webAppStrategy = new WebAppStrategy({
+	clientId: process.env.APPID_CLIENT_ID,
+	tenantId: process.env.APPID_TENANT_ID,
+	secret: process.env.APPID_SECRET,
+	profilesUrl: process.env.APPID_PROFILES_URL,
+	oauthServerUrl: process.env.APPID_OAUTH_SERVER_URL,
+	redirectUri: APPID_REDIRECT_URI + CALLBACK_URL
+});
 passport.use(webAppStrategy);
 passport.serializeUser((user, cb) => cb(null, user));
 passport.deserializeUser((obj, cb) => cb(null, obj));
@@ -106,21 +116,6 @@ app.get("/error", (req, res) => {
 });
 
 app.listen(port);
-
-function getAppIDConfig() {
-//  let config;
-  try {
-    config = require("./localdev-config.json");
-  } catch (e) {
-    let vcapApplication = JSON.parse(process.env["VCAP_APPLICATION"]);
-    return {
-      redirectUri:
-        "https://" + vcapApplication["application_uris"][0] + CALLBACK_URL
-    };
-  }
-
-  return config;
-}
 
 function getInfo ( email ){
 

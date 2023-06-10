@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders,  HttpParams } from '@angular/common/http';
 import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { env } from '../../environments/env';
+import { environment } from '../../environments/environment';
 
-const endpoint = env.cloudant.url;
+const endpoint = environment.cloudantUrl;
 
 @Injectable({
   providedIn: 'root'
@@ -155,7 +155,7 @@ export class CloudantService {
 		return {
 			headers: new HttpHeaders({
 				'Content-Type': 'application/json',
-				'Authorization': 'Basic ' + btoa(`${env.cloudant.username}:${env.cloudant.password}`)
+				'Authorization': 'Basic ' + btoa(`${environment.cloudantUsername}:${environment.cloudantPassword}`)
 			})
 		};
 	}

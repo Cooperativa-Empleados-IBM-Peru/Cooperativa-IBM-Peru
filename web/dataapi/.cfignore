@@ -1,9 +1,0 @@
-node_modules/.cache
-node_modules/ibm_db/installer/clidriver
-node_modules/ibm_db/examples
-.vscode/
-.git
-
-env.json
-env.ts
-*.config.json
