@@ -88,9 +88,10 @@ app.get(CALLBACK_URL, passport.authenticate(
 
 // Ruta: Aplicacion Angular
 // Middleware: Auth user
+const angularDist = env === 'production' ? "/dist" : "/client/dist";
 app.use("/", 
 	passport.authenticate(WebAppStrategy.STRATEGY_NAME), 
-	express.static(__dirname + "/dist")
+	express.static(__dirname + angularDist)
 	);
 
 // Ruta: Cerrar sesion

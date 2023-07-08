@@ -1,16 +1,14 @@
 # Stage 1: Build
-FROM node:16-slim AS build
+FROM node:16-alpine AS build
 
 # Establecer el directorio de trabajo
 WORKDIR /app
 
 # Copiar los archivos de configuración del proyecto (angular.json, package.json, etc.)
-COPY . .
+COPY /client .
 
 # Instalar las dependencias necesarias y compilar la aplicación de Angular
-RUN apt-get update && \
-    apt-get install -y build-essential openssl libssl-dev libbz2-dev python3 libxml2 && \
-    npm install && npm run build:prod
+RUN npm install && npm run build:prod
 
 # Stage 2: Run
 FROM node:16-slim
@@ -29,6 +27,9 @@ RUN apt-get update && \
 
 # Instalar las dependencias necesarias y compilar la aplicación de Angular
 RUN npm ci --only=production
+
+# Set the NODE_ENV to production
+ENV NODE_ENV production
 
 # Exponer el puerto en el que el servidor Express estará escuchando
 EXPOSE 6001
