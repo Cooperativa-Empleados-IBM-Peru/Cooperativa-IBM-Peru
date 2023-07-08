@@ -5,6 +5,7 @@ const appID = require("ibmcloud-appid");
 const dotenv = require('dotenv');
 const bodyParser = require("body-parser");
 const ibmdb = require('ibm_db');
+const cors = require('cors');
 const { v4: uuidv4 } = require('uuid');
 
 const WebAppStrategy = appID.WebAppStrategy;
@@ -13,13 +14,31 @@ const WebAppStrategy = appID.WebAppStrategy;
 dotenv.config();
 
 //db2 config
-const connStr = `DATABASE=${process.env.DB2_DATABASE};HOSTNAME=${process.env.DB2_HOSTNAME};UID=${process.env.DB2_USER};PWD=${process.env.DB2_PWD};PORT=${process.env.DB2_PORT};PROTOCOL=TCPIP;Security=SSL;`;
+const connStr = `DATABASE=${process.env.DB2_DATABASE};HOSTNAME=${process.env.DB2_HOSTNAME};UID=${process.env.DB2_USERNAME};PWD=${process.env.DB2_PASSWORD};PORT=${process.env.DB2_PORT};PROTOCOL=TCPIP;Security=SSL;`;
 
 // crear instancia Express
 const app = express();
-const port = process.env.PORT || 6001;
 
+// Constants
+const PORT = process.env.PORT || 6001;
+const HOST = '0.0.0.0';
 var env = process.env.NODE_ENV || "dev";
+
+// service uri
+let SERVICE_URI = "";
+if(process.env.APPID_REDIRECT_URI) {
+	SERVICE_URI = process.env.APPID_REDIRECT_URI;
+} else if (env === 'production') {
+	SERVICE_URI = `https://${process.env.CE_APP}.${process.env.CE_SUBDOMAIN}.${process.env.CE_DOMAIN}`;
+} else {
+	SERVICE_URI = `http://localhost:${PORT}`;
+}
+
+// Configurar CORS
+app.use(cors({
+	origin: SERVICE_URI,
+	optionsSuccessStatus: 200
+}));
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -43,16 +62,13 @@ app.use(passport.session());
 
 // Configurar Passport con APP ID
 const CALLBACK_URL = "/ibm/cloud/appid/callback";
-const APPID_REDIRECT_URI = process.env.APPID_REDIRECT_URI || 
-  process.env.NODE_ENV === 'production' ? `https://${process.env.CE_APP}.${process.env.CE_SUBDOMAIN}.${process.env.CE_DOMAIN}` : `http://localhost:${port}`;
-
 let webAppStrategy = new WebAppStrategy({
 	clientId: process.env.APPID_CLIENT_ID,
 	tenantId: process.env.APPID_TENANT_ID,
 	secret: process.env.APPID_SECRET,
 	profilesUrl: process.env.APPID_PROFILES_URL,
 	oauthServerUrl: process.env.APPID_OAUTH_SERVER_URL,
-	redirectUri: APPID_REDIRECT_URI + CALLBACK_URL
+	redirectUri: SERVICE_URI + CALLBACK_URL
 });
 passport.use(webAppStrategy);
 passport.serializeUser((user, cb) => cb(null, user));
@@ -115,17 +131,18 @@ app.get("/error", (req, res) => {
   res.send("Authentication Error");
 });
 
-app.listen(port);
+app.listen(PORT, HOST, () => {
+	console.log(`Running on http://${HOST}:${PORT}`);
+});
 
 function getInfo ( email ){
 
 	return new Promise(function (resolve, reject) {
 		ibmdb.open(connStr, function (err,conn) {
 			if (err) reject(err);
-
 			// Save last login info
-			let sqlins = `INSERT INTO ${process.env.DB2_USER}.USERSLOGIN (EMAILEMPLEADO, FECLOGIN) VALUES ('${email}', CURRENT TIMESTAMP);`;
-			let sqlqry = `SELECT c.UUID FROM ${process.env.DB2_USER}.VWSOCIOSACTIVOS c WHERE c.EMAILEMPLEADO = '${email}' OR c.EMAILEMPLEADO2 = '${email}';`;
+			let sqlins = `INSERT INTO ${process.env.DB2_USERNAME}.USERSLOGIN (EMAILEMPLEADO, FECLOGIN) VALUES ('${email}', CURRENT TIMESTAMP);`;
+			let sqlqry = `SELECT c.UUID FROM ${process.env.DB2_USERNAME}.VWSOCIOSACTIVOS c WHERE c.EMAILEMPLEADO = '${email}' OR c.EMAILEMPLEADO2 = '${email}';`;
 
 			conn.query(sqlins, function (err2, result) {
 				if (err2) throw err2;
