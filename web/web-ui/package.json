@@ -58,7 +58,7 @@
     "zone.js": "0.11.8"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "v12-lts",
+    "@angular-devkit/build-angular": "v18-lts",
     "@angular/cdk": "v12-lts",
     "@angular/cli": "v12-lts",
     "@angular/compiler": "v12-lts",
@@ -66,10 +66,10 @@
     "@babel/core": "7.19.1",
     "@compodoc/compodoc": "1.1.19",
     "@storybook/addon-actions": "6.5.12",
-    "@storybook/addon-essentials": "6.5.12",
+    "@storybook/addon-essentials": "8.1.7",
     "@storybook/addon-interactions": "6.5.12",
     "@storybook/addon-links": "6.5.12",
-    "@storybook/angular": "6.5.12",
+    "@storybook/angular": "8.1.7",
     "@storybook/builder-webpack5": "6.5.12",
     "@storybook/manager-webpack5": "6.5.12",
     "@storybook/testing-library": "0.0.13",
