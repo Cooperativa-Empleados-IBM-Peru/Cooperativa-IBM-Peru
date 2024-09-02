@@ -68,7 +68,7 @@ jobs:
         zip -r -9 node_modules.zip node_modules
       working-directory: ${{env.working-directory}}
     - name: Uploading artifacts
-      uses: actions/upload-artifact@v3.1.0
+      uses: actions/upload-artifact@v3.2.1
       with:
         name: dataapi-dist
         path: |
