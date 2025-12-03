@@ -96,7 +96,7 @@
     "type": "git"
   },
   "overrides": {
-    "webpack": "5.74.0",
+    "webpack": "5.94.0",
     "@carbon/icons-angular": {
       "@angular/core" : "12",
       "@angular/compiler" : "12"
