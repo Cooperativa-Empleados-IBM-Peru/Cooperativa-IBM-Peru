@@ -17,11 +17,7 @@
         <ibm-sidenav-item [route]="['socios/garantizados']">Garantías</ibm-sidenav-item>
         <ibm-sidenav-item [route]="['socios/automovil']">Automóvil</ibm-sidenav-item>
     </ibm-sidenav-menu>
-
-    <ibm-sidenav-menu *ngIf="ibmidservice.IsAdmin" title="Administración">
-        <ibm-sidenav-item [route]="['administracion/listasocios']">Lista de Socios</ibm-sidenav-item>
-    </ibm-sidenav-menu> 
-    
+   
     <ibm-sidenav-menu title="Prestamos">
         <ibm-sidenav-item [route]="['prestamos/tasasinteres']">Tasas de Interés</ibm-sidenav-item>
         <ibm-sidenav-item [route]="['prestamos/simulador']">Simulador</ibm-sidenav-item>
@@ -78,6 +74,8 @@
         <ibm-sidenav-item [route]="['avisos/noticias']">Noticias</ibm-sidenav-item>  -->
     </ibm-sidenav-menu> 
    
-    
+    <ibm-sidenav-menu *ngIf="ibmidservice.IsAdmin" title="Administración">
+        <ibm-sidenav-item [route]="['administracion/listasocios']">Lista de Socios</ibm-sidenav-item>
+    </ibm-sidenav-menu>   
 
 </ibm-sidenav>

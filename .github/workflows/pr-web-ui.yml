@@ -1,4 +1,4 @@
-name: Cooperativa web ui UAT
+name: web ui PR
 on:
   pull_request_target:
     types: [opened, synchronize, closed]
@@ -6,6 +6,7 @@ on:
       - 'master'
     paths:
       - 'web/web-ui/**'
+  workflow_dispatch:
 env:
   working-directory: ./web/web-ui
 jobs:
@@ -19,9 +20,9 @@ jobs:
         sudo apt-get update && sudo apt-get upgrade
         sudo apt autoremove
     - name: Install node
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v3.4.1
       with:
-        node-version: '16.14.2'
+        node-version: '16.17.0'
     - name : Update npm
       run: |
         npm install npm@latest -g
@@ -31,11 +32,10 @@ jobs:
     - name: Install Angular
       run: npm install -g @angular/cli
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v3.0.2
     - name: Install packages
       run: |
-        npm install --legacy-peer-deps
-        npm prune
+        npm ci
       working-directory: ${{env.working-directory}}
     - name : Prepare env files
       run: |
@@ -73,7 +73,7 @@ jobs:
         npm prune --omit=dev
       working-directory: ${{env.working-directory}}
     - name: Uploading artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v3.1.0
       with:
         name: ui-dist
         path: |
@@ -84,10 +84,11 @@ jobs:
           web/web-ui/manifest-dev.yml
           web/web-ui/package.json
           web/web-ui/package-lock.json
+          web/web-ui/.cfignore
   deploy:
     name: Deploy app
     needs: [build]
-    if: ${{ github.event.pull_request.merged == true }}
+    if: ${{ true }}
     runs-on: ubuntu-latest
     environment: UAT
     steps:

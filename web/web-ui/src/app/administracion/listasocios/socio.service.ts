@@ -80,7 +80,7 @@ export class SocioService {
 
 			}
 		}); */
-		this.db2Service.updateSocio(socio.codempleado.trim(), socio).subscribe((response: any) => {
+		this.db2Service.updateSocio(socio.uuid.trim(), socio).subscribe((response: any) => {
 //			console.log('socio updated');
 			// this.redirectTo('/administracion/listasocios');
 		});

@@ -2,11 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IbmidService } from './services/ibmid.service';
 import { Db2Service } from './services/db2.service';
-//import { classCount } from './classes/count';
 import { MasterLookup } from './classes/masterlookup';
-//import { CoopeSocios } from './classes/coopesocios';
-//import { vwSociosDetalle } from './classes/vwsociosdetalle';
-//import { CuentasSocio } from './classes/cuentassocio';
 
 @Component({
 	selector: 'app-root',
@@ -16,12 +12,8 @@ import { MasterLookup } from './classes/masterlookup';
 
 export class AppComponent implements OnInit {
 	title = 'coopeibm-web';
-//	db2count: classCount;
 
 	masterlkup : MasterLookup;
-//	socio: CoopeSocios;
-//	sociodetalle: vwSociosDetalle;
-//	ctassocio: CuentasSocio;
 
 	sidemenuactive = false;
 	hasHamburger = true;
@@ -39,9 +31,8 @@ export class AppComponent implements OnInit {
 				this.isToken = true;
 
 				if ( this.ibmidservice.Uuid == "") {
-	//				console.log("logging out, no es socio");
 					setTimeout(() => {
-						this.redirectTo('/logout');
+						window.location.href = '/logout';
 					}, 1000);
 
 				} else {

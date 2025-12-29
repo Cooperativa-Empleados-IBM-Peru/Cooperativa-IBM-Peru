@@ -23,10 +23,8 @@ export class DeletemodalComponent extends BaseModal {
 
 		}
 
-
-
   deleteSocio() {
-	this.db2Service.deleteSocio(this.socio.codempleado).subscribe(() => {
+	this.db2Service.deleteSocio(this.socio.uuid).subscribe(() => {
 	//	console.log('deleted');
 		this.redirectTo('/administracion/listasocios');
 		this.modalService.destroy();
