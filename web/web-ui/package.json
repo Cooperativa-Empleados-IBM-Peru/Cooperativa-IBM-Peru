@@ -96,10 +96,10 @@
     "type": "git"
   },
   "overrides": {
-    "webpack": "latest",
+    "webpack": "5.74.0",
     "@carbon/icons-angular": {
-      "@angular/core" : "v11-lts",
-      "@angular/compiler" : "v11-lts"
+      "@angular/core" : "12",
+      "@angular/compiler" : "12"
     }
   }
 }
