@@ -6,8 +6,6 @@ const dotenv = require('dotenv');
 const bodyParser = require("body-parser");
 const ibmdb = require('ibm_db');
 const { v4: uuidv4 } = require('uuid');
-const cron = require('node-cron');
-const converter = require('json-2-csv');
 
 const WebAppStrategy = appID.WebAppStrategy;
 
@@ -22,40 +20,6 @@ const app = express();
 const port = process.env.PORT || 6001;
 
 var env = process.env.NODE_ENV || "dev";
-
-const sched5 = cron.schedule("*/15 * * * *", () => {
-	var currdatetime = new Date();
-    console.log('running a task every 15 minutes!! ' + currdatetime);
-
-	ibmdb.open(connStr, function (err,conn) {
-		if (err) reject(err);
-		
-		// Save last login info
-		var sql = `SELECT * FROM ${process.env.DB2_USER}.USERSLOGIN`;
-
-		conn.query(sql, function (err, data) {
-			if (err) {
-				reject(err);
-			  } else {
-//				console.log(data);
-
-				converter.json2csv(data, (err, csv) => {
-					if (err) {
-						throw err;
-					}
-				
-					// print CSV string
-//					console.log(csv);
-				});
-
-			  }
-	
-		  conn.close();
-		});
-
-	  });
-
-});
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -84,22 +48,37 @@ passport.use(webAppStrategy);
 passport.serializeUser((user, cb) => cb(null, user));
 passport.deserializeUser((obj, cb) => cb(null, obj));
 
-app.get(CALLBACK_URL, passport.authenticate(WebAppStrategy.STRATEGY_NAME, {failureRedirect: '/error'}));
+// Handle Login
+app.get('/login', passport.authenticate(WebAppStrategy.STRATEGY_NAME, {
+	successRedirect: '/',
+	forceLogin: true
+}));
+
+// Handle callback
+app.get(CALLBACK_URL, passport.authenticate(
+	WebAppStrategy.STRATEGY_NAME, 
+	{failureRedirect: '/error'}
+	));
 
 // Ruta: Aplicacion Angular
 // Middleware: Auth user
-app.use("/", passport.authenticate(WebAppStrategy.STRATEGY_NAME), express.static(__dirname + "/dist"));
+app.use("/", 
+	passport.authenticate(WebAppStrategy.STRATEGY_NAME), 
+	express.static(__dirname + "/dist")
+	);
 
 // Ruta: Cerrar sesion
 // Middleware: Auth user
-app.get("/logout", passport.authenticate(WebAppStrategy.STRATEGY_NAME), (req, res) => {
-  WebAppStrategy.logout(req);
-  res.redirect("/");
-});
+app.get("/logout", 
+	passport.authenticate(WebAppStrategy.STRATEGY_NAME), (req, res) => {
+  		WebAppStrategy.logout(req);
+  		res.redirect("/");
+	});
 
 // Ruta: Obtener el email
 // Middleware: Auth user
 app.get("/api/token", passport.authenticate(WebAppStrategy.STRATEGY_NAME),(req, res) => {
+
   var accessToken = req.session[WebAppStrategy.AUTH_CONTEXT].accessToken;
   var email = req.session[WebAppStrategy.AUTH_CONTEXT].identityTokenPayload.email;
   getInfo(email).then((uuid) =>{
@@ -139,14 +118,16 @@ function getAppIDConfig() {
         "https://" + vcapApplication["application_uris"][0] + CALLBACK_URL
     };
   }
+
   return config;
 }
 
 function getInfo ( email ){
+
 	return new Promise(function (resolve, reject) {
 		ibmdb.open(connStr, function (err,conn) {
 			if (err) reject(err);
-			
+
 			// Save last login info
 			let sqlins = `INSERT INTO ${process.env.DB2_USER}.USERSLOGIN (EMAILEMPLEADO, FECLOGIN) VALUES ('${email}', CURRENT TIMESTAMP);`;
 			let sqlqry = `SELECT c.UUID FROM ${process.env.DB2_USER}.VWSOCIOSACTIVOS c WHERE c.EMAILEMPLEADO = '${email}' OR c.EMAILEMPLEADO2 = '${email}';`;

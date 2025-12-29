@@ -61,11 +61,7 @@ const routes: Routes = [
 			import('./administracion/administracion.module').then(
 				(m) => m.AdministracionModule
 			),
-	} //,
-//	{
-//		path: 'logout',
-//		redirectTo: '/logout'
-//	}
+	}
 ];
 
 @NgModule({
