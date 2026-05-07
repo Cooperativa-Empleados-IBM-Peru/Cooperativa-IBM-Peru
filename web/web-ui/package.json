@@ -46,7 +46,7 @@
     "express-session": "1.17.3",
     "ibm_db": "3.0.0",
     "ibmcloud-appid": "6.2.6",
-    "ibmcloud-appid-js": "1.0.1",
+    "ibmcloud-appid-js": "1.0.3",
     "ngx-owl-carousel": "2.0.7",
     "ngx-owl-carousel-o": "6.0.2",
     "ngx-quill": "15.0.0",
