@@ -55,7 +55,7 @@
     "request": "2.88.2",
     "rxjs": "6.6.7",
     "uuid": "9.0.0",
-    "zone.js": "0.11.8"
+    "zone.js": "0.16.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "v12-lts",
