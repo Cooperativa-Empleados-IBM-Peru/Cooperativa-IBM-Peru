@@ -34,7 +34,7 @@ jobs:
     - name: Install Angular
       run: npm install -g @angular/cli
     - name: Checkout repository
-      uses: actions/checkout@v3.0.2
+      uses: actions/checkout@v3.7.0
     - name: Install packages
       run: |
         npm ci
