@@ -64,7 +64,7 @@
     "@angular/compiler": "v12-lts",
     "@angular/compiler-cli": "v12-lts",
     "@babel/core": "7.19.1",
-    "@compodoc/compodoc": "1.1.19",
+    "@compodoc/compodoc": "1.2.1",
     "@storybook/addon-actions": "6.5.12",
     "@storybook/addon-essentials": "6.5.12",
     "@storybook/addon-interactions": "6.5.12",
