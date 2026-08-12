@@ -179,6 +179,17 @@ public class CoopeCargaFiles {
 
             }
 
+            String sociosPersonalProp = prop.getProperty("coopetxt.sociospersonal");
+            if (sociosPersonalProp != null && !sociosPersonalProp.trim().isEmpty()) {
+                fname = prop.getProperty("coopetxt.path") + sociosPersonalProp;
+                logger.info("Looking for Socios Personal file : " + fname);
+                if (loadFileCoope(fname)) {
+                    logger.info("Loading Socios Personal to db2");
+                    cargaSociosPersonal();
+                    closeFile();
+                }
+            }
+
                 Thread.sleep(5000);
                 logger.info("calling Stored Procedure MOVEDATA");
                 callStoredProc("MOVEDATA()");
@@ -1388,5 +1399,251 @@ public class CoopeCargaFiles {
         }
             
     }
+
+    private void cargaSociosPersonal() {
+        logger.debug("Iniciando variables cargaSociosPersonal");
+        String filerow = "";
+        
+        java.time.LocalDateTime start = java.time.LocalDateTime.now();
+
+        int recordsReceived = 0;
+        int recordsLoaded = 0;
+        int recordsUpdated = 0;
+        int recordsRejected = 0;
+        int duplicateRecords = 0;
+        int unknownSocios = 0;
+        int formatErrors = 0;
+
+        java.util.Set<String> seenDocume = new java.util.HashSet<>();
+        java.util.Set<String> existingSocios = new java.util.HashSet<>();
+
+        // 1. Retrieve all existing CodEmpleado from COOPESOCIOS to check matching records
+        try (Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT TRIM(CODEMPLEADO) FROM COOPESOCIOS")) {
+            while (rs.next()) {
+                String cod = rs.getString(1);
+                if (cod != null) {
+                    existingSocios.add(cod.trim());
+                }
+            }
+        } catch (SQLException e) {
+            logger.error("Error retrieving existing socios: " + e.getMessage(), e);
+            return;
+        }
+
+        // List to hold valid parsed records
+        java.util.List<CoopeSocioPersonal> validRecords = new java.util.ArrayList<>();
+
+        // 2. Parse file line by line
+        try {
+            while ((filerow = fileReader.readLine()) != null) {
+                recordsReceived++;
+                logger.trace(filerow);
+
+                // Split by semicolon, preserving all trailing empty fields
+                String[] parts = filerow.split(";", -1);
+                if (parts.length != 21) {
+                    logger.error("Format error: line has " + parts.length + " fields instead of 21. Line: " + filerow);
+                    formatErrors++;
+                    recordsRejected++;
+                    continue;
+                }
+
+                // Trim all fields
+                for (int i = 0; i < parts.length; i++) {
+                    parts[i] = parts[i].trim();
+                }
+
+                String docume = parts[0];
+
+                // Validate DOCUME not empty
+                if (docume.isEmpty()) {
+                    logger.error("Format error: DOCUME is empty. Line: " + filerow);
+                    formatErrors++;
+                    recordsRejected++;
+                    continue;
+                }
+
+                // Validate field lengths against maximums
+                boolean lengthError = false;
+                for (int i = 0; i < parts.length; i++) {
+                    if (parts[i].length() > MAX_LENGTHS[i]) {
+                        logger.error("Format error: field " + (i + 1) + " exceeds max length of " + MAX_LENGTHS[i] + ". Value: '" + parts[i] + "'. Line: " + filerow);
+                        lengthError = true;
+                        break;
+                    }
+                }
+                if (lengthError) {
+                    formatErrors++;
+                    recordsRejected++;
+                    continue;
+                }
+
+                // Validate catalogs
+                // TIPDID (index 1)
+                String tipdid = parts[1];
+                if (!tipdid.isEmpty() && !tipdid.equals("1") && !tipdid.equals("4") && !tipdid.equals("7")) {
+                    logger.error("Invalid TIPDID: '" + tipdid + "'. Line: " + filerow);
+                    formatErrors++;
+                    recordsRejected++;
+                    continue;
+                }
+
+                // NACION (index 13)
+                String nacion = parts[13];
+                if (!nacion.isEmpty() && !nacion.equals("P") && !nacion.equals("E") && !nacion.equals("1") && !nacion.equals("2")) {
+                    logger.error("Invalid NACION: '" + nacion + "'. Line: " + filerow);
+                    formatErrors++;
+                    recordsRejected++;
+                    continue;
+                }
+
+                // ESTCIV (index 17)
+                String estciv = parts[17];
+                if (!estciv.isEmpty() && !estciv.equals("S") && !estciv.equals("C") && !estciv.equals("D") && !estciv.equals("V")) {
+                    logger.error("Invalid ESTCIV: '" + estciv + "'. Line: " + filerow);
+                    formatErrors++;
+                    recordsRejected++;
+                    continue;
+                }
+
+                // Validate duplicate DOCUME
+                if (seenDocume.contains(docume)) {
+                    logger.error("Duplicate DOCUME: " + docume + ". Line: " + filerow);
+                    duplicateRecords++;
+                    recordsRejected++;
+                    continue;
+                }
+                seenDocume.add(docume);
+
+                // Validate matching COOPESOCIOS record
+                if (!existingSocios.contains(docume)) {
+                    logger.error("Unknown socio: DOCUME " + docume + " does not map to any existing COOPESOCIOS record. Line: " + filerow);
+                    unknownSocios++;
+                    recordsRejected++;
+                    continue;
+                }
+
+                // Valid record, add to list
+                validRecords.add(new CoopeSocioPersonal(parts));
+            }
+        } catch (IOException e) {
+            logger.error("IOException reading file: " + e.getMessage(), e);
+            return;
+        }
+
+        // 3. Batch insert valid records into temporary DB2 table
+        if (!validRecords.isEmpty()) {
+            String insertSql = "INSERT INTO COOPESOCIOSTEMPPERSONAL (DOCUME, TIPDID, DOCIDE, APEPAT, " +
+                "APEMAT, NOMBRE, DIRECC, LOCALI, PROVIN, DEPART, NCOMPL, NOMBC2, TELCEL, NACION, " +
+                "CCIUDA, NOMCON, DNICY, ESTCIV, CARGAM, OFICIO, SECTO1) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            try (PreparedStatement ps = con.prepareStatement(insertSql)) {
+                int count = 0;
+                for (CoopeSocioPersonal rec : validRecords) {
+                    ps.setString(1, rec.getDocume());
+                    setNullableString(ps, 2, rec.getTipdid());
+                    setNullableString(ps, 3, rec.getDocide());
+                    setNullableString(ps, 4, rec.getApepat());
+                    setNullableString(ps, 5, rec.getApemat());
+                    setNullableString(ps, 6, rec.getNombre());
+                    setNullableString(ps, 7, rec.getDirecc());
+                    setNullableString(ps, 8, rec.getLocali());
+                    setNullableString(ps, 9, rec.getProvin());
+                    setNullableString(ps, 10, rec.getDepart());
+                    setNullableString(ps, 11, rec.getNcompl());
+                    setNullableString(ps, 12, rec.getNombc2());
+                    setNullableString(ps, 13, rec.getTelcel());
+                    setNullableString(ps, 14, rec.getNacion());
+                    setNullableString(ps, 15, rec.getCciuda());
+                    setNullableString(ps, 16, rec.getNomcon());
+                    setNullableString(ps, 17, rec.getDnicy());
+                    setNullableString(ps, 18, rec.getEstciv());
+                    setNullableString(ps, 19, rec.getCargam());
+                    setNullableString(ps, 20, rec.getOficio());
+                    setNullableString(ps, 21, rec.getSecto1());
+
+                    ps.addBatch();
+                    count++;
+                    if (count % batchSize == 0) {
+                        ps.executeBatch();
+                    }
+                }
+                ps.executeBatch();
+                recordsLoaded = validRecords.size();
+                con.commit();
+            } catch (SQLException e) {
+                logger.error("SQLException loading temp table: " + e.getMessage(), e);
+                try {
+                    con.rollback();
+                } catch (SQLException rollbackEx) {
+                    logger.error("Rollback failed: " + rollbackEx.getMessage(), rollbackEx);
+                }
+                return;
+            }
+
+            // 4. Call stored procedure UPDATESOCIOSPERSONAL
+            try {
+                logger.info("calling Stored Procedure UPDATESOCIOSPERSONAL");
+                callStoredProc("UPDATESOCIOSPERSONAL()");
+                recordsUpdated = recordsLoaded;
+            } catch (Exception e) {
+                logger.error("Error executing UPDATESOCIOSPERSONAL SP: " + e.getMessage(), e);
+            }
+        }
+
+        java.time.LocalDateTime end = java.time.LocalDateTime.now();
+
+        // 5. Print Processing Report
+        String filename = prop.getProperty("coopetxt.sociospersonal");
+        logger.info("===============================================");
+        logger.info("PROCESSING REPORT");
+        logger.info("File: " + filename);
+        logger.info("Batch: " + java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(start).replace('T', ' '));
+        logger.info("Start: " + java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(start).replace('T', ' '));
+        logger.info("End: " + java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(end).replace('T', ' '));
+        logger.info("");
+        logger.info("Records received: " + recordsReceived);
+        logger.info("Records loaded: " + recordsLoaded);
+        logger.info("Records updated: " + recordsUpdated);
+        logger.info("Records rejected: " + recordsRejected);
+        logger.info("Duplicate records: " + duplicateRecords);
+        logger.info("Unknown socios: " + unknownSocios);
+        logger.info("Format errors: " + formatErrors);
+        logger.info("===============================================");
+    }
+
+    private void setNullableString(PreparedStatement ps, int paramIndex, String value) throws SQLException {
+        if (value == null || value.isEmpty()) {
+            ps.setNull(paramIndex, Types.VARCHAR);
+        } else {
+            ps.setString(paramIndex, value);
+        }
+    }
+
+    private static final int[] MAX_LENGTHS = {
+        6,  // DOCUME
+        1,  // TIPDID
+        11, // DOCIDE
+        20, // APEPAT
+        20, // APEMAT
+        30, // NOMBRE
+        80, // DIRECC
+        40, // LOCALI
+        40, // PROVIN
+        40, // DEPART
+        60, // NCOMPL
+        50, // NOMBC2
+        9,  // TELCEL
+        1,  // NACION
+        6,  // CCIUDA
+        40, // NOMCON
+        8,  // DNICY
+        1,  // ESTCIV
+        2,  // CARGAM
+        20, // OFICIO
+        2   // SECTO1
+    };
 
 }
