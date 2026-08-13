@@ -1,8 +1,0 @@
-{
-  "clientId": "<APPID.CLIENTID>",
-  "oauthServerUrl": "<APPID.OAUTHSERVERURL>",
-  "profilesUrl": "<APPID.PROFILESURL>",
-  "secret": "<APPID.SECRET>",
-  "tenantId": "<APPID.TENANTID>",
-  "redirectUri": "<APPID.REDIRECTURI>"
-}

@@ -8,9 +8,9 @@ import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IbmidService } from './ibmid.service';
 import { UUID } from 'angular2-uuid';
-import { env } from '../../environments/env';
+import { environment } from '../../environments/environment';
 
-const endpoint = env.coopeapi.apiurl;
+const endpoint = environment.coopeapiUrl;
 
 @Injectable({
   providedIn: 'root'
