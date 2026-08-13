@@ -76,7 +76,7 @@
     "@types/jasmine": "4.3.0",
     "@types/jasminewd2": "2.0.10",
     "@types/node": "17.0.45",
-    "babel-loader": "8.2.5",
+    "babel-loader": "8.4.1",
     "codelyzer": "6.0.2",
     "d3": "7.6.1",
     "jasmine-core": "4.4.0",
