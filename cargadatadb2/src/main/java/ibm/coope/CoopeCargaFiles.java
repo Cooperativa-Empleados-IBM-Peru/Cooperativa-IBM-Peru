@@ -787,6 +787,7 @@ public class CoopeCargaFiles {
                 }
     
                 //Detalles
+                if (filerow.length() >= 67) {
                 tipodocgarante = filerow.substring(25, 26).trim();
                 docidgarante = filerow.substring(26, 37).trim();
                 nombregarante = filerow.substring(37, 67).trim();
@@ -804,8 +805,10 @@ public class CoopeCargaFiles {
                     if(++countdet % batchSize == 0) {
                         psdet.executeBatch();
                     }
-                 }    
+                }
+                }
 
+                if (filerow.length() >= 109) {
                 tipodocgarante = filerow.substring(67, 68).trim();
                 docidgarante = filerow.substring(68, 79).trim();
                 nombregarante = filerow.substring(79, 109).trim();
@@ -823,8 +826,10 @@ public class CoopeCargaFiles {
                     if(++countdet % batchSize == 0) {
                         psdet.executeBatch();
                     }
-               }    
-                     
+                }    
+                }
+
+                if (filerow.length() >= 151) {
                 tipodocgarante = filerow.substring(109, 110).trim();
                 docidgarante = filerow.substring(110, 121).trim();
                 nombregarante = filerow.substring(121, 151).trim();
@@ -842,8 +847,10 @@ public class CoopeCargaFiles {
                     if(++countdet % batchSize == 0) {
                         psdet.executeBatch();
                     }
-               }    
-                      
+                } 
+                }   
+                    
+                if (filerow.length() >=193) {
                 tipodocgarante = filerow.substring(151, 152).trim();
                 docidgarante = filerow.substring(152, 163).trim();
                 nombregarante = filerow.substring(163, 193).trim();
@@ -861,9 +868,10 @@ public class CoopeCargaFiles {
                     if(++countdet % batchSize == 0) {
                         psdet.executeBatch();
                     }
-               }    
+                }
+                }    
        
-                
+                if (filerow.length() >= 235) {
                 tipodocgarante = filerow.substring(193, 194).trim();
                 docidgarante = filerow.substring(194, 205).trim();
                 nombregarante = filerow.substring(205, 235).trim();
@@ -881,8 +889,9 @@ public class CoopeCargaFiles {
                     if(++countdet % batchSize == 0) {
                         psdet.executeBatch();
                     }
-                }    
-       
+                }
+                }  
+      
            }
 
            ps.executeBatch();
