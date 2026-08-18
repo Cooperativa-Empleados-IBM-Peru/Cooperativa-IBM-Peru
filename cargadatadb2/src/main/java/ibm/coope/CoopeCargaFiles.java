@@ -1440,10 +1440,11 @@ public class CoopeCargaFiles {
                 recordsReceived++;
                 logger.trace(filerow);
 
-                // Split by semicolon, preserving all trailing empty fields
-                String[] parts = filerow.split(";", -1);
-                if (parts.length != 21) {
-                    logger.error("Format error: line has " + parts.length + " fields instead of 21. Line: " + filerow);
+                // Split by tab (extracto S400 de José) or semicolon (pruebas), preserving trailing empties
+                String[] parts = filerow.contains("\t") ? filerow.split("\t", -1) : filerow.split(";", -1);
+                // 22 fields = 21 del contrato + LUGNAC al final (campo 22, se descarta al construir el modelo)
+                if (parts.length != 21 && parts.length != 22) {
+                    logger.error("Format error: line has " + parts.length + " fields instead of 21 (o 22 con LUGNAC). Line: " + filerow);
                     formatErrors++;
                     recordsRejected++;
                     continue;
@@ -1464,9 +1465,9 @@ public class CoopeCargaFiles {
                     continue;
                 }
 
-                // Validate field lengths against maximums
+                // Validate field lengths against maximums (only the 21 contract fields; LUGNAC at index 21 is dropped)
                 boolean lengthError = false;
-                for (int i = 0; i < parts.length; i++) {
+                for (int i = 0; i < 21 && i < parts.length; i++) {
                     if (parts[i].length() > MAX_LENGTHS[i]) {
                         logger.error("Format error: field " + (i + 1) + " exceeds max length of " + MAX_LENGTHS[i] + ". Value: '" + parts[i] + "'. Line: " + filerow);
                         lengthError = true;
@@ -1482,7 +1483,7 @@ public class CoopeCargaFiles {
                 // Validate catalogs
                 // TIPDID (index 1)
                 String tipdid = parts[1];
-                if (!tipdid.isEmpty() && !tipdid.equals("1") && !tipdid.equals("4") && !tipdid.equals("7")) {
+                if (!tipdid.isEmpty() && !tipdid.equals("1") && !tipdid.equals("3") && !tipdid.equals("4") && !tipdid.equals("6") && !tipdid.equals("7")) {
                     logger.error("Invalid TIPDID: '" + tipdid + "'. Line: " + filerow);
                     formatErrors++;
                     recordsRejected++;
