@@ -155,6 +155,17 @@ public class CoopeSftp {
                 logger.info(remotefname + " (" + attr.getSize() +") -> " + localfname);
                 channelSftp.get(remotefname , localfname);
 
+                // Optional: the socios-personal file may not exist on days without changes.
+                try {
+                    remotefname = prop.getProperty("coopesftp.path") + prop.getProperty("coopetxt.sociospersonal");
+                    localfname = prop.getProperty("coopetxt.path") + prop.getProperty("coopetxt.sociospersonal");
+                    attr = channelSftp.lstat(remotefname);
+                    logger.info(remotefname + " (" + attr.getSize() +") -> " + localfname);
+                    channelSftp.get(remotefname , localfname);
+                } catch (SftpException e) {
+                    logger.warn("Socios personal file not available on sftp (skipped): " + e.getMessage());
+                }
+
             } catch (SftpException e) {
                 logger.error(e);
 
