@@ -16,7 +16,7 @@
     "dotenv": "16.0.2",
     "express": "4.18.1",
     "express-session": "1.17.3",
-    "ibm_db": "3.0.0",
+    "ibm_db": "3.3.5",
     "ibmcloud-appid": "6.2.6",
     "passport": "0.5.3",
     "request": "2.88.2",
