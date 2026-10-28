@@ -30,7 +30,7 @@ hs_err_pid*
 build
 
 # Ignore Maven build output directory
-target
+target/
 
 #Visual Code
 .vscode/*

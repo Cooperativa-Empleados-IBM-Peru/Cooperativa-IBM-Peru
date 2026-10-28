@@ -3,12 +3,12 @@
 Java program to upload the data of Cooperativa to DB2 database in Cloud
 
 ## Maven install
-```
-    mvn dependency:purge-local-repository
-    mvn clean
-    mvn dependency:copy-dependencies
-    mvn package
-    mvn assembly:single
+```bash
+mvn dependency:purge-local-repository
+mvn clean
+mvn dependency:copy-dependencies
+mvn package
+mvn assembly:single
 ```
 
 ## Parameters
@@ -43,6 +43,7 @@ El proceso carga los files en el siguiente orden
 ## Properties
 El file *resources/coopeibm.properties* contiene la siguiente información. Debe actualizarse la ubicación de los files segun sea necesario.  
 
+```
 coope.environment=dev / test / prod  
 coope.support=cooperat@pe.ibm.com  
 
@@ -68,6 +69,7 @@ coopetxt.garantizados=relgzd.txt
 coopetxt.fondoreposicionauto=maefra.txt  
 coopetxt.fondosiniestroauto=maesin.txt  
 coopetxt.videos=videos.txt
+```
 
 ## Credenciales
 El file *resources/env.json* son las credenciales para conectarse al db2. Este file se obtiene del servicio db2 on cloud de la aplicación.
@@ -115,4 +117,7 @@ Esta info la sacamos del código de la bd de la Cooperativa en Notes
 
 
 # Compilación del .jar
+
+```bash
 mvn dependency:copy-dependencies
+```
