@@ -22,8 +22,13 @@ Una vez descargado el certificado, agregarlo a un keystore con nombre *db2cloud.
 ## Ejecución
 Una vez seteadas las configuraciones de la base de datos, y creado el keystore, se puede ejecutar las migraciones con el siguiente comando :
 
-```
+```bash
 docker run --rm -it -v "$PWD"/sql:/flyway/sql -v "$PWD"/conf:/flyway/conf -v "$PWD"/drivers:/flyway/drivers flyway/flyway:11 migrate
+```
+
+O descargar el cli de flyway, genrar el file `config/flyway.toml` y ejecutar
+```bash
+flyway -configFiles="conf/flyway.toml" info
 ```
 
 Este comando ejecutará las migraciones de la bd desde una imagen docker de flyway

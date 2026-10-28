@@ -1,0 +1,10 @@
+[environments.default]
+url = "jdbc:db2://<host>:<port>/<database>:sslConnection=true;sslTrustStoreLocation=drivers/db2cloud.jks;sslTrustStorePassword=123abc;"
+user = "<db2user>"
+password = "<db2password>"
+driver = "com.ibm.db2.jcc.DB2Driver"
+
+[flyway]
+environment = "default"
+locations = ["filesystem:sql"]
+jarDirs = ["drivers"]

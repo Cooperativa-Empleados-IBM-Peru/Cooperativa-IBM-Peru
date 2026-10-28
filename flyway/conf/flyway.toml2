@@ -1,0 +1,10 @@
+[environments.default]
+url = "jdbc:db2://125f9f61-9715-46f9-9399-c8177b21803b.c1ogj3sd0tgtu0lqde00.databases.appdomain.cloud:30426/BLUDB:sslConnection=true;sslTrustStoreLocation=drivers/db2cloud.jks;sslTrustStorePassword=123abc;"
+user = "qvs27840"
+password = "9np6IRyxy5H16vPs"
+driver = "com.ibm.db2.jcc.DB2Driver"
+
+[flyway]
+environment = "default"
+locations = ["filesystem:sql"]
+jarDirs = ["drivers"]

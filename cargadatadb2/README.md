@@ -107,9 +107,12 @@ Esta info la sacamos del código de la bd de la Cooperativa en Notes
 - 205 : Hipotecario
 - 206 : Consumo
 - 207 : Automóvil
-- 208 : PS
-- 209 : Especial 1
-- 210 : Especial 2
+- 208 : Escolar (antes: PS)
+- 209 : Traslado Hipotecario (antes: Especial 1)
+- 210 : Salud (antes : Especial 2)
+- 211 : Hipotecario Especial
+- 212 : Largo Plazo Especial
+
 
 # Compilación del .jar
 mvn dependency:copy-dependencies

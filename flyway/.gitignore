@@ -1,4 +1,5 @@
 #flyway configuration
 flyway.conf
+flyway.toml
 *.jks
 
