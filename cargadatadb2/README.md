@@ -2,20 +2,31 @@
 
 Java program to upload the data of Cooperativa to DB2 database in Cloud
 
-## Maven install
+## Build
+Requires JDK 21 and Maven. Run from the `cargadatadb2` folder:
+
 ```bash
-mvn dependency:purge-local-repository
-mvn clean
-mvn dependency:copy-dependencies
-mvn package
-mvn assembly:single
+mvn clean package assembly:single
+```
+
+This generates, in `target/`:
+- `coopeibm-cargadatadb2-1.7.0-jar-with-dependencies.jar` : runnable jar (includes all dependencies)
+- `coopeibm-cargadatadb2-1.7.0.jar` : jar with only the project classes (needs the jars in `target/dependency`)
+
+## Run
+The program reads its configuration from `./resources` (relative to the current directory), so run it from a folder
+that contains the `resources/` folder (`coopeibm.properties`, `env.json`, `log4j2.properties`):
+
+```bash
+java -jar target/coopeibm-cargadatadb2-1.7.0-jar-with-dependencies.jar <parameter>
 ```
 
 ## Parameters
-Se aceptan los siguientes parámetros :  
-    **cargadata**   : Esta opción cargará los files de datos de la cuentas de los socios a la bd  
-    **getfiles**    : Esta opción traerá los files de datos via sftp del server Domino  
-    **help**        : Muestra esta información de ayuda  
+Se aceptan los siguientes parámetros :
+    **cargadata**     : Esta opción cargará los files de datos de la cuentas de los socios a la bd
+    **getfiles**      : Esta opción traerá los files de datos via sftp del server Domino
+    **fullcargadata** : Esta opción traerá los files via sftp, y los cargará en la bd (igual: **FULL**)
+    **help**          : Muestra esta información de ayuda
     
 ## Tables
 An SQL File with the definition of the Tables and Views is included in the resoures folder
@@ -116,8 +127,3 @@ Esta info la sacamos del código de la bd de la Cooperativa en Notes
 - 212 : Largo Plazo Especial
 
 
-# Compilación del .jar
-
-```bash
-mvn dependency:copy-dependencies
-```
