@@ -3,27 +3,21 @@ package ibm.coope;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.jcraft.jsch.Logger;
+/**
+ * Utility class kept for potential future SSH diagnostic use.
+ * The JSch-specific Logger interface has been removed together with the JSch library.
+ * Apache MINA SSHD routes its internal log output through SLF4J / Log4j automatically.
+ */
+public class SFTPLogger {
 
-public class SFTPLogger implements Logger {
+    private SimpleDateFormat sdf = new SimpleDateFormat("kk:mm:ss SSS ");
 
-	private SimpleDateFormat sdf = new SimpleDateFormat("kk:mm:ss SSS ");
-	
-	public SFTPLogger() {
-	
-	}
-	
-	public boolean isEnabled(int level){
-	      return true;
+    public SFTPLogger() {
     }
 
-	 public void log(int level, String message){
-		System.out.println(message);
-	}
+    public String currentTime() {
+        Date timeNow = new Date();
+        return sdf.format(timeNow);
+    }
 
-	public String currentTime() {
-		Date timeNow = new Date();
-		return sdf.format(timeNow);
-	}
-	
 }

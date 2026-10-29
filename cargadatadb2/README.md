@@ -2,20 +2,31 @@
 
 Java program to upload the data of Cooperativa to DB2 database in Cloud
 
-## Maven install
+## Build
+Requires JDK 21 and Maven. Run from the `cargadatadb2` folder:
+
+```bash
+mvn clean package assembly:single
 ```
-    mvn dependency:purge-local-repository
-    mvn clean
-    mvn dependency:copy-dependencies
-    mvn package
-    mvn assembly:single
+
+This generates, in `target/`:
+- `coopeibm-cargadatadb2-1.7.0-jar-with-dependencies.jar` : runnable jar (includes all dependencies)
+- `coopeibm-cargadatadb2-1.7.0.jar` : jar with only the project classes (needs the jars in `target/dependency`)
+
+## Run
+The program reads its configuration from `./resources` (relative to the current directory), so run it from a folder
+that contains the `resources/` folder (`coopeibm.properties`, `log4j2.properties`):
+
+```bash
+java -jar target/coopeibm-cargadatadb2-1.7.0-jar-with-dependencies.jar <parameter>
 ```
 
 ## Parameters
-Se aceptan los siguientes parámetros :  
-    **cargadata**   : Esta opción cargará los files de datos de la cuentas de los socios a la bd  
-    **getfiles**    : Esta opción traerá los files de datos via sftp del server Domino  
-    **help**        : Muestra esta información de ayuda  
+Se aceptan los siguientes parámetros :
+    **cargadata**     : Esta opción cargará los files de datos de la cuentas de los socios a la bd
+    **getfiles**      : Esta opción traerá los files de datos via sftp del server Domino
+    **fullcargadata** : Esta opción traerá los files via sftp, y los cargará en la bd (igual: **FULL**)
+    **help**          : Muestra esta información de ayuda
     
 ## Tables
 An SQL File with the definition of the Tables and Views is included in the resoures folder
@@ -40,37 +51,93 @@ El proceso carga los files en el siguiente orden
   
 - Videos (not used)  
 
-## Properties
-El file *resources/coopeibm.properties* contiene la siguiente información. Debe actualizarse la ubicación de los files segun sea necesario.  
+## Configuration
 
-coope.environment=dev / test / prod  
-coope.support=cooperat@pe.ibm.com  
+All runtime configuration lives in the `resources/` folder. Two files are required:
 
-coopesftp.server=*sftp server hostname*  
-coopesftp.user=*sftp user*  
-coopesftp.clave=*sftp password*  
-coopesftp.path=*/home/coope/*  
+| File | Template in repo | Contains secrets? |
+|---|---|---|
+| `resources/coopeibm.properties` | `resources/coopeibm.properties.template` | ✅ Yes — git-ignored |
+| `resources/log4j2.properties` | `resources/log4j2.properties` | No — copy as-is |
 
-coopetxt.country=815  
-coopetxt.path=*local path for files ex : /mnt/c/code/filescoope/*  
-coopetxt.socios=coope-socios.csv  
-coopetxt.admins=coope-admins.txt  
-coopetxt.maestro=prusal.txt  
-coopetxt.movimientos=movaho.txt  
-coopetxt.miscelaneos=movmis.txt  
-coopetxt.aportaciones=movapo.txt  
-coopetxt.bloqueo=movblq.txt  
-coopetxt.prestamos=maepre.txt  
-coopetxt.pagos=planpg.txt  
-coopetxt.certificados=maecer.txt  
-coopetxt.garantes=relgar.txt  
-coopetxt.garantizados=relgzd.txt  
-coopetxt.fondoreposicionauto=maefra.txt  
-coopetxt.fondosiniestroauto=maesin.txt  
+Set up from the templates:
+
+```bash
+cp resources/coopeibm.properties.template resources/coopeibm.properties
+# then edit coopeibm.properties with the real values
+
+cp resources/log4j2.properties <deployment-dir>/resources/log4j2.properties
+# no edits needed for normal use
+```
+
+The file has three sections:
+
+### Environment
+```properties
+coope.environment=dev          # dev | test | prod
+coope.support=<email>
+```
+
+### SFTP server (IBM Domino)
+```properties
+coopesftp.server=<hostname>
+coopesftp.user=<username>
+coopesftp.clave=<password>
+coopesftp.path=/home/coope/
+```
+
+### DB2 on Cloud
+Obtain `jdbcurl`, `username` and `password` from the IBM Cloud Db2 service credentials page.
+```properties
+db2.jdbcurl=jdbc:db2://<host>:<port>/<db>:sslConnection=true;sslTrustStoreLocation=./resources/coope-truststore.p12;sslTrustStorePassword=<truststore-password>;loginTimeout=30;
+db2.username=<username>
+db2.password=<password>
+```
+- `loginTimeout` : seconds to wait for the connection. Without it a failing connection can look like a hang.
+
+### Database certificate
+Las instancias de db2 en IBM Cloud necesitan un certificado para poder conectarse de manera segura con SSL. \
+Descargar el certificado de la consola web de la base de datos, el nombre el file será : *DigiCertGlobalRootCA.crt* \
+Una vez descargado el certificado, agregarlo a un keystore con nombre *db2cloud.jks* y grabar el mismo en la carpeta **drivers**
+
+> Puede utilizarse *keytool* o *KeyStore Explorer* para crear el keystore.
+
+#### Crear certificado
+```bash
+keytool -importcert -alias db2-cert -file DigiCertGlobalRootCA.crt -keystore db2cloud.jks  -storetype PKCS12 -storepass changeit
+```
+
+#### Verificar certificado
+```bash
+keytool -list -v -keystore db2cloud.jks -alias db2-cert
+```
+
+#### Listar todos los certificados
+```bash
+keytool -list -keystore db2cloud.jks
+```
+
+
+### Flat-file paths
+```properties
+coopetxt.country=815
+coopetxt.path=<local path, e.g. /mnt/c/cargacoope/filescoope/>
+coopetxt.maestro=prusal.txt
+coopetxt.movimientos=movaho.txt
+coopetxt.miscelaneos=movmis.txt
+coopetxt.aportaciones=movapo.txt
+coopetxt.bloqueo=movblq.txt
+coopetxt.prestamos=maepre.txt
+coopetxt.pagos=planpg.txt
+coopetxt.certificados=maecer.txt
+coopetxt.garantes=relgar.txt
+coopetxt.garantizados=relgzd.txt
+coopetxt.fondoreposicionauto=maefra.txt
+coopetxt.fondosiniestroauto=maesin.txt
 coopetxt.videos=videos.txt
-
-## Credenciales
-El file *resources/env.json* son las credenciales para conectarse al db2. Este file se obtiene del servicio db2 on cloud de la aplicación.
+# Optional — only needed on days when personal-data changes are present:
+# coopetxt.sociospersonal=datsoc.txt
+```
 
 ## Detalles
 1. La carga de socios debería hacerse solo una vez (carga inicial), sin embargo se deja el proceso por si es necesario
@@ -107,9 +174,10 @@ Esta info la sacamos del código de la bd de la Cooperativa en Notes
 - 205 : Hipotecario
 - 206 : Consumo
 - 207 : Automóvil
-- 208 : PS
-- 209 : Especial 1
-- 210 : Especial 2
+- 208 : Escolar (antes: PS)
+- 209 : Traslado Hipotecario (antes: Especial 1)
+- 210 : Salud (antes : Especial 2)
+- 211 : Hipotecario Especial
+- 212 : Largo Plazo Especial
 
-# Compilación del .jar
-mvn dependency:copy-dependencies
+
