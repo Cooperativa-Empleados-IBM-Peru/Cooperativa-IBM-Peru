@@ -44,3 +44,4 @@ target/
 logs
 coopeibm.properties
 env.json
+filescoope/*.txt

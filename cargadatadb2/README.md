@@ -53,12 +53,21 @@ El proceso carga los files en el siguiente orden
 
 ## Configuration
 
-All configuration lives in a single file: `resources/coopeibm.properties`.
-This file is **git-ignored** and must never be committed. A ready-to-fill template is provided:
+All runtime configuration lives in the `resources/` folder. Two files are required:
+
+| File | Template in repo | Contains secrets? |
+|---|---|---|
+| `resources/coopeibm.properties` | `resources/coopeibm.properties.template` | ✅ Yes — git-ignored |
+| `resources/log4j2.properties` | `resources/log4j2.properties` | No — copy as-is |
+
+Set up from the templates:
 
 ```bash
 cp resources/coopeibm.properties.template resources/coopeibm.properties
 # then edit coopeibm.properties with the real values
+
+cp resources/log4j2.properties <deployment-dir>/resources/log4j2.properties
+# no edits needed for normal use
 ```
 
 The file has three sections:
