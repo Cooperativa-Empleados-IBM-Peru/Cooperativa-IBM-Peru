@@ -112,7 +112,7 @@ coopetxt.fondoreposicionauto=maefra.txt
 coopetxt.fondosiniestroauto=maesin.txt
 coopetxt.videos=videos.txt
 # Optional — only needed on days when personal-data changes are present:
-# coopetxt.sociospersonal=Datsoc.txt
+# coopetxt.sociospersonal=datsoc.txt
 ```
 
 ## Detalles
