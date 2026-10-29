@@ -1343,10 +1343,16 @@ public class CoopeCargaFiles {
 
         logger.info(". conectando a db2");
 
+        final long startMillis = System.currentTimeMillis();
+
         try {
             // Load the driver
             Class.forName("com.ibm.db2.jcc.DB2Driver");
             logger.info("**** Loaded the JDBC driver");
+
+            logConnectionSettings(prop.getProperty("db2.jdbcurl"));
+            logger.info("**** Connecting to db2 (if the server certificate is not trusted the driver retries"
+                    + " silently for a few minutes before failing)...");
 
             // Create the connection using the IBM Data Server Driver for JDBC and SQLJ
             con = DriverManager.getConnection(prop.getProperty("db2.jdbcurl"), prop.getProperty("db2.username"),
@@ -1362,12 +1368,15 @@ public class CoopeCargaFiles {
             db2connected = false;
 
         } catch (SQLException ex) {
+            logger.error("Could not connect to db2 after " + (System.currentTimeMillis() - startMillis) / 1000
+                    + " seconds");
             logger.error("SQLException information");
             while (ex != null) {
                 logger.error("Error msg: " + ex.getMessage());
                 logger.error("SQLSTATE: " + ex.getSQLState());
                 logger.error("Error code: " + ex.getErrorCode());
                 logger.error(ex);
+                logConnectionHint(ex);
                 ex = ex.getNextException(); // For drivers that support chained exceptions
 
                 db2connected = false;
@@ -1376,6 +1385,63 @@ public class CoopeCargaFiles {
 
         return db2connected;
 
+    }
+
+    /**
+     * Logs the connection settings (password values masked) and checks that the
+     * truststore file, if configured, exists and is readable.
+     */
+    private void logConnectionSettings(String jdbcurl) {
+
+        if (jdbcurl == null) {
+            logger.error("Property db2.jdbcurl is not defined");
+            return;
+        }
+
+        logger.info("**** db2.jdbcurl : " + jdbcurl.replaceAll("(?i)(password\\s*=)[^;]*", "$1****"));
+        logger.info("**** db2.username : " + prop.getProperty("db2.username"));
+
+        final java.util.regex.Matcher m = java.util.regex.Pattern.compile("(?i)sslTrustStoreLocation\\s*=([^;]*)")
+                .matcher(jdbcurl);
+
+        if (m.find()) {
+            final java.io.File ts = new java.io.File(m.group(1).trim());
+            if (ts.isFile() && ts.canRead()) {
+                logger.info("**** SSL truststore : " + ts.getAbsolutePath() + " (" + ts.length() + " bytes)");
+            } else {
+                logger.error("**** SSL truststore NOT FOUND or not readable : " + ts.getAbsolutePath()
+                        + " (the path is relative to the current directory : " + System.getProperty("user.dir")
+                        + "). See README, section 'DB2 SSL truststore'");
+            }
+        } else if (jdbcurl.toLowerCase().contains("sslconnection=true")) {
+            logger.info("**** SSL truststore : not configured in the url, using the JVM default trust store ("
+                    + System.getProperty("java.home") + "/lib/security/cacerts)");
+        }
+    }
+
+    /**
+     * Logs a human readable hint for the most common connection failures.
+     */
+    private void logConnectionHint(SQLException ex) {
+
+        final StringBuilder causes = new StringBuilder();
+        for (Throwable t = ex; t != null; t = t.getCause()) {
+            causes.append(t.getMessage()).append(" | ");
+        }
+        final String all = causes.toString();
+
+        if (all.contains("PKIX path building failed") || all.contains("certificate_unknown")) {
+            logger.error("HINT : the db2 server SSL certificate is not trusted by this JVM. Create the truststore"
+                    + " and set sslTrustStoreLocation / sslTrustStorePassword in db2.jdbcurl"
+                    + " (see README, section 'DB2 SSL truststore')");
+        } else if (all.contains("UnknownHostException")) {
+            logger.error("HINT : db2 host name cannot be resolved. Check the host in db2.jdbcurl and the network/DNS");
+        } else if (all.contains("Connection refused") || all.contains("timed out")
+                || all.contains("Connect timed out")) {
+            logger.error("HINT : cannot reach the db2 server. Check host, port, firewall/VPN and loginTimeout");
+        } else if (ex.getErrorCode() == -4214 || ex.getErrorCode() == -30082 || "28000".equals(ex.getSQLState())) {
+            logger.error("HINT : authentication failed. Check db2.username and db2.password");
+        }
     }
 
     private void closedb2Connection() {
@@ -1412,7 +1478,7 @@ public class CoopeCargaFiles {
         int recordsUpdated = 0;
         int recordsRejected = 0;
         int duplicateRecords = 0;
-        int unknownSocios = 0;
+        int newSocios = 0;
         int formatErrors = 0;
 
         java.util.Set<String> seenDocume = new java.util.HashSet<>();
@@ -1434,6 +1500,8 @@ public class CoopeCargaFiles {
 
         // List to hold valid parsed records
         java.util.List<CoopeSocioPersonal> validRecords = new java.util.ArrayList<>();
+        // Records whose DOCUME does not exist yet in COOPESOCIOS (to be created)
+        java.util.List<CoopeSocioPersonal> newSocioRecords = new java.util.ArrayList<>();
 
         // 2. Parse file line by line
         try {
@@ -1467,10 +1535,11 @@ public class CoopeCargaFiles {
                 }
 
                 // Validate field lengths against maximums (only the 21 contract fields; LUGNAC at index 21 is dropped)
+                // DB2 VARCHAR/CHAR columns are sized in bytes (UTF-8 database), so measure UTF-8 bytes, not chars
                 boolean lengthError = false;
                 for (int i = 0; i < 21 && i < parts.length; i++) {
-                    if (parts[i].length() > MAX_LENGTHS[i]) {
-                        logger.error("Format error: field " + (i + 1) + " exceeds max length of " + MAX_LENGTHS[i] + ". Value: '" + parts[i] + "'. Line: " + filerow);
+                    if (parts[i].getBytes(java.nio.charset.StandardCharsets.UTF_8).length > MAX_LENGTHS[i]) {
+                        logger.error("Format error: field " + (i + 1) + " exceeds max length of " + MAX_LENGTHS[i] + " bytes. Value: '" + parts[i] + "'. Line: " + filerow);
                         lengthError = true;
                         break;
                     }
@@ -1493,7 +1562,7 @@ public class CoopeCargaFiles {
 
                 // NACION (index 13)
                 String nacion = parts[13];
-                if (!nacion.isEmpty() && !nacion.equals("P") && !nacion.equals("E") && !nacion.equals("1") && !nacion.equals("2")) {
+                if (!nacion.isEmpty() && !nacion.equals("0") && !nacion.equals("P") && !nacion.equals("E") && !nacion.equals("1") && !nacion.equals("2")) {
                     logger.error("Invalid NACION: '" + nacion + "'. Line: " + filerow);
                     formatErrors++;
                     recordsRejected++;
@@ -1518,16 +1587,15 @@ public class CoopeCargaFiles {
                 }
                 seenDocume.add(docume);
 
-                // Validate matching COOPESOCIOS record
-                if (!existingSocios.contains(docume)) {
-                    logger.error("Unknown socio: DOCUME " + docume + " does not map to any existing COOPESOCIOS record. Line: " + filerow);
-                    unknownSocios++;
-                    recordsRejected++;
-                    continue;
-                }
-
                 // Valid record, add to list
-                validRecords.add(new CoopeSocioPersonal(parts));
+                CoopeSocioPersonal socioRec = new CoopeSocioPersonal(parts);
+                validRecords.add(socioRec);
+
+                // DOCUME not in COOPESOCIOS yet: the socio will be created
+                if (!existingSocios.contains(docume)) {
+                    logger.info("New socio: DOCUME " + docume + " does not exist in COOPESOCIOS, it will be added");
+                    newSocioRecords.add(socioRec);
+                }
             }
         } catch (IOException e) {
             logger.error("IOException reading file: " + e.getMessage(), e);
@@ -1574,9 +1642,19 @@ public class CoopeCargaFiles {
                 }
                 ps.executeBatch();
                 recordsLoaded = validRecords.size();
+
+                // Create the new socios in COOPESOCIOS (same transaction as the temp load)
+                newSocios = insertNewSocios(newSocioRecords);
+
                 con.commit();
             } catch (SQLException e) {
+                newSocios = 0;
                 logger.error("SQLException loading temp table: " + e.getMessage(), e);
+                SQLException next = e.getNextException();
+                while (next != null) {
+                    logger.error("Chained SQLException: SQLSTATE=" + next.getSQLState() + " code=" + next.getErrorCode() + " msg=" + next.getMessage());
+                    next = next.getNextException();
+                }
                 try {
                     con.rollback();
                 } catch (SQLException rollbackEx) {
@@ -1611,9 +1689,72 @@ public class CoopeCargaFiles {
         logger.info("Records updated: " + recordsUpdated);
         logger.info("Records rejected: " + recordsRejected);
         logger.info("Duplicate records: " + duplicateRecords);
-        logger.info("Unknown socios: " + unknownSocios);
+        logger.info("New socios added: " + newSocios);
         logger.info("Format errors: " + formatErrors);
         logger.info("===============================================");
+    }
+
+    /**
+     * Inserts into COOPESOCIOS the socios found in the personal-data file that do not exist yet.
+     * Only the mandatory/identity columns are set here; the remaining personal fields are filled in
+     * afterwards by the stored procedure UPDATESOCIOSPERSONAL (from COOPESOCIOSTEMPPERSONAL).
+     * Does not commit: the caller owns the transaction.
+     *
+     * @return number of socios inserted
+     */
+    private int insertNewSocios(java.util.List<CoopeSocioPersonal> newSocioRecords) throws SQLException {
+        if (newSocioRecords.isEmpty()) {
+            return 0;
+        }
+
+        String codPais = prop.getProperty("coopetxt.country");
+        if (codPais == null || codPais.trim().isEmpty()) {
+            throw new SQLException("Property coopetxt.country is required to add new socios (COOPESOCIOS.CODPAIS is NOT NULL)");
+        }
+        codPais = codPais.trim();
+
+        String sql = "INSERT INTO COOPESOCIOS (CODEMPLEADO, CODPAIS, NOMBREEMPLEADO, EMAILEMPLEADO, " +
+            "INBLUEPAGES, ACTIVO, ISADMIN, UUID) VALUES (?, ?, ?, ?, FALSE, TRUE, FALSE, ?)";
+
+        int inserted = 0;
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            for (CoopeSocioPersonal rec : newSocioRecords) {
+                // Full name: NCOMPL, or APEPAT APEMAT NOMBRE when NCOMPL is empty
+                String nombre = rec.getNcompl();
+                if (nombre == null || nombre.isEmpty()) {
+                    nombre = (nvl(rec.getApepat()) + " " + nvl(rec.getApemat()) + " " + nvl(rec.getNombre())).replaceAll("\\s+", " ").trim();
+                }
+                if (nombre.isEmpty()) {
+                    nombre = rec.getDocume();
+                }
+
+                // In datsoc.txt the NOMBC2 column carries the socio e-mail address
+                String email = rec.getNombc2();
+                email = (email != null && email.contains("@")) ? email.toLowerCase() : null;
+
+                ps.setString(1, rec.getDocume());
+                ps.setString(2, codPais);
+                ps.setString(3, nombre);
+                if (email == null) {
+                    ps.setNull(4, Types.CHAR);
+                } else {
+                    ps.setString(4, email);
+                }
+                ps.setString(5, java.util.UUID.randomUUID().toString());
+                ps.addBatch();
+                inserted++;
+                if (inserted % batchSize == 0) {
+                    ps.executeBatch();
+                }
+            }
+            ps.executeBatch();
+        }
+        logger.info("New socios inserted into COOPESOCIOS: " + inserted);
+        return inserted;
+    }
+
+    private static String nvl(String value) {
+        return value == null ? "" : value;
     }
 
     private void setNullableString(PreparedStatement ps, int paramIndex, String value) throws SQLException {

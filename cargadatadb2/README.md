@@ -93,8 +93,6 @@ db2.jdbcurl=jdbc:db2://<host>:<port>/<db>:sslConnection=true;sslTrustStoreLocati
 db2.username=<username>
 db2.password=<password>
 ```
-- `sslTrustStoreLocation` / `sslTrustStorePassword` : truststore with the CA that signed the DB2 server certificate (see
-  [DB2 SSL truststore](#db2-ssl-truststore)). The path is relative to the directory the program is run from.
 - `loginTimeout` : seconds to wait for the connection. Without it a failing connection can look like a hang.
 
 ### Database certificate

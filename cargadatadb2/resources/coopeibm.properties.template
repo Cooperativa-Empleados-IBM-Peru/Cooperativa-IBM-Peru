@@ -20,7 +20,7 @@ coopesftp.path=/home/coope/
 # DB2 on Cloud connection
 # Obtain jdbcurl, username and password from the IBM Cloud Db2 service credentials.
 # -----------------------------------------------------------------------------
-db2.jdbcurl=jdbc:db2://<hostname>:<port>/<database>:sslConnection=true;sslTrustStoreLocation=./resources/coope-truststore.p12;sslTrustStorePassword=<truststore-password>;loginTimeout=30;
+db2.jdbcurl=jdbc:db2://<hostname>:<port>/<database>:sslConnection=true;sslTrustStoreLocation=./resources/db2cloud.jks;sslTrustStorePassword=changeit;loginTimeout=30;
 db2.username=<db2-username>
 db2.password=<db2-password>
 
