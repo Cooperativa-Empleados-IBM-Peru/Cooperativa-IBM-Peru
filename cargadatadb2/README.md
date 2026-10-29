@@ -89,10 +89,36 @@ coopesftp.path=/home/coope/
 ### DB2 on Cloud
 Obtain `jdbcurl`, `username` and `password` from the IBM Cloud Db2 service credentials page.
 ```properties
-db2.jdbcurl=jdbc:db2://<host>:<port>/<db>:sslConnection=true;
+db2.jdbcurl=jdbc:db2://<host>:<port>/<db>:sslConnection=true;sslTrustStoreLocation=./resources/coope-truststore.p12;sslTrustStorePassword=<truststore-password>;loginTimeout=30;
 db2.username=<username>
 db2.password=<password>
 ```
+- `sslTrustStoreLocation` / `sslTrustStorePassword` : truststore with the CA that signed the DB2 server certificate (see
+  [DB2 SSL truststore](#db2-ssl-truststore)). The path is relative to the directory the program is run from.
+- `loginTimeout` : seconds to wait for the connection. Without it a failing connection can look like a hang.
+
+### Database certificate
+Las instancias de db2 en IBM Cloud necesitan un certificado para poder conectarse de manera segura con SSL. \
+Descargar el certificado de la consola web de la base de datos, el nombre el file será : *DigiCertGlobalRootCA.crt* \
+Una vez descargado el certificado, agregarlo a un keystore con nombre *db2cloud.jks* y grabar el mismo en la carpeta **drivers**
+
+> Puede utilizarse *keytool* o *KeyStore Explorer* para crear el keystore.
+
+#### Crear certificado
+```bash
+keytool -importcert -alias db2-cert -file DigiCertGlobalRootCA.crt -keystore db2cloud.jks  -storetype PKCS12 -storepass changeit
+```
+
+#### Verificar certificado
+```bash
+keytool -list -v -keystore db2cloud.jks -alias db2-cert
+```
+
+#### Listar todos los certificados
+```bash
+keytool -list -keystore db2cloud.jks
+```
+
 
 ### Flat-file paths
 ```properties

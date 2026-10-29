@@ -45,3 +45,6 @@ logs
 coopeibm.properties
 env.json
 filescoope/*.txt
+
+# Truststore with the DB2 server CA (see README, "DB2 SSL truststore")
+resources/*.p12

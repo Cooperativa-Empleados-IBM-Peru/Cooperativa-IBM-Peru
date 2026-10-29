@@ -19,6 +19,21 @@ Una vez descargado el certificado, agregarlo a un keystore con nombre *db2cloud.
 
 > Puede utilizarse *keytool* o *KeyStore Explorer* para crear el keystore.
 
+#### Crear certificado
+```bash
+keytool -importcert -alias db2-cert -file DigiCertGlobalRootCA.crt -keystore db2cloud.jks  -storetype PKCS12 -storepass changeit
+```
+
+#### Verificar certificado
+```bash
+keytool -list -v -keystore db2cloud.jks -alias db2-cert
+```
+
+#### Listar todos los certificados
+```bash
+keytool -list -keystore db2cloud.jks
+```
+
 ## Ejecución
 Una vez seteadas las configuraciones de la base de datos, y creado el keystore, se puede ejecutar las migraciones con el siguiente comando :
 
@@ -26,7 +41,7 @@ Una vez seteadas las configuraciones de la base de datos, y creado el keystore, 
 docker run --rm -it -v "$PWD"/sql:/flyway/sql -v "$PWD"/conf:/flyway/conf -v "$PWD"/drivers:/flyway/drivers flyway/flyway:11 migrate
 ```
 
-O descargar el cli de flyway, genrar el file `config/flyway.toml` y ejecutar
+O descargar el cli de flyway, generar el file `config/flyway.toml` y ejecutar
 ```bash
 flyway -configFiles="conf/flyway.toml" info
 ```
