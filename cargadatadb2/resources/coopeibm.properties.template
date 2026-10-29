@@ -1,0 +1,51 @@
+# =============================================================================
+# Cooperativa IBM Peru - configuration template
+# Copy this file to coopeibm.properties and fill in all values marked <...>
+# DO NOT commit coopeibm.properties to version control (it is git-ignored).
+# =============================================================================
+
+# Runtime environment: dev | test | prod
+coope.environment=dev
+coope.support=<support-email@ibm.com>
+
+# -----------------------------------------------------------------------------
+# SFTP server (IBM Domino) - source of the flat data files
+# -----------------------------------------------------------------------------
+coopesftp.server=<sftp-hostname>
+coopesftp.user=<sftp-username>
+coopesftp.clave=<sftp-password>
+coopesftp.path=/home/coope/
+
+# -----------------------------------------------------------------------------
+# DB2 on Cloud connection
+# Obtain jdbcurl, username and password from the IBM Cloud Db2 service credentials.
+# -----------------------------------------------------------------------------
+db2.jdbcurl=jdbc:db2://<hostname>:<port>/<database>:sslConnection=true;
+db2.username=<db2-username>
+db2.password=<db2-password>
+
+# -----------------------------------------------------------------------------
+# Flat-file paths and filenames
+# coopetxt.path : local directory where files are downloaded to / read from.
+#   Windows example : c:\\cargacoope\\filescoope\\
+#   Linux example   : /mnt/c/cargacoope/filescoope/
+# -----------------------------------------------------------------------------
+coopetxt.country=815
+coopetxt.path=<local-path-to-files>
+coopetxt.socios=coope-socios.csv
+coopetxt.admins=coope-admins.txt
+coopetxt.maestro=prusal.txt
+coopetxt.movimientos=movaho.txt
+coopetxt.miscelaneos=movmis.txt
+coopetxt.aportaciones=movapo.txt
+coopetxt.bloqueo=movblq.txt
+coopetxt.prestamos=maepre.txt
+coopetxt.pagos=planpg.txt
+coopetxt.certificados=maecer.txt
+coopetxt.garantes=relgar.txt
+coopetxt.garantizados=relgzd.txt
+coopetxt.fondoreposicionauto=maefra.txt
+coopetxt.fondosiniestroauto=maesin.txt
+coopetxt.videos=videos.txt
+# Optional: only needed on days when personal-data changes are present.
+# coopetxt.sociospersonal=Datsoc.txt

@@ -15,7 +15,7 @@ This generates, in `target/`:
 
 ## Run
 The program reads its configuration from `./resources` (relative to the current directory), so run it from a folder
-that contains the `resources/` folder (`coopeibm.properties`, `env.json`, `log4j2.properties`):
+that contains the `resources/` folder (`coopeibm.properties`, `log4j2.properties`):
 
 ```bash
 java -jar target/coopeibm-cargadatadb2-1.7.0-jar-with-dependencies.jar <parameter>
@@ -51,39 +51,60 @@ El proceso carga los files en el siguiente orden
   
 - Videos (not used)  
 
-## Properties
-El file *resources/coopeibm.properties* contiene la siguiente información. Debe actualizarse la ubicación de los files segun sea necesario.  
+## Configuration
 
+All configuration lives in a single file: `resources/coopeibm.properties`.
+This file is **git-ignored** and must never be committed. A ready-to-fill template is provided:
+
+```bash
+cp resources/coopeibm.properties.template resources/coopeibm.properties
+# then edit coopeibm.properties with the real values
 ```
-coope.environment=dev / test / prod  
-coope.support=cooperat@pe.ibm.com  
 
-coopesftp.server=*sftp server hostname*  
-coopesftp.user=*sftp user*  
-coopesftp.clave=*sftp password*  
-coopesftp.path=*/home/coope/*  
+The file has three sections:
 
-coopetxt.country=815  
-coopetxt.path=*local path for files ex : /mnt/c/code/filescoope/*  
-coopetxt.socios=coope-socios.csv  
-coopetxt.admins=coope-admins.txt  
-coopetxt.maestro=prusal.txt  
-coopetxt.movimientos=movaho.txt  
-coopetxt.miscelaneos=movmis.txt  
-coopetxt.aportaciones=movapo.txt  
-coopetxt.bloqueo=movblq.txt  
-coopetxt.prestamos=maepre.txt  
-coopetxt.pagos=planpg.txt  
-coopetxt.certificados=maecer.txt  
-coopetxt.garantes=relgar.txt  
-coopetxt.garantizados=relgzd.txt  
-coopetxt.fondoreposicionauto=maefra.txt  
-coopetxt.fondosiniestroauto=maesin.txt  
+### Environment
+```properties
+coope.environment=dev          # dev | test | prod
+coope.support=<email>
+```
+
+### SFTP server (IBM Domino)
+```properties
+coopesftp.server=<hostname>
+coopesftp.user=<username>
+coopesftp.clave=<password>
+coopesftp.path=/home/coope/
+```
+
+### DB2 on Cloud
+Obtain `jdbcurl`, `username` and `password` from the IBM Cloud Db2 service credentials page.
+```properties
+db2.jdbcurl=jdbc:db2://<host>:<port>/<db>:sslConnection=true;
+db2.username=<username>
+db2.password=<password>
+```
+
+### Flat-file paths
+```properties
+coopetxt.country=815
+coopetxt.path=<local path, e.g. /mnt/c/cargacoope/filescoope/>
+coopetxt.maestro=prusal.txt
+coopetxt.movimientos=movaho.txt
+coopetxt.miscelaneos=movmis.txt
+coopetxt.aportaciones=movapo.txt
+coopetxt.bloqueo=movblq.txt
+coopetxt.prestamos=maepre.txt
+coopetxt.pagos=planpg.txt
+coopetxt.certificados=maecer.txt
+coopetxt.garantes=relgar.txt
+coopetxt.garantizados=relgzd.txt
+coopetxt.fondoreposicionauto=maefra.txt
+coopetxt.fondosiniestroauto=maesin.txt
 coopetxt.videos=videos.txt
+# Optional — only needed on days when personal-data changes are present:
+# coopetxt.sociospersonal=Datsoc.txt
 ```
-
-## Credenciales
-El file *resources/env.json* son las credenciales para conectarse al db2. Este file se obtiene del servicio db2 on cloud de la aplicación.
 
 ## Detalles
 1. La carga de socios debería hacerse solo una vez (carga inicial), sin embargo se deja el proceso por si es necesario

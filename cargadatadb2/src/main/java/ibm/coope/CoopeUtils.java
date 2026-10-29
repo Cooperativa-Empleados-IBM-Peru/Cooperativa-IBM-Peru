@@ -1,10 +1,8 @@
 package ibm.coope;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,10 +11,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.Map;
 import java.util.Properties;
-
-import com.google.gson.Gson;
 
 public class CoopeUtils {
 
@@ -115,42 +110,14 @@ public class CoopeUtils {
 
 		Properties prop = new Properties();
 
-		final String configFiledb2 = resourcefolder + "/env.json";
 		final String configFileprop = resourcefolder + "/coopeibm.properties";
 
-		// Read properties file and load configuration
-		try {
-			InputStream inputStream = new FileInputStream(configFileprop);
+		try (InputStream inputStream = new FileInputStream(configFileprop)) {
 			prop.load(inputStream);
-
-			// create Gson instance
-			final Gson gson = new Gson();
-
-			// create a reader
-			final Reader reader = Files.newBufferedReader(Paths.get(configFiledb2));
-
-			// convert JSON file to map
-			final Map<?, ?> map = gson.fromJson(reader, Map.class);
-
-			// print map entries
-			for (final Map.Entry<?, ?> entry : map.entrySet()) {
-				final String k = (String) entry.getKey().toString();
-				String v = (String) entry.getValue().toString();
-
-				if (k.equals("port")) {
-					v = v.substring(0, v.indexOf("."));
-				}
-
-				prop.setProperty(k, v);
-			}
-
-			// close reader
-			reader.close();
-
-		} catch (final Exception ex) {
+		} catch (IOException ex) {
 			ex.printStackTrace();
-		} 
-		
+		}
+
 		return prop;
 
 	}

@@ -47,8 +47,6 @@ public class CoopeCargaFiles {
 
         String fname = "";
 
-        try {
-    
         if (connectdb2()) {
 
             logger.info("Calling Stored Procedure TRUNCTEMPS");
@@ -190,20 +188,14 @@ public class CoopeCargaFiles {
                 }
             }
 
-                Thread.sleep(5000);
                 logger.info("calling Stored Procedure MOVEDATA");
                 callStoredProc("MOVEDATA()");
-                Thread.sleep(5000);
                 logger.info("calling Stored Procedure TRUNCTEMPS");
                 callStoredProc("TRUNCTEMPS()");
-        
+
                 closedb2Connection();
 
         } // if connectdb2
-
-            } catch (InterruptedException e) {
-                logger.error(e);
-            }
 
     }
 
@@ -1357,8 +1349,8 @@ public class CoopeCargaFiles {
             logger.info("**** Loaded the JDBC driver");
 
             // Create the connection using the IBM Data Server Driver for JDBC and SQLJ
-            con = DriverManager.getConnection(prop.getProperty("jdbcurl"), prop.getProperty("username"),
-                    prop.getProperty("password"));
+            con = DriverManager.getConnection(prop.getProperty("db2.jdbcurl"), prop.getProperty("db2.username"),
+                    prop.getProperty("db2.password"));
             // Commit changes manually
             con.setAutoCommit(false);
             logger.info("**** Created a JDBC connection to the data source. Autocommit : " + con.getAutoCommit() );
