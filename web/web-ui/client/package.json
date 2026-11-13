@@ -49,7 +49,7 @@
     "zone.js": "0.11.8"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "v12-lts",
+    "@angular-devkit/build-angular": "v21-lts",
     "@angular/cdk": "v12-lts",
     "@angular/cli": "v12-lts",
     "@angular/compiler": "v12-lts",
